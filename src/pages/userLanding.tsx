@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-<Instagram className="w-5 h-5 text-gray-400 group-hover:text-red-700 transition-colors" />
 import { Film, Users, BarChart3, Calendar, ArrowRight, Sparkles, Play, User, Clapperboard, ChartLine, UsersRound, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '../assets/images/camera-roll-removebg-preview.png'
 

@@ -1,11 +1,12 @@
 import './App.css'
+import AdminSignin from './pages/adminSignIn'
 import AdminLanding from './pages/userLanding'
 
 function App() {
 
   return (
     <>
-      <AdminLanding></AdminLanding>
+      <AdminSignin></AdminSignin>
     </>
   )
 }
