@@ -4,7 +4,7 @@ import { MdAlarm, MdSlideshow } from "react-icons/md";
 import { House, UserCog, SquareCheck, Disc, Search, Layers2, RotateCw, CircleQuestionMark, Bell, Clapperboard, Tv, Video, MapPinHouse, User, DollarSign, Ticket, Users, Film, CircleX, SquarePen, Eye, Trash, ChevronLeft, ChevronRight } from "lucide-react";
 import movie1 from '../assets/images/movie-poster-1.webp'
 
-function AdminCinemaOwner() {
+function AdminAdmin() {
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] overflow-hidden'>
@@ -44,33 +44,36 @@ function AdminCinemaOwner() {
                 </div>
 
                 {/* tabs */}
-                <div className='flex items-center mt-5'>
-                    <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Users</div>
-                    <div className='px-2.5 pb-2 opacity-95 text-[18px] border-b-2 border-red-900'>Cinema Owners</div>
-                    <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Admins</div>
+                <div className='mt-5 flex justify-between items-center'>
+                    <div className='flex items-center'>
+                        <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Users</div>
+                        <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Cinema Owners</div>
+                        <div className='px-2.5 pb-2 opacity-95 text-[18px] border-b-2 border-red-900'>Admins</div>
+                    </div>
+                    <div>
+                        <button className='text-[13px] rounded-sm w-[85px] h-[34px] bg-transparent border-[1.5px] border-gray-400'>+ Admin</button>
+                    </div>
                 </div>
 
                 {/* cinema containner */}
                 <div className='grid grid-cols-1  gap-1 mt-6 border-gray-800'>
                     {/* single cinema */}
-                    <div className='rounded-sm bg-[#252525] border-gray-700 w-full grid grid-cols-8 px-5 py-2 mb-1'>
+                    <div className='rounded-sm bg-[#252525] border-gray-700 w-full grid grid-cols-7 px-5 py-2 mb-1'>
                         <div className='text-[14px] text-white/90'>No</div>
                         <div className='text-[14px] text-white/90'>Email</div>
                         <div className='text-[14px] text-white/90'>First Name</div>
                         <div className='text-[14px] text-white/90'>Last Name</div>
                         <div className='text-[14px] text-white/90'>Mobile</div>
-                        <div className='text-[14px] text-white/90'>Business No</div>
                         <div className='text-[14px] text-white/90'>Status</div>
                         <div className='text-[14px] text-white/90'>...</div>
                     </div>
 
-                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-8 px-5 py-2 pb-2.5'>
+                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-7 px-5 py-2 pb-2.5'>
                         <div className='text-[13px] text-gray-400'>1</div>
                         <div className='text-[13px] text-gray-400'>thenuri@gamil.com</div>
                         <div className='text-[13px] text-gray-400'>Thenuri</div>
                         <div className='text-[13px] text-gray-400'>Nethangi</div>
                         <div className='text-[13px] text-gray-400'>+94 712345678</div>
-                        <div className='text-[13px] text-gray-400'>12345</div>
                         <div className='text-[13px] text-green-400'>Active</div>
                         <div className='flex items-center gap-2'>
                             <Trash className='text-gray-400 w-[16px] h-[16px]' />
@@ -78,13 +81,25 @@ function AdminCinemaOwner() {
                         </div>
                     </div>
 
-                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-8 px-5 py-2 pb-2.5'>
+                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-7 px-5 py-2 pb-2.5'>
                         <div className='text-[13px] text-gray-400'>1</div>
                         <div className='text-[13px] text-gray-400'>thenuri@gamil.com</div>
                         <div className='text-[13px] text-gray-400'>Thenuri</div>
                         <div className='text-[13px] text-gray-400'>Nethangi</div>
                         <div className='text-[13px] text-gray-400'>+94 712345678</div>
-                        <div className='text-[13px] text-gray-400'>12345</div>
+                        <div className='text-[13px] text-red-400'>Desable</div>
+                        <div className='flex items-center gap-2'>
+                            <Trash className='text-gray-400 w-[16px] h-[16px]' />
+                            <Eye className='text-gray-400 w-[17.5px] h-[17.5px]' />
+                        </div>
+                    </div>
+
+                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-7 px-5 py-2 pb-2.5'>
+                        <div className='text-[13px] text-gray-400'>1</div>
+                        <div className='text-[13px] text-gray-400'>thenuri@gamil.com</div>
+                        <div className='text-[13px] text-gray-400'>Thenuri</div>
+                        <div className='text-[13px] text-gray-400'>Nethangi</div>
+                        <div className='text-[13px] text-gray-400'>+94 712345678</div>
                         <div className='text-[13px] text-green-400'>Active</div>
                         <div className='flex items-center gap-2'>
                             <Trash className='text-gray-400 w-[16px] h-[16px]' />
@@ -92,42 +107,13 @@ function AdminCinemaOwner() {
                         </div>
                     </div>
 
-                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-8 px-5 py-2 pb-2.5'>
+                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-7 px-5 py-2 pb-2.5'>
                         <div className='text-[13px] text-gray-400'>1</div>
                         <div className='text-[13px] text-gray-400'>thenuri@gamil.com</div>
                         <div className='text-[13px] text-gray-400'>Thenuri</div>
                         <div className='text-[13px] text-gray-400'>Nethangi</div>
                         <div className='text-[13px] text-gray-400'>+94 712345678</div>
-                        <div className='text-[13px] text-gray-400'>12345</div>
                         <div className='text-[13px] text-green-400'>Active</div>
-                        <div className='flex items-center gap-2'>
-                            <Trash className='text-gray-400 w-[16px] h-[16px]' />
-                            <Eye className='text-gray-400 w-[17.5px] h-[17.5px]' />
-                        </div>
-                    </div>
-
-                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-8 px-5 py-2 pb-2.5'>
-                        <div className='text-[13px] text-gray-400'>1</div>
-                        <div className='text-[13px] text-gray-400'>thenuri@gamil.com</div>
-                        <div className='text-[13px] text-gray-400'>Thenuri</div>
-                        <div className='text-[13px] text-gray-400'>Nethangi</div>
-                        <div className='text-[13px] text-gray-400'>+94 712345678</div>
-                        <div className='text-[13px] text-gray-400'>12345</div>
-                        <div className='text-[13px] text-red-400'>Disable</div>
-                        <div className='flex items-center gap-2'>
-                            <Trash className='text-gray-400 w-[16px] h-[16px]' />
-                            <Eye className='text-gray-400 w-[17.5px] h-[17.5px]' />
-                        </div>
-                    </div>
-
-                    <div className='bg-[#252525] border-b border-white/20 w-full grid grid-cols-8 px-5 py-2 pb-2.5'>
-                        <div className='text-[13px] text-gray-400'>1</div>
-                        <div className='text-[13px] text-gray-400'>thenuri@gamil.com</div>
-                        <div className='text-[13px] text-gray-400'>Thenuri</div>
-                        <div className='text-[13px] text-gray-400'>Nethangi</div>
-                        <div className='text-[13px] text-gray-400'>+94 712345678</div>
-                        <div className='text-[13px] text-gray-400'>12345</div>
-                        <div className='text-[13px] text-red-400'>Disable</div>
                         <div className='flex items-center gap-2'>
                             <Trash className='text-gray-400 w-[16px] h-[16px]' />
                             <Eye className='text-gray-400 w-[17.5px] h-[17.5px]' />
@@ -150,4 +136,4 @@ function AdminCinemaOwner() {
     )
 }
 
-export default AdminCinemaOwner
+export default AdminAdmin

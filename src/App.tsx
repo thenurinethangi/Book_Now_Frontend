@@ -12,6 +12,7 @@ import AdminMovie from './pages/adminMovie'
 import AdminMovieRequest from './pages/adminMovieRequest'
 import AdminUser from './pages/adminUser'
 import AdminCinemaOwner from './pages/adminCinemaOwner'
+import AdminAdmin from './pages/adminAdmin'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path='/movie/request' element={<AdminMovieRequest />}></Route>
         <Route path='/admin/user' element={<AdminUser />}></Route>
         <Route path='/admin/owner' element={<AdminCinemaOwner />}></Route>
+        <Route path='/admin/admin' element={<AdminAdmin />}></Route>
       </Routes>
     </BrowserRouter>
   )
