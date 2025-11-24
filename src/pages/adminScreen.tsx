@@ -2,13 +2,9 @@ import React from 'react'
 import { NavLink } from "react-router-dom";
 import { MdAlarm, MdSlideshow } from "react-icons/md";
 import { House, UserCog, SquareCheck, Disc, Search, Layers2, RotateCw, CircleQuestionMark, Bell, Clapperboard, Tv, Video, MapPinHouse, User, DollarSign, Ticket, Users, Film, CircleX } from "lucide-react";
-import cinema1 from '../assets/images/cinema-hall-1.jpg'
-import cinema2 from '../assets/images/cinema-hall-2.jpg'
-import cinema3 from '../assets/images/cinema-hall-3.webp'
-import cinema4 from '../assets/images/cinema-hall-4.jpg'
-import cinema5 from '../assets/images/cinema-hall-5.jpg'
+import cinema1 from '../assets/images/cinema-hall-5.jpg'
 
-function AdminCinema() {
+function AdminScreen() {
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] overflow-hidden'>
@@ -41,7 +37,7 @@ function AdminCinema() {
                     <div>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16px] font-medium z-0">
-                                <span className='text-[18px] font-medium'>Home {`>`}</span>&nbsp;Cinema
+                                <span className='text-[18px] font-medium'>Home {`>`}</span>&nbsp;Screen
                             </span>
                         </div>
                     </div>
@@ -49,129 +45,146 @@ function AdminCinema() {
 
                 {/* tabs */}
                 <div className='flex items-center mt-5'>
-                    <div className='px-2.5 border-b-2 border-red-900 pb-2 opacity-95 text-[18px]'>Approved</div>
-                    <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Pending</div>
-                    <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Rejected</div>
+                    <div className='px-2.5 border-b-2 border-red-900 pb-2 opacity-95 text-[18px]'>Active</div>
+                    <div className='px-2.5 pb-2 opacity-95 text-[18px]'>Deactive</div>
                 </div>
 
                 {/* cinema containner */}
                 <div className='grid grid-cols-5 gap-[12px] mt-6'>
                     {/* single cinema */}
-                    <div className='rounded-md bg-[#1e1e1e] h-[350px]'>
+                    <div className='rounded-md bg-[#1e1e1e] h-[405px]'>
                         <div className='h-[45%] relative'>
                             <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
                             <img src={cinema1} className='w-full h-full'></img>
                         </div>
-                        <div className='px-4.5 py-5 flex flex-col justify-between h-[55%]'>
+                        <div className='px-4.5 py-5 pb-3.5 flex flex-col justify-between h-[55%]'>
                             <div className='flex flex-col gap-[15px]'>
-                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone</h3>
-                                <p className='text-[12px] text-[#999]'>63 Mall, Nupe Matara</p>
+                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone-SX</h3>
+                                <div>
+                                    <p className='text-[12px] text-[#999]'>Cinema: Backstone/12345</p>
+                                    <p className='text-[12px] text-[#999]'>Seats: 230</p>
+                                    <p className='text-[11px] text-black bg-[#0c9a8e] px-1 py-[1px] rounded-xs font-medium inline'>Available</p>
+                                </div>
                                 <div className='flex items-center gap-2 mt-2'>
                                     <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>LUX</p>
                                 </div>
                             </div>
-                            <div className='text-red-700 text-[12px]'>
+                            <div className='text-red-700 text-[12px] font-medium'>
                                 More details
                             </div>
                         </div>
                     </div>
 
-                    <div className='rounded-md bg-[#1e1e1e] h-[350px]'>
-                        <div className='h-[45%] relative'>
-                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
-                            <img src={cinema2} className='w-full h-full'></img>
-                        </div>
-                        <div className='px-4.5 py-5 flex flex-col justify-between h-[55%]'>
-                            <div className='flex flex-col gap-[15px]'>
-                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone</h3>
-                                <p className='text-[12px] text-[#999]'>63 Mall, Nupe Matara</p>
-                                <div className='flex items-center gap-2 mt-2'>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>LUX</p>
-                                </div>
-                            </div>
-                            <div className='text-red-700 text-[12px]'>
-                                More details
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='rounded-md bg-[#1e1e1e] h-[350px]'>
-                        <div className='h-[45%] relative'>
-                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
-                            <img src={cinema3} className='w-full h-full'></img>
-                        </div>
-                        <div className='px-4.5 py-5 flex flex-col justify-between h-[55%]'>
-                            <div className='flex flex-col gap-[15px]'>
-                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone</h3>
-                                <p className='text-[12px] text-[#999]'>63 Mall, Nupe Matara</p>
-                                <div className='flex items-center gap-2 mt-2'>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>LUX</p>
-                                </div>
-                            </div>
-                            <div className='text-red-700 text-[12px]'>
-                                More details
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='rounded-md bg-[#1e1e1e] h-[350px]'>
-                        <div className='h-[45%] relative'>
-                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
-                            <img src={cinema4} className='w-full h-full'></img>
-                        </div>
-                        <div className='px-4.5 py-5 flex flex-col justify-between h-[55%]'>
-                            <div className='flex flex-col gap-[15px]'>
-                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone</h3>
-                                <p className='text-[12px] text-[#999]'>63 Mall, Nupe Matara</p>
-                                <div className='flex items-center gap-2 mt-2'>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>LUX</p>
-                                </div>
-                            </div>
-                            <div className='text-red-700 text-[12px]'>
-                                More details
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='rounded-md bg-[#1e1e1e] h-[350px]'>
-                        <div className='h-[45%] relative'>
-                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
-                            <img src={cinema5} className='w-full h-full'></img>
-                        </div>
-                        <div className='px-4.5 py-5 flex flex-col justify-between h-[55%]'>
-                            <div className='flex flex-col gap-[15px]'>
-                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone</h3>
-                                <p className='text-[12px] text-[#999]'>63 Mall, Nupe Matara</p>
-                                <div className='flex items-center gap-2 mt-2'>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>LUX</p>
-                                </div>
-                            </div>
-                            <div className='text-red-700 text-[12px]'>
-                                More details
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='rounded-md bg-[#1e1e1e] h-[350px]'>
+                    <div className='rounded-md bg-[#1e1e1e] h-[405px]'>
                         <div className='h-[45%] relative'>
                             <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
                             <img src={cinema1} className='w-full h-full'></img>
                         </div>
-                        <div className='px-4.5 py-5 flex flex-col justify-between h-[55%]'>
+                        <div className='px-4.5 py-5 pb-3.5 flex flex-col justify-between h-[55%]'>
                             <div className='flex flex-col gap-[15px]'>
-                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone</h3>
-                                <p className='text-[12px] text-[#999]'>63 Mall, Nupe Matara</p>
+                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone-SX</h3>
+                                <div>
+                                    <p className='text-[12px] text-[#999]'>Cinema: Backstone/12345</p>
+                                    <p className='text-[12px] text-[#999]'>Seats: 230</p>
+                                    <p className='text-[11px] text-white/90 bg-red-700 px-1 py-[1px] rounded-xs font-medium inline'>Unavailable</p>
+                                </div>
                                 <div className='flex items-center gap-2 mt-2'>
                                     <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
-                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>LUX</p>
                                 </div>
                             </div>
-                            <div className='text-red-700 text-[12px]'>
+                            <div className='text-red-700 text-[12px] font-medium'>
+                                More details
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='rounded-md bg-[#1e1e1e] h-[405px]'>
+                        <div className='h-[45%] relative'>
+                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
+                            <img src={cinema1} className='w-full h-full'></img>
+                        </div>
+                        <div className='px-4.5 py-5 pb-3.5 flex flex-col justify-between h-[55%]'>
+                            <div className='flex flex-col gap-[15px]'>
+                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone-SX</h3>
+                                <div>
+                                    <p className='text-[12px] text-[#999]'>Cinema: Backstone/12345</p>
+                                    <p className='text-[12px] text-[#999]'>Seats: 230</p>
+                                    <p className='text-[11px] text-black bg-[#0c9a8e] px-1 py-[1px] rounded-xs font-medium inline'>Available</p>
+                                </div>
+                                <div className='flex items-center gap-2 mt-2'>
+                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
+                                </div>
+                            </div>
+                            <div className='text-red-700 text-[12px] font-medium'>
+                                More details
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='rounded-md bg-[#1e1e1e] h-[405px]'>
+                        <div className='h-[45%] relative'>
+                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
+                            <img src={cinema1} className='w-full h-full'></img>
+                        </div>
+                        <div className='px-4.5 py-5 pb-3.5 flex flex-col justify-between h-[55%]'>
+                            <div className='flex flex-col gap-[15px]'>
+                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone-SX</h3>
+                                <div>
+                                    <p className='text-[12px] text-[#999]'>Cinema: Backstone/12345</p>
+                                    <p className='text-[12px] text-[#999]'>Seats: 230</p>
+                                    <p className='text-[11px] text-black bg-[#0c9a8e] px-1 py-[1px] rounded-xs font-medium inline'>Available</p>
+                                </div>
+                                <div className='flex items-center gap-2 mt-2'>
+                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
+                                </div>
+                            </div>
+                            <div className='text-red-700 text-[12px] font-medium'>
+                                More details
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='rounded-md bg-[#1e1e1e] h-[405px]'>
+                        <div className='h-[45%] relative'>
+                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
+                            <img src={cinema1} className='w-full h-full'></img>
+                        </div>
+                        <div className='px-4.5 py-5 pb-3.5 flex flex-col justify-between h-[55%]'>
+                            <div className='flex flex-col gap-[15px]'>
+                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone-SX</h3>
+                                <div>
+                                    <p className='text-[12px] text-[#999]'>Cinema: Backstone/12345</p>
+                                    <p className='text-[12px] text-[#999]'>Seats: 230</p>
+                                    <p className='text-[11px] text-black bg-[#0c9a8e] px-1 py-[1px] rounded-xs font-medium inline'>Available</p>
+                                </div>
+                                <div className='flex items-center gap-2 mt-2'>
+                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
+                                </div>
+                            </div>
+                            <div className='text-red-700 text-[12px] font-medium'>
+                                More details
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='rounded-md bg-[#1e1e1e] h-[405px]'>
+                        <div className='h-[45%] relative'>
+                            <CircleX className='absolute right-1 top-2.5 text-gray-500 w-5 h-5' />
+                            <img src={cinema1} className='w-full h-full'></img>
+                        </div>
+                        <div className='px-4.5 py-5 pb-3.5 flex flex-col justify-between h-[55%]'>
+                            <div className='flex flex-col gap-[15px]'>
+                                <h3 className='text-[18px] text-[#dedede] font-medium'>Backstone-SX</h3>
+                                <div>
+                                    <p className='text-[12px] text-[#999]'>Cinema: Backstone/12345</p>
+                                    <p className='text-[12px] text-[#999]'>Seats: 230</p>
+                                    <p className='text-[11px] text-black bg-[#0c9a8e] px-1 py-[1px] rounded-xs font-medium inline'>Available</p>
+                                </div>
+                                <div className='flex items-center gap-2 mt-2'>
+                                    <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>3D</p>
+                                </div>
+                            </div>
+                            <div className='text-red-700 text-[12px] font-medium'>
                                 More details
                             </div>
                         </div>
@@ -185,4 +198,4 @@ function AdminCinema() {
     )
 }
 
-export default AdminCinema
+export default AdminScreen

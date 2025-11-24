@@ -95,7 +95,7 @@ const AdminDashboard2 = () => {
             </nav>
 
             {/* content right side */}
-            <div className='w-full h-min-screen text-white px-7 py-3'>
+            <div className='w-full h-min-screen text-white px-7 py-3 pt-4'>
 
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>
@@ -103,8 +103,8 @@ const AdminDashboard2 = () => {
                             <div className="flex items-center justify-center z-10">
                                 <img src={logo} width={'47px'}></img>
                             </div>
-                            <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[23px] font-medium -translate-x-19 z-0">
-                                <span className='text-[28px] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW/ADMIN
+                            <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[23px] font-medium -translate-x-19 z-0 tracking-wide leading-relaxed">
+                                <span className='text-[28px] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW ADMIN
                             </span>
                         </div>
                         <p className='text-gray-500 text-[15px]'>Welcome back, here's what's happening today</p>
@@ -115,11 +115,11 @@ const AdminDashboard2 = () => {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="flex justify-center items-center gap-20 mb-5 bg-black rounded-sm py-[23px]">
+                <div className="flex justify-center items-center gap-20 mb-5 bg-[#1e1e1e] rounded-sm py-[23px]">
                     {stats.map((stat, index) => (
                         <div
                             key={index}
-                            className="group relative px-5.5 py-3 backdrop-blur-sm bg-black transition-all duration-300 hover:transform hover:scale-105 overflow-hidden"
+                            className="group relative px-5.5 py-3 backdrop-blur-sm bg-[#1e1e1e] transition-all duration-300 hover:transform hover:scale-105 overflow-hidden"
                         >
                             <div className="absolute inset-0 transition-all duration-300"></div>
 
@@ -145,7 +145,7 @@ const AdminDashboard2 = () => {
                 <div className='flex gap-4'>
 
                     {/* Revenue Chart */}
-                    <div className="lg:col-span-2 bg-black backdrop-blur-sm rounded-sm px-5 py-3 w-[70%]">
+                    <div className="lg:col-span-2 bg-[#1e1e1e] backdrop-blur-sm rounded-sm px-5 py-3 w-[70%]">
                         <div className="flex items-center justify-between mb-6">
                             <div>
                                 <h3 className="text-[14px] font-medium">Revenue Overview</h3>
@@ -173,7 +173,7 @@ const AdminDashboard2 = () => {
                         </ResponsiveContainer>
                     </div>
 
-                    <div className="bg-black rounded-b-sm w-[30%] px-5 py-3 text-white">
+                    <div className="bg-[#1e1e1e] rounded-b-sm w-[30%] px-5 py-3 text-white">
 
                         <div className='flex justify-between items-center' style={{ marginBottom: '16px' }}>
                             <h1 className='text-[13.5px] font-medium tracking-[0.01em]'>Pending Cinema Request</h1>

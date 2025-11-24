@@ -9,9 +9,9 @@
 @import "tailwindcss";
 
 html{
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 body{
-    overflow: hidden;
+    /* overflow: hidden; */
 }
