@@ -14,6 +14,7 @@ import AdminUser from './pages/adminUser'
 import AdminCinemaOwner from './pages/adminCinemaOwner'
 import AdminAdmin from './pages/adminAdmin'
 import AdminBooking from './pages/adminBooking'
+import AdminGenre from './pages/adminGenre'
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route path='/admin/owner' element={<AdminCinemaOwner />}></Route>
         <Route path='/admin/admin' element={<AdminAdmin />}></Route>
         <Route path='/admin/booking' element={<AdminBooking />}></Route>
+        <Route path='/admin/genre' element={<AdminGenre />}></Route>
       </Routes>
     </BrowserRouter>
   )
