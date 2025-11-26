@@ -18,6 +18,7 @@ import AdminGenre from './pages/adminGenre'
 import Home from './pages/home'
 import SingleMovie from './pages/singleMovie'
 import UserSheetSelect from './pages/userSheetSelect'
+import UserTicketSelect from './pages/userTicketSelect'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
         <Route path='/' element={<Home />}></Route>
         <Route path='/single/movie' element={<SingleMovie />}></Route>
         <Route path='/sheet' element={<UserSheetSelect />}></Route>
+        <Route path='/ticket' element={<UserTicketSelect />}></Route>
       </Routes>
     </BrowserRouter>
   )
