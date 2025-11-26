@@ -15,6 +15,9 @@ import AdminCinemaOwner from './pages/adminCinemaOwner'
 import AdminAdmin from './pages/adminAdmin'
 import AdminBooking from './pages/adminBooking'
 import AdminGenre from './pages/adminGenre'
+import Home from './pages/home'
+import SingleMovie from './pages/singleMovie'
+import UserSheetSelect from './pages/userSheetSelect'
 
 function App() {
 
@@ -36,6 +39,9 @@ function App() {
         <Route path='/admin/admin' element={<AdminAdmin />}></Route>
         <Route path='/admin/booking' element={<AdminBooking />}></Route>
         <Route path='/admin/genre' element={<AdminGenre />}></Route>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/single/movie' element={<SingleMovie />}></Route>
+        <Route path='/sheet' element={<UserSheetSelect />}></Route>
       </Routes>
     </BrowserRouter>
   )
