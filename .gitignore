@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+git config --global http.postBuffer 524288000
+git config --global http.maxRequestBuffer 1000M
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999

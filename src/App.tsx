@@ -20,6 +20,7 @@ import SingleMovie from './pages/singleMovie'
 import UserSheetSelect from './pages/userSheetSelect'
 import UserTicketSelect from './pages/userTicketSelect'
 import UserSignin from './pages/userSignIn'
+import OwnerSignin from './pages/ownerSignIn'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
         <Route path='/sheet' element={<UserSheetSelect />}></Route>
         <Route path='/ticket' element={<UserTicketSelect />}></Route>
         <Route path='/user/signin' element={<UserSignin />}></Route>
+        <Route path='/owner/signin' element={<OwnerSignin />}></Route>
       </Routes>
     </BrowserRouter>
   )
