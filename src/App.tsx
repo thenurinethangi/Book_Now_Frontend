@@ -22,6 +22,8 @@ import UserTicketSelect from './pages/userTicketSelect'
 import UserSignin from './pages/userSignIn'
 import OwnerSignin from './pages/ownerSignIn'
 import SeatDesigner from './pages/x'
+import UserSignup from './pages/userSignUp'
+import OwnerSignup from './pages/ownerSignUp'
 
 function App() {
 
@@ -50,6 +52,8 @@ function App() {
         <Route path='/user/signin' element={<UserSignin />}></Route>
         <Route path='/owner/signin' element={<OwnerSignin />}></Route>
         <Route path='/seats' element={<SeatDesigner />}></Route>
+        <Route path='/user/signup' element={<UserSignup />}></Route>
+        <Route path='/owner/signup' element={<OwnerSignup />}></Route>
       </Routes>
     </BrowserRouter>
   )
