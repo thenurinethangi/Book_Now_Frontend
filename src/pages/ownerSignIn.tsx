@@ -40,10 +40,6 @@ const OwnerSignin: React.FC = () => {
                     <p className='font-[Poppins] text-[15.5px] text-[#999]'>Don't have an account? <span className='text-red-700'>Sign Up</span></p>
                 </div>
 
-                <div className='w-[450px] mt-14'>
-                    <p className='font-[Poppins] text-[12px] text-center text-[#999]'>Own a cinema? <span className='text-red-700'>Register now</span> and manage screens, showtimes, and ticket bookings all in one place with SYNEMA.</p>
-                </div>
-
             </div>
         </div>
     );

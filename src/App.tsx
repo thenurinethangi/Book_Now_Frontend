@@ -21,6 +21,7 @@ import UserSheetSelect from './pages/userSheetSelect'
 import UserTicketSelect from './pages/userTicketSelect'
 import UserSignin from './pages/userSignIn'
 import OwnerSignin from './pages/ownerSignIn'
+import SeatDesigner from './pages/x'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
         <Route path='/ticket' element={<UserTicketSelect />}></Route>
         <Route path='/user/signin' element={<UserSignin />}></Route>
         <Route path='/owner/signin' element={<OwnerSignin />}></Route>
+        <Route path='/seats' element={<SeatDesigner />}></Route>
       </Routes>
     </BrowserRouter>
   )

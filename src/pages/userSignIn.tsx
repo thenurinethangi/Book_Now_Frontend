@@ -16,7 +16,7 @@ const UserSignin: React.FC = () => {
 
                 <X className='absolute right-4.5 top-4.5 w-5.5 h-5.5' />
 
-                <div className="flex justify-center items-center space-x-3 mt-3">
+                <div className="flex justify-center items-center space-x-3">
                     <div className="flex items-center justify-center z-10">
                         <img src={logo2} width={'120px'}></img>
                     </div>
@@ -35,12 +35,12 @@ const UserSignin: React.FC = () => {
                     <button className='w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3'>Sign in</button>
                 </form>
 
-                <div>
-                    <p className='font-[Poppins] text-[15.5px] text-[#999]'>Forgot password? <span className='text-red-700'>Get help now</span></p>
-                    <p className='font-[Poppins] text-[15.5px] text-[#999]'>Don't have an account? <span className='text-red-700'>Sign Up</span></p>
+                <div className='-translate-y-1'>
+                    <p className='font-[Poppins] text-[14.5px] text-[#999]'>Forgot password? <span className='text-red-700'>Get help now</span></p>
+                    <p className='font-[Poppins] text-[14.5px] text-[#999]'>Don't have an account? <span className='text-red-700'>Sign Up</span></p>
                 </div>
 
-                <div className='w-[450px] mt-14'>
+                <div className='w-[440px] mt-14'>
                     <p className='font-[Poppins] text-[12px] text-center text-[#999]'>Own a cinema? <span className='text-red-700'>Register now</span> and manage screens, showtimes, and ticket bookings all in one place with SYNEMA.</p>
                 </div>
 

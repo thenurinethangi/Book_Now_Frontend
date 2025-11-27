@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import logo from '../assets/images/camera-roll-removebg-preview.png'
+import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 
 const AdminSignin: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -15,17 +16,17 @@ const AdminSignin: React.FC = () => {
 
                 <X className='absolute right-4.5 top-4.5 w-5.5 h-5.5' />
 
-                <div className="flex justify-center items-center space-x-3 translate-x-14 mt-22">
+                <div className="flex justify-center items-center space-x-3 mt-2">
                     <div className="flex items-center justify-center z-10">
-                        <img src={logo} width={'50px'}></img>
+                        <img src={logo2} width={'120px'}></img>
                     </div>
-                    <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[25px] font-[Luckiest Guy] font-semibold -translate-x-20 z-0">
+                    {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[25px] font-[Luckiest Guy] font-semibold -translate-x-20 z-0">
                         <span className='text-[29px] font-[Luckiest Guy] font-semibold'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                    </span>
+                    </span> */}
                 </div>
 
                 <div>
-                    <p className='text-[20px] font-[Poppins] font-medium pt-3'>Sign in to your account</p>
+                    <p className='text-[20px] font-[Poppins] font-medium pt-2'>Sign in to your account</p>
                 </div>
 
                 <form className='flex flex-col gap-4 font-[Poppins]'>
