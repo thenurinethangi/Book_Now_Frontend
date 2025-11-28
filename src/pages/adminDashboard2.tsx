@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import ticket from '../assets/images/ticket-4-removebg-preview.png'
 import circle from '../assets/images/new-moon.png'
 import logo from '../assets/images/camera-roll-removebg-preview.png'
+import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import { GiMoneyStack } from "react-icons/gi";
 import { FaTicketAlt } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
@@ -99,15 +100,15 @@ const AdminDashboard2 = () => {
 
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>
-                        <div className="flex items-center space-x-3 ml-4">
-                            <div className="flex items-center justify-center z-10">
-                                <img src={logo} width={'47px'}></img>
+                        <div className="flex items-center space-x-3 ml-4 relative translate-y-4.5">
+                            <div className="flex items-center justify-center z-10 absolute -translate-x-4">
+                                <img src={logo2} width={'60px'}></img>
                             </div>
-                            <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[23px] font-medium -translate-x-19 z-0 tracking-wide leading-relaxed">
+                            {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[23px] font-medium -translate-x-19 z-0 tracking-wide leading-relaxed">
                                 <span className='text-[28px] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW ADMIN
-                            </span>
+                            </span> */}
                         </div>
-                        <p className='text-gray-500 text-[15px]'>Welcome back, here's what's happening today</p>
+                        <p className='text-gray-500 text-[15px] mt-10'>Welcome back, here's what's happening today</p>
                     </div>
                     <div>
                         <User className="w-5 h-5 text-red-900" />

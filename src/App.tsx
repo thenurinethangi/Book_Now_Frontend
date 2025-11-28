@@ -24,6 +24,8 @@ import OwnerSignin from './pages/ownerSignIn'
 import SeatDesigner from './pages/x'
 import UserSignup from './pages/userSignUp'
 import OwnerSignup from './pages/ownerSignUp'
+import CinemaLanding from './pages/cinemaLanding'
+import CinemaDashboard from './pages/cinemaDashboard'
 
 function App() {
 
@@ -54,6 +56,8 @@ function App() {
         <Route path='/seats' element={<SeatDesigner />}></Route>
         <Route path='/user/signup' element={<UserSignup />}></Route>
         <Route path='/owner/signup' element={<OwnerSignup />}></Route>
+        <Route path='/owner/landing' element={<CinemaLanding />}></Route>
+        <Route path='/owner/dashboard' element={<CinemaDashboard />}></Route>
       </Routes>
     </BrowserRouter>
   )
