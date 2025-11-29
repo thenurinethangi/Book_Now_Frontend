@@ -34,6 +34,7 @@ import CinemaShowTime from './pages/cinemaShowTime'
 import CinemaAddShowtime from './pages/cinemaAddShowtime'
 import CinemaMovie from './pages/cinemaMovie'
 import CinemaAddMovie from './pages/cinemaAddMovie'
+import CinemaRequestMovie from './pages/cinemaMovieRequest'
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
         <Route path='/owner/add/showtime' element={<CinemaAddShowtime  />}></Route>
         <Route path='/owner/movie' element={<CinemaMovie  />}></Route>
         <Route path='/owner/movie/add' element={<CinemaAddMovie  />}></Route>
+        <Route path='/owner/movie/request' element={<CinemaRequestMovie  />}></Route>
       </Routes>
     </BrowserRouter>
   )
