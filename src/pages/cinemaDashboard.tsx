@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Home, Tv, Film, Clock, Ticket, DollarSign, User, Bell, Settings, Search, TrendingUp, Users, Eye, Calendar, ChevronRight, MoreVertical, Plus, Edit, Trash2, TvMinimalPlay, Tag, Coins, Wallet } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
+import Chart from "react-apexcharts";
+import type { ApexOptions } from "apexcharts";
 
 const CinemaOwnerDashboard = () => {
     const [activeNav, setActiveNav] = useState('home');
@@ -83,6 +85,87 @@ const CinemaOwnerDashboard = () => {
         { icon: <Search className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' }
     ];
 
+    const options: ApexOptions = {
+        colors: ["#D32F2F"],
+        chart: {
+            fontFamily: "Poppins, sans-serif",
+            type: "bar",
+            height: 180,
+            toolbar: {
+                show: false,
+            },
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "39%",
+                borderRadius: 5,
+                borderRadiusApplication: "end",
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            show: true,
+            width: 4,
+            colors: ["transparent"],
+        },
+        xaxis: {
+            categories: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul"
+            ],
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+        },
+        legend: {
+            show: true,
+            position: "top",
+            horizontalAlign: "left",
+            fontFamily: "Outfit",
+        },
+        yaxis: {
+            title: {
+                text: undefined,
+            },
+        },
+        grid: {
+            yaxis: {
+                lines: {
+                    show: false,
+                },
+            },
+        },
+        fill: {
+            opacity: 1,
+        },
+
+        tooltip: {
+            x: {
+                show: true,
+            },
+            y: {
+                formatter: (val: number) => `${val}`,
+            },
+        },
+    };
+    const series = [
+        {
+            name: "Sales",
+            data: [168, 385, 201, 298, 187, 195, 250],
+        },
+    ];
+
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
 
@@ -162,27 +245,15 @@ const CinemaOwnerDashboard = () => {
                 {/* Main Grid Layout */}
                 <div className='grid grid-cols-3 gap-4 mb-6'>
 
-                    {/* Revenue Chart - Spans 2 columns */}
-                    <div className="col-span-2 bg-[#1e1e1e] border border-gray-700 rounded-md p-5">
-                        <div className="flex items-center justify-between mb-5">
-                            <div>
-                                <h3 className="text-[14px] font-medium mb-1">Weekly Revenue</h3>
-                                <p className="text-[12px] text-gray-400">Last 7 days performance</p>
-                            </div>
-                            <TrendingUp className="w-5 h-5 text-green-500" />
+                    <div className="col-span-2 max-w-full overflow-x-auto bg-[#1e1e1e] rounded-md border border-gray-700 p-5">
+                        <div className="mb-5">
+                            <h3 className="text-[14.5px] font-medium mb-1">Screen Occupancy</h3>
+                            <p className="text-[12px] text-gray-400">Current utilization</p>
                         </div>
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart data={revenueData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                                <XAxis dataKey="day" stroke="#666" tick={{ fontSize: 12, fill: "#666" }} />
-                                <YAxis stroke="#666" tick={{ fontSize: 12, fill: "#666" }} />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #ffffff20', borderRadius: '6px', fontSize: '12px' }}
-                                    labelStyle={{ color: '#fff' }}
-                                />
-                                <Bar dataKey="revenue" fill="#b91c1c" radius={[3, 3, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
+
+                        <div id="chartOne" className="min-w-[1000px]">
+                            <Chart options={options} series={series} type="bar" height={300} />
+                        </div>
                     </div>
 
                     {/* Screen Occupancy - 1 column */}

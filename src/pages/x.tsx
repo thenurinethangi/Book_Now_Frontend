@@ -31,18 +31,20 @@ function SeatBlock({ id, label }: { id: SeatType; label: string }) {
     id === "odc"
       ? "bg-blue-600"
       : id === "balcony"
-      ? "bg-green-600"
-      : "bg-purple-600";
+        ? "bg-green-600"
+        : "bg-purple-600";
 
   return (
-    <div
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      className={`p-3 rounded-md cursor-grab text-white text-sm ${color}`}
-      style={style}
-    >
-      {label}
+    <div className="flex flex-col items-center">
+      <div
+        ref={setNodeRef}
+        {...listeners}
+        {...attributes}
+        className={`w-[35px] h-[35px] p-3 rounded-sm cursor-grab text-white text-sm ${color}`}
+        style={style}
+      >
+      </div>
+      <p className="text-[13px] mt-1 font-light">{label}</p>
     </div>
   );
 }
@@ -103,18 +105,18 @@ export default function SeatDesigner() {
   };
 
   return (
-    <div className="w-full h-screen bg-[#121212] text-white flex p-6 gap-6">
+    <div className="w-full h-screen bg-[#121212] text-white flex justify-center items-center p-6 gap-10 relative font-[Poppins]">
       <DndContext onDragEnd={handleDrop}>
         {/* LEFT SIDEBAR */}
-        <div className="w-40 flex flex-col gap-4">
-          <h2 className="text-lg font-semibold mb-2">Seat Types</h2>
+        <div className="w-40 flex flex-col gap-4 absolute left-0 top-[35%]">
+          {/* <h2 className="text-[16px] font-medium">Seat Types</h2> */}
           <SeatBlock id="odc" label="ODC Seat" />
           <SeatBlock id="balcony" label="Balcony Seat" />
-          <SeatBlock id="vip" label="VIP Seat" />
+          <SeatBlock id="vip" label="Box" />
         </div>
 
         {/* GRID */}
-        <div className="grid grid-cols-10 gap-1 bg-[#1a1a1a] p-4 rounded-md">
+        <div className="grid grid-cols-17 gap-1 p-4 rounded-md w-[80%] h-full">
           {Array.from({ length: 100 }).map((_, i) => {
             const cellId = `cell-${i}`;
             const seatInCell = seats.find((s) => s.cellId === cellId);

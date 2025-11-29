@@ -26,6 +26,9 @@ import UserSignup from './pages/userSignUp'
 import OwnerSignup from './pages/ownerSignUp'
 import CinemaLanding from './pages/cinemaLanding'
 import CinemaDashboard from './pages/cinemaDashboard'
+import CinemaScreen from './pages/cinemaScreen'
+import CinemaScreenAdd from './pages/cinemaScreenAdd'
+import CinemaTransaction from './pages/cinemaTransaction'
 
 function App() {
 
@@ -58,6 +61,9 @@ function App() {
         <Route path='/owner/signup' element={<OwnerSignup />}></Route>
         <Route path='/owner/landing' element={<CinemaLanding />}></Route>
         <Route path='/owner/dashboard' element={<CinemaDashboard />}></Route>
+        <Route path='/owner/screen' element={<CinemaScreen  />}></Route>
+        <Route path='/owner/screen/add' element={<CinemaScreenAdd  />}></Route>
+        <Route path='/owner/transaction' element={<CinemaTransaction  />}></Route>
       </Routes>
     </BrowserRouter>
   )
