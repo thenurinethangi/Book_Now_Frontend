@@ -1,38 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Search, User, Tags, Bookmark } from "lucide-react";
-import logo from '../assets/images/camera-roll-removebg-preview.png'
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
-import logo3 from '../assets/images/logo-2-removebg-preview.png'
 import movie1 from '../assets/images/movie-1.jpg'
 import movie2 from '../assets/images/movie-3.jpg'
 import movie3 from '../assets/images/movie-2.jpg'
 import movie4 from '../assets/images/movie-4.png'
-import movie5 from '../assets/images/movie-7.jpg'
 import movie6 from '../assets/images/movie-8.jpg'
 import trailer1 from '../assets/videos/AvatarFireAsh-Trailer.mp4'
 import trailer2 from '../assets/videos/WickedForGood-Trailer.mp4'
 import trailer3 from '../assets/videos/ZOOTOPIA-2-Trailer.mp4'
 import trailer4 from '../assets/videos/Conjuring4-Trailer.mp4'
 import trailer5 from '../assets/videos/PREDATOR-BADLANDS-Trailer.mp4'
-import {
-    SlidersHorizontal,
-    ArrowUpDown,
-    List,
-    Grid3x3
-} from "lucide-react";
-import { MdGridView } from "react-icons/md";
-import { MdViewList } from "react-icons/md";
+import { MdGridView, MdViewList } from "react-icons/md";
 import { BiSortAlt2 } from "react-icons/bi";
-import { TbLayoutGrid } from "react-icons/tb";
 import poster1 from '../assets/images/zootopia-poster.jpg'
 import poster2 from '../assets/images/wicked-for-good-poster.jpg'
 import poster3 from '../assets/images/the-conjuring-last-rites-poster.jpg'
 import poster4 from '../assets/images/predator-badlands-poster.jpg'
-import { RiTicket2Line } from "react-icons/ri";
-import { AiOutlineHeart } from "react-icons/ai";
-import { MdPlayArrow, MdPlayCircleFilled, MdPlayCircle } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
-
+import Navigation from '../components/navigation';
 
 interface Slide {
     image: string;
@@ -42,6 +27,7 @@ interface Slide {
 }
 
 function Home() {
+
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     const [showTrailer, setShowTrailer] = useState<boolean>(false);
     const [isTransitioning, setIsTransitioning] = useState<boolean>(true);
@@ -80,53 +66,49 @@ function Home() {
         }
     ];
 
-    // Create extended slides array for infinite loop effect
     const extendedSlides = [...slides, slides[0]];
 
-    // Auto slide effect
     useEffect(() => {
         const slideInterval = setInterval(() => {
             setShowTrailer(false);
             setCurrentSlide((prev) => prev + 1);
-        }, 16000); // Change slide every 8 seconds
+        }, 16000); 
 
         return () => clearInterval(slideInterval);
     }, []);
 
-    // Handle infinite loop - reset to start without animation
+
     useEffect(() => {
         if (currentSlide === slides.length) {
             setTimeout(() => {
                 setIsTransitioning(false);
                 setCurrentSlide(0);
-            }, 700); // Wait for transition to complete
+            }, 700); 
 
             setTimeout(() => {
                 setIsTransitioning(true);
-            }, 750); // Re-enable transition
+            }, 750); 
         }
     }, [currentSlide, slides.length]);
 
-    // Show trailer after 3 seconds of showing the poster
+    
     useEffect(() => {
         setShowTrailer(false);
-
+        
         const trailerTimeout = setTimeout(() => {
             setShowTrailer(true);
-            // Play the current video (use modulo to get the actual slide index)
             const actualIndex = currentSlide % slides.length;
             if (videoRefs.current[actualIndex]) {
                 const video = videoRefs.current[actualIndex];
                 if (video) {
-                    video.currentTime = 0; // Reset to start
+                    video.currentTime = 0; 
                     video.play().catch(err => console.log("Video play error:", err));
                 }
             }
-        }, 3000); // Show poster for 3 seconds, then show trailer
+        }, 3000); 
 
         return () => {
             clearTimeout(trailerTimeout);
-            // Pause all videos
             videoRefs.current.forEach((video) => {
                 if (video) {
                     video.pause();
@@ -141,26 +123,7 @@ function Home() {
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-10'>
 
             {/* navigation */}
-            <div className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
-                <div className='flex items-center gap-10'>
-                    <div className="flex items-center space-x-3 ml-4">
-                        <div className="flex items-center justify-center z-10">
-                            <img src={logo2} width={'80px'} alt="logo"></img>
-                        </div>
-                        {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[20px] font-[Luckiest Guy] font-medium -translate-x-18 z-1">
-                            <span className='text-[25px] font-[Luckiest Guy] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                        </span> */}
-                    </div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Movie</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Cinema</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Showtime</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>About Us</div>
-                </div>
-                <div className='flex items-center gap-5'>
-                    <Search className='w-[20px] h-[20px] cursor-pointer' />
-                    <User className='w-[18px] h-[18px] cursor-pointer' />
-                </div>
-            </div>
+            <Navigation />
 
             {/* hero */}
             <div className='relative w-full h-[600px] overflow-x-hidden overflow-y-auto'>
