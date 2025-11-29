@@ -29,6 +29,11 @@ import CinemaDashboard from './pages/cinemaDashboard'
 import CinemaScreen from './pages/cinemaScreen'
 import CinemaScreenAdd from './pages/cinemaScreenAdd'
 import CinemaTransaction from './pages/cinemaTransaction'
+import CinemaBooking from './pages/cinemaBooking'
+import CinemaShowTime from './pages/cinemaShowTime'
+import CinemaAddShowtime from './pages/cinemaAddShowtime'
+import CinemaMovie from './pages/cinemaMovie'
+import CinemaAddMovie from './pages/cinemaAddMovie'
 
 function App() {
 
@@ -64,6 +69,11 @@ function App() {
         <Route path='/owner/screen' element={<CinemaScreen  />}></Route>
         <Route path='/owner/screen/add' element={<CinemaScreenAdd  />}></Route>
         <Route path='/owner/transaction' element={<CinemaTransaction  />}></Route>
+        <Route path='/owner/booking' element={<CinemaBooking  />}></Route>
+        <Route path='/owner/showtime' element={<CinemaShowTime  />}></Route>
+        <Route path='/owner/add/showtime' element={<CinemaAddShowtime  />}></Route>
+        <Route path='/owner/movie' element={<CinemaMovie  />}></Route>
+        <Route path='/owner/movie/add' element={<CinemaAddMovie  />}></Route>
       </Routes>
     </BrowserRouter>
   )
