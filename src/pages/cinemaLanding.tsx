@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Film, Calendar, DollarSign, Users, TrendingUp, Clock, Monitor, Ticket, ArrowRight, CheckCircle, Star, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Sparkles, BarChart3, Zap, Dot, Asterisk, Tags, Coins, ChartLine, TvMinimalPlay, TvMinimal } from 'lucide-react';
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import hero from '../assets/images/cinema-11.jpg'
+import SignUp from '../components/cinema/SignUp';
+import SignIn from '../components/cinema/SignIn';
 
 const CinemaLanding = () => {
+
     const [isVisible, setIsVisible] = useState(false);
+
+    const [signUpVisible,setSignUpVisible] = useState(false);
+    const [signInVisible,setSignInVisible] = useState(false);
 
     useEffect(() => {
         setIsVisible(true);
@@ -60,21 +66,9 @@ const CinemaLanding = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-[#121212] text-white font-[Poppins] overflow-hidden">
+        <div className="min-h-screen bg-[#121212] text-white font-[Poppins] overflow-hidden relative">
             {/* Hero Section */}
             <div className="relative min-h-screen">
-                {/* Background Image with Overlay */}
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920&q=80')` }}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#121212]/95 via-[#121212]/90 to-red-900/20"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
-                </div>
-
-                {/* Animated Background Elements */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-20 left-20 w-72 h-72 bg-red-500/10 rounded-full blur-3xl animate-pulse"></div>
-                    <div className="absolute bottom-40 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '700ms' }}></div>
-                    <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1400ms' }}></div>
-                </div>
 
                 {/* Navigation */}
                 <nav className="relative z-10 flex items-center justify-between px-8 py-1">
@@ -83,11 +77,11 @@ const CinemaLanding = () => {
                             <img src={logo2} width={'80px'} alt="logo"></img>
                         </div>
                     </div>
-                    <div className="flex items-center -translate-y-0.5">
-                        <button className="px-2 py-2 text-gray-300 hover:text-white transition-colors font-[Poppins] text-sm">
+                    <div className="flex items-center -translate-y-1">
+                        <button onClick={(e) => setSignInVisible(true)} className="px-2 py-5 text-white/87 hover:text-white transition-colors font-[Poppins] text-[13.5px] cursor-pointer">
                             Login
                         </button>
-                        <button className="px-4 py-2.5 text-gray-300 hover:text-white transition-colors font-[Poppins] text-sm">
+                        <button onClick={(e) => setSignUpVisible(true)} className="px-4 pl-2.5 text-white/87 hover:text-white transition-colors font-[Poppins] text-[13.5px] cursor-pointer">
                             Register
                         </button>
                     </div>
@@ -115,7 +109,7 @@ const CinemaLanding = () => {
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                                    <button className="group relative px-5 py-2.5 bg-gradient-to-r from-red-900 to-red-800 rounded-lg font-medium text-[17px] font-[Poppins] shadow-2xl shadow-red-900/50 hover:shadow-red-900/70 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
+                                    <button onClick={(e) => setSignUpVisible(true)} className="group relative px-5 py-2.5 bg-gradient-to-r from-red-900 to-red-800 rounded-lg font-medium text-[17px] font-[Poppins] shadow-2xl shadow-red-900/50 hover:shadow-red-900/70 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer">
                                         <span>Register Your Cinema</span>
                                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </button>
@@ -159,7 +153,7 @@ const CinemaLanding = () => {
                                     <div className="absolute inset-0 bg-gradient-to-r from-[#121212] via-transparent to-transparent -translate-x-2"></div>
 
                                     {/* Floating Stats Card */}
-                                    <div className="absolute bottom-6 left-6 right-6 bg-white/2 backdrop-blur-md border border-white/17 rounded-xl p-4">
+                                    <div className="absolute bottom-6 left-6 right-6 bg-white/2 backdrop-blur-md border border-white/17 rounded-xl p-4 -translate-y-2">
                                         <div className="grid grid-cols-3 gap-4 text-center">
                                             <div>
                                                 <div className="text-2xl font-bold text-red-400 font-[Poppins]">40%</div>
@@ -178,8 +172,8 @@ const CinemaLanding = () => {
                                 </div>
 
                                 {/* Decorative Elements */}
-                                <div className="absolute -top-6 -right-6 w-32 h-32 bg-red-500/20 rounded-full blur-3xl"></div>
-                                <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div>
+                                {/* <div className="absolute -top-6 -right-6 w-32 h-32 bg-red-500/20 rounded-full blur-3xl"></div>
+                                <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div> */}
                             </div>
                         </div>
                     </div>
@@ -314,8 +308,8 @@ const CinemaLanding = () => {
                             </p>
                             <div className="flex space-x-3">
                                 {[Facebook, Twitter, Instagram, Youtube].map((Icon, index) => (
-                                    <a key={index} href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
-                                        <Icon className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
+                                    <a key={index} href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-full flex items-center justify-center transition-all duration-300 group">
+                                        <Icon className="w-4 h-4 text-gray-400 group-hover:text-red-700 transition-colors" />
                                     </a>
                                 ))}
                             </div>
@@ -397,6 +391,9 @@ const CinemaLanding = () => {
           }
         }
       `}</style>
+
+                { signUpVisible ?  <SignUp setSignUpVisible={setSignUpVisible} setSignInVisible={setSignInVisible} /> : '' }
+                { signInVisible ?  <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : '' }
         </div>
     );
 };

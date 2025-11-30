@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import logo from '../assets/images/camera-roll-removebg-preview.png'
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 
 const UserSignin: React.FC = () => {
+
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -20,9 +20,6 @@ const UserSignin: React.FC = () => {
                     <div className="flex items-center justify-center z-10">
                         <img src={logo2} width={'120px'}></img>
                     </div>
-                    {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[25px] font-[Luckiest Guy] font-semibold -translate-x-20 z-0">
-                        <span className='text-[29px] font-[Luckiest Guy] font-semibold'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                    </span> */}
                 </div>
 
                 <div>

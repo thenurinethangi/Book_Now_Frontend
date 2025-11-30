@@ -1,7 +1,7 @@
 import { Search, User } from "lucide-react";
-import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
+import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 
-function Navigation() {
+function Navigation(props: any) {
 
     return (
         <nav className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
@@ -18,7 +18,7 @@ function Navigation() {
             </div>
             <div className='flex items-center gap-5'>
                 <Search className='w-5 h-5 cursor-pointer' />
-                <User className='w-[18px] h-[18px] cursor-pointer' />
+                <User onClick={(e) => props.setSignInVisible(true)} className='w-[18px] h-[18px] cursor-pointer' />
             </div>
         </nav>
     )
