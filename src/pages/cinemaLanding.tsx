@@ -151,6 +151,8 @@ const CinemaLanding = () => {
                                     <div className="absolute inset-0 bg-gradient-to-b from-[#121212] via-transparent to-transparent"></div>
                                     <div className="absolute inset-0 bg-gradient-to-l from-[#121212] via-transparent to-transparent translate-x-2"></div>
                                     <div className="absolute inset-0 bg-gradient-to-r from-[#121212] via-transparent to-transparent -translate-x-2"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-l from-[#121212]/30 via-transparent to-transparent"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-[#121212]/30 via-transparent to-transparent"></div>
 
                                     {/* Floating Stats Card */}
                                     <div className="absolute bottom-6 left-6 right-6 bg-white/2 backdrop-blur-md border border-white/17 rounded-xl p-4 -translate-y-2">
@@ -170,10 +172,6 @@ const CinemaLanding = () => {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Decorative Elements */}
-                                {/* <div className="absolute -top-6 -right-6 w-32 h-32 bg-red-500/20 rounded-full blur-3xl"></div>
-                                <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div> */}
                             </div>
                         </div>
                     </div>
