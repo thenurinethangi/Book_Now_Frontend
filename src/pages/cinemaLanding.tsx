@@ -4,17 +4,29 @@ import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import hero from '../assets/images/cinema-11.jpg'
 import SignUp from '../components/cinema/SignUp';
 import SignIn from '../components/cinema/SignIn';
+import Auth from '../components/cinema/Auth';
 
 const CinemaLanding = () => {
 
     const [isVisible, setIsVisible] = useState(false);
 
-    const [signUpVisible,setSignUpVisible] = useState(false);
-    const [signInVisible,setSignInVisible] = useState(false);
+    const [authVisible, setAuthVisible] = useState(false);
+    const [authType, setAuthType] = useState('');
+    const [cinemaAdminEmail, setCinemaAdminEmail] = useState('');
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
+
+    function handleOpenSignUpModel() {
+        setAuthVisible(true);
+        setAuthType('SignUp');
+    }
+
+    function handleOpenSignInModel() {
+        setAuthVisible(true);
+        setAuthType('SignIn');
+    }
 
     const features = [
         {
@@ -78,10 +90,10 @@ const CinemaLanding = () => {
                         </div>
                     </div>
                     <div className="flex items-center -translate-y-1">
-                        <button onClick={(e) => setSignInVisible(true)} className="px-2 py-5 text-white/87 hover:text-white transition-colors font-[Poppins] text-[13.5px] cursor-pointer">
+                        <button onClick={handleOpenSignInModel} className="px-2 py-5 text-white/87 hover:text-white transition-colors font-[Poppins] text-[13.5px] cursor-pointer">
                             Login
                         </button>
-                        <button onClick={(e) => setSignUpVisible(true)} className="px-4 pl-2.5 text-white/87 hover:text-white transition-colors font-[Poppins] text-[13.5px] cursor-pointer">
+                        <button onClick={handleOpenSignUpModel} className="px-4 pl-2.5 text-white/87 hover:text-white transition-colors font-[Poppins] text-[13.5px] cursor-pointer">
                             Register
                         </button>
                     </div>
@@ -109,7 +121,7 @@ const CinemaLanding = () => {
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                                    <button onClick={(e) => setSignUpVisible(true)} className="group relative px-5 py-2.5 bg-gradient-to-r from-red-900 to-red-800 rounded-lg font-medium text-[17px] font-[Poppins] shadow-2xl shadow-red-900/50 hover:shadow-red-900/70 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer">
+                                    <button onClick={(e) => handleOpenSignUpModel} className="group relative px-5 py-2.5 bg-gradient-to-r from-red-900 to-red-800 rounded-lg font-medium text-[17px] font-[Poppins] shadow-2xl shadow-red-900/50 hover:shadow-red-900/70 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer">
                                         <span>Register Your Cinema</span>
                                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </button>
@@ -390,8 +402,7 @@ const CinemaLanding = () => {
         }
       `}</style>
 
-                { signUpVisible ?  <SignUp setSignUpVisible={setSignUpVisible} setSignInVisible={setSignInVisible} /> : '' }
-                { signInVisible ?  <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : '' }
+            {authVisible && authType ? <Auth authType={authType} setAuthVisible={setAuthVisible} setAuthType={setAuthType} cinemaAdminEmail={cinemaAdminEmail} setCinemaAdminEmail={setCinemaAdminEmail} /> : ''}
         </div>
     );
 };
