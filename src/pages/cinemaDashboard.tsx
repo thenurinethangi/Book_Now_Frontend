@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Home, Tv, Film, Clock, Ticket, DollarSign, User, Bell, Settings, Search, TrendingUp, Users, Eye, Calendar, ChevronRight, MoreVertical, Plus, Edit, Trash2, TvMinimalPlay, Tag, Coins, Wallet } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { useState } from 'react';
+import { Home, Tv, Clock, User, Bell, Settings, Search, Users, TvMinimalPlay, Tag, Coins, Wallet } from 'lucide-react';
+import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import Chart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
+import SidebarNavigation from '../components/cinema/SidebarNavigation';
 
 const CinemaOwnerDashboard = () => {
-    const [activeNav, setActiveNav] = useState('home');
 
     const stats = [
         {
@@ -43,16 +43,6 @@ const CinemaOwnerDashboard = () => {
         }
     ];
 
-    const revenueData = [
-        { day: 'Mon', revenue: 2400, bookings: 65 },
-        { day: 'Tue', revenue: 2100, bookings: 58 },
-        { day: 'Wed', revenue: 2600, bookings: 72 },
-        { day: 'Thu', revenue: 2900, bookings: 78 },
-        { day: 'Fri', revenue: 3400, bookings: 95 },
-        { day: 'Sat', revenue: 4200, bookings: 118 },
-        { day: 'Sun', revenue: 3800, bookings: 102 }
-    ];
-
     const screenData = [
         { name: 'IMX', value: 92, color: '#b91c1c' },
         { name: 'SX 3D', value: 85, color: '#dc2626' },
@@ -73,16 +63,6 @@ const CinemaOwnerDashboard = () => {
         { title: 'The Dark Knight', bookings: 198, revenue: '$7,128', rating: 4.9 },
         { title: 'Inception', bookings: 176, revenue: '$6,336', rating: 4.7 },
         { title: 'Interstellar', bookings: 145, revenue: '$5,220', rating: 4.6 }
-    ];
-
-    const navItems = [
-        { icon: <Home className="w-5.5 h-5.5" />, label: 'Home', id: 'home' },
-        { icon: <Tv className="w-5.5 h-5.5" />, label: 'Screens', id: 'screens' },
-        { icon: <TvMinimalPlay className="w-5.5 h-5.5" />, label: 'Movies', id: 'movies' },
-        { icon: <Clock className="w-5.5 h-5.5" />, label: 'Showtimes', id: 'showtimes' },
-        { icon: <Tag className="w-5.5 h-5.5" />, label: 'Bookings', id: 'bookings' },
-        { icon: <Wallet className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' },
-        { icon: <Search className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' }
     ];
 
     const options: ApexOptions = {
@@ -170,24 +150,7 @@ const CinemaOwnerDashboard = () => {
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
 
             {/* Sidebar Navigation */}
-            <nav className="w-[65px] h-screen bg-[#121212] border-r border-gray-500 flex flex-col justify-between items-center fixed" style={{ paddingBlock: '17px' }}>
-                <div className="flex flex-col justify-start items-center gap-5">
-                    {navItems.map((item) => (
-                        <button
-                            key={item.id}
-                            onClick={() => setActiveNav(item.id)}
-                            className={`nav transition-colors ${activeNav === item.id ? 'text-red-700' : 'text-gray-500'}`}
-                        >
-                            {item.icon}
-                        </button>
-                    ))}
-                </div>
-                <div className="flex flex-col justify-start items-center gap-4">
-                    <Settings className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
-                    <Bell className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
-                    <User className="w-5.5 h-5.5 text-red-700 cursor-pointer" />
-                </div>
-            </nav>
+            <SidebarNavigation page={'home'} />
 
             {/* Main Content */}
             <div className='flex-1 ml-[65px] text-white px-7 py-4'>
