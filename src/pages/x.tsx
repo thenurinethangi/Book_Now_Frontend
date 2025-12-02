@@ -1,8 +1,4 @@
-import {
-  DndContext,
-  useDraggable,
-  useDroppable
-} from "@dnd-kit/core";
+import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 
 import type { DragEndEvent } from "@dnd-kit/core";
 import { useState } from "react";
@@ -105,7 +101,7 @@ export default function SeatDesigner() {
   };
 
   return (
-    <div className="w-full h-screen bg-[#121212] text-white flex justify-center items-center p-6 gap-10 relative font-[Poppins]">
+    <div className="w-screen h-screen fixed inset-0 z-[200] bg-[#121212] text-white flex justify-center items-center p-6 gap-10 font-[Poppins]">
       <DndContext onDragEnd={handleDrop}>
         {/* LEFT SIDEBAR */}
         <div className="w-40 flex flex-col gap-4 absolute left-0 top-[35%]">

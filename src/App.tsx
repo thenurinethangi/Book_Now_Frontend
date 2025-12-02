@@ -40,6 +40,7 @@ import CinemaMovie from './pages/cinemaMovie'
 import CinemaAddMovie from './pages/cinemaAddMovie'
 import CinemaRequestMovie from './pages/cinemaMovieRequest'
 import OTPModel from './components/cinema/OTPModel';
+import RowColQsModel from './components/cinema/RowColQsMpdel';
 
 function App() {
 
@@ -74,7 +75,7 @@ function App() {
           <Route path='/owner/signup' element={<OwnerSignup />}></Route>
           <Route path='/cinema/landing' element={<CinemaLanding />}></Route>
           <Route path='/cinema/dashboard' element={<CinemaDashboard />}></Route>
-          <Route path='/owner/screen' element={<CinemaScreen />}></Route>
+          <Route path='/cinema/screen' element={<CinemaScreen />}></Route>
           <Route path='/owner/screen/add' element={<CinemaScreenAdd />}></Route>
           <Route path='/owner/transaction' element={<CinemaTransaction />}></Route>
           <Route path='/owner/booking' element={<CinemaBooking />}></Route>
@@ -84,6 +85,7 @@ function App() {
           <Route path='/owner/movie/add' element={<CinemaAddMovie />}></Route>
           <Route path='/owner/movie/request' element={<CinemaRequestMovie />}></Route>
           <Route path='/otp' element={<OTPModel />}></Route>
+          <Route path='/qs' element={<RowColQsModel />}></Route>
         </Routes>
       </BrowserRouter>
     </>
