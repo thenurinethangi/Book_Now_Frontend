@@ -1,7 +1,11 @@
 import api from "../api"
 
-const addNewScreen = (formdata: FormData) => {
+export const addNewScreen = async (formdata: FormData) => {
+    const res = await api.post('/screen/add',formdata,{ withCredentials: true });
+    return res;
+}
 
-    api.post('/');
-
+export const getAllScreens = async () => {
+    const res = await api.get('/screen/all',{ withCredentials: true });
+    return res;
 }

@@ -3,11 +3,13 @@ import { Plus, Rows, X } from 'lucide-react';
 import { toast } from 'react-toastify';
 import RowColQsModal from './RowColQsMpdel';
 import SeatDesigner from './SeatDesigner';
+import { addNewScreen } from '../../services/cinema/screenService';
 
 function AddScreen() {
 
     const [screenName, setScreenName] = useState('');
     const [noOfSeats, setNoOfSeats] = useState(1);
+    const [description, setDescription] = useState('');
     const [screenImage, setScreenImage] = useState(null);
 
     const [screenTypes, setScreenTypes] = useState(['3D']);
@@ -20,8 +22,6 @@ function AddScreen() {
     const [columns, setColumns] = useState(1);
 
     const [seatLayout, setSeatLayout] = useState(null);
-
-    const pastelColors = ["#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#E2BAFF", "#FFD6E0", "#D6F5FF", "#E8FFD6", "#F3D9FF", "#FFF0D9", "#D9FFF8"];
 
     const addScreenType = () => {
         setScreenTypes([...screenTypes, '']);
@@ -57,7 +57,7 @@ function AddScreen() {
 
     function handleAddNewScreen() {
 
-        if (!screenName || !noOfSeats || !screenTypes || !seatTypes || !screenImage) {
+        if (!screenName || !noOfSeats || !description || !screenTypes || !seatTypes || !screenImage) {
             toast.warn('All field Required');
             return;
         }
@@ -65,11 +65,10 @@ function AddScreen() {
         setShowQsModel(true);
     }
 
-    const handleSaveSeatLayout = (layout: any) => {
+    const handleSaveSeatLayout = async (layout: any) => {
         setSeatLayout(layout);
-        setShowSeatLayoutModel(false);
 
-        if (!screenName || !noOfSeats || !screenTypes || !seatTypes || !screenImage || layout) {
+        if (!screenName || !noOfSeats || !description || !screenTypes || !seatTypes || !screenImage || !layout) {
             toast.warn('All field Required');
             return;
         }
@@ -78,6 +77,7 @@ function AddScreen() {
 
         formdata.append('screenName', screenName);
         formdata.append('numberOfSeats', noOfSeats.toString());
+        formdata.append('description', description);
         formdata.append('screenImage', screenImage);
 
         screenTypes.forEach(type => {
@@ -90,13 +90,32 @@ function AddScreen() {
 
         formdata.append('seatLayout', JSON.stringify(layout));
 
-        // Send to backend
-        fetch('/api/add-screen', { method: 'POST', body: formdata })
-            .then(res => res.json())
-            .then(data => {
-                toast.success('Screen added successfully');
-                // Reset form or navigate
-            });
+        try {
+            const res = await addNewScreen(formdata);
+            
+            toast.success(`Added new screen ${screenName}.`);
+            setScreenName('');
+            setDescription('');
+            setNoOfSeats(1);
+            setScreenImage(null);
+            setScreenTypes(['3D']);
+            setSeatTypes(['ODC']);
+            setSeatLayout(null);
+        }
+        catch (e) {
+            console.log(e);
+            toast.error('Failed to add a new screen. please try again later!');
+
+            setScreenName('');
+            setDescription('');
+            setNoOfSeats(1);
+            setScreenImage(null);
+            setScreenTypes(['3D']);
+            setSeatTypes(['ODC']);
+            setSeatLayout(null);
+        }
+
+        setShowSeatLayoutModel(false);
     };
 
     return (
@@ -117,6 +136,13 @@ function AddScreen() {
                         <div>
                             <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Number of seats</label>
                             <input onChange={(e) => setNoOfSeats(Number(e.target.value))} value={noOfSeats} className='bg-[#121212] border border-gray-700 h-11 w-full rounded-lg appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0' type="number" id="input" placeholder='Enter screen number' required />
+                        </div>
+                    </div>
+
+                    <div className='grid grid-cols-1 gap-5 pt-4 pb-1.5 px-6'>
+                        <div>
+                            <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Description</label>
+                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} className='bg-[#121212] border border-gray-700 w-full rounded-lg appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0' rows={8} id="input" placeholder='Enter screen description' required></textarea>
                         </div>
                     </div>
 

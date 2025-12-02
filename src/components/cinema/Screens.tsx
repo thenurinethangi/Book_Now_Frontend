@@ -1,6 +1,13 @@
 import { Users, Maximize } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 function Screens() {
+
+    const [load,setLoad] = useState(false);
+
+    useEffect(() => {
+
+    }, [load]);
 
     const screens = [
         {

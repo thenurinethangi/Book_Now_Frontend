@@ -14,6 +14,7 @@ api.interceptors.request.use((config) => {
     const isPublic = PUBLIC_ENDPOINTS.some((url) => config.url?.includes(url));
 
     if (!isPublic && accessToken) {
+        console.log(accessToken);
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
@@ -40,6 +41,7 @@ api.interceptors.response.use(
                 return axios(originalRequest)
             }
             catch (refreshErr) {
+                console.log(refreshErr)
                 localStorage.removeItem("refreshToken")
                 localStorage.removeItem("accessToken")
                 window.location.href = "/login"
