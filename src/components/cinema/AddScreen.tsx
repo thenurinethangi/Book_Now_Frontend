@@ -5,7 +5,7 @@ import RowColQsModal from './RowColQsMpdel';
 import SeatDesigner from './SeatDesigner';
 import { addNewScreen } from '../../services/cinema/screenService';
 
-function AddScreen() {
+function AddScreen(props: any) {
 
     const [screenName, setScreenName] = useState('');
     const [noOfSeats, setNoOfSeats] = useState(1);
@@ -101,6 +101,9 @@ function AddScreen() {
             setScreenTypes(['3D']);
             setSeatTypes(['ODC']);
             setSeatLayout(null);
+
+            props.setLoadScreens(!props.loadScreens);
+            props.setShow('screens');
         }
         catch (e) {
             console.log(e);

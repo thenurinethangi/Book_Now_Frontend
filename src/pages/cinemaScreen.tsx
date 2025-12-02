@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Tv, Search, Users } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import Screens from '../components/cinema/Screens';
@@ -7,6 +7,17 @@ import AddScreen from '../components/cinema/AddScreen';
 function CinemaScreen() {
 
     const [show,setShow] = useState('screens');
+    const [loadScreens, setLoadScreens] = useState(false);
+    const [data,setData] = useState([]);
+    const [totalSeats,setTotalSeats] = useState(0);
+
+    useEffect(() => {
+        let total = 0;
+        data.forEach((d: any) => {
+            total+=Number(d.numberOfSeats);
+        });
+        setTotalSeats(total);
+    },[data]);
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -53,7 +64,7 @@ function CinemaScreen() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Screens</p>
-                                <p className='text-[18px] font-medium text-white'>4</p>
+                                <p className='text-[18px] font-medium text-white'>{data.length}</p>
                             </div>
                             <Tv className='w-8 h-8 text-red-700 opacity-20' />
                         </div>
@@ -62,7 +73,7 @@ function CinemaScreen() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Active Now</p>
-                                <p className='text-[18px] font-medium text-white'>3</p>
+                                <p className='text-[18px] font-medium text-white'>{data.filter((d: any) => d.status === "ACTIVE").length}</p>
                             </div>
                             <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse' />
                         </div>
@@ -71,7 +82,7 @@ function CinemaScreen() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Seats</p>
-                                <p className='text-[18px] font-medium text-white'>660</p>
+                                <p className='text-[18px] font-medium text-white'>{totalSeats}</p>
                             </div>
                             <Users className='w-8 h-8 text-red-700 opacity-20' />
                         </div>
@@ -90,10 +101,10 @@ function CinemaScreen() {
                 </div>
 
                 {/* Cinema Screens Grid */}
-                { show === 'screens' ? <Screens /> : '' }
+                { show === 'screens' ? <Screens loadScreens={loadScreens} setData={setData} /> : '' }
 
                 {/* add a new screen */}
-                { show === 'setup' ? <AddScreen /> : '' }
+                { show === 'setup' ? <AddScreen loadScreens={loadScreens} setLoadScreens={setLoadScreens} setShow={setShow} /> : '' }
                 
             </div>
         </div>
