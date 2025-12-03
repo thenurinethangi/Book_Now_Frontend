@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { addMovie, getAllAvailableMoviesToAdd, getSelectedMovieAvailableFormats } from "../../services/cinema/movieService";
 import { toast } from "react-toastify";
 
-function AddMovie() {
+function AddMovie(props: any) {
 
     const [movieAddedCount, setMovieAddedCount] = useState(0);
 
@@ -80,6 +80,8 @@ function AddMovie() {
             setChoosedFormats([]);
 
             loadAllAvailableMoviesToAdd();
+
+            props.setManageMovies([...props.manageMovies,res.data.data]);
 
             toast.success('Add Movie to managed movie list');
         }

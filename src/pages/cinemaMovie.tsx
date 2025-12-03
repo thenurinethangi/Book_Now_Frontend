@@ -3,11 +3,14 @@ import { Home, UserCog, Settings, Disc, Search, Layers, RotateCw, HelpCircle, Be
 import Movies from '../components/cinema/Movies';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import AddMovie from '../components/cinema/AddMovie';
+import RequestMovie from '../components/cinema/RequestMovie';
 
 function CinemaMovie() {
 
     const [activeTab, setActiveTab] = useState('manage');
     const [loadMovies,setLoadMovie] = useState(0);
+
+    const [manageMovies,setManageMovies] = useState([]);
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -44,7 +47,7 @@ function CinemaMovie() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Movies</p>
-                                <p className='text-[18px] font-medium text-white'>156</p>
+                                <p className='text-[18px] font-medium text-white'>{manageMovies.length}</p>
                             </div>
                             <Video className='w-8 h-8 text-red-700 opacity-20' />
                         </div>
@@ -53,7 +56,7 @@ function CinemaMovie() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Now Showing</p>
-                                <p className='text-[18px] font-medium text-green-500'>42</p>
+                                <p className='text-[18px] font-medium text-green-500'>{manageMovies.filter((m: any) => m.status === 'Now Showing').length}</p>
                             </div>
                             <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse' />
                         </div>
@@ -62,7 +65,7 @@ function CinemaMovie() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Coming Soon</p>
-                                <p className='text-[18px] font-medium text-white'>18</p>
+                                <p className='text-[18px] font-medium text-white'>{manageMovies.filter((m: any) => m.status === 'Coming Soon').length}</p>
                             </div>
                             <Calendar className='w-7.5 h-7.5 text-red-700 opacity-20' />
                         </div>
@@ -101,9 +104,11 @@ function CinemaMovie() {
                 </div>
 
                 {/* movie container */}
-                { activeTab === 'manage'  ? <Movies loadMovies={loadMovies} setLoadMovie={setLoadMovie} /> : ''}
+                { activeTab === 'manage'  ? <Movies loadMovies={loadMovies} setLoadMovie={setLoadMovie} setmanageMovies={setManageMovies} /> : ''}
 
-                { activeTab === 'add'  ? <AddMovie /> : ''}
+                { activeTab === 'add'  ? <AddMovie manageMovies={manageMovies} setManageMovies={setManageMovies} /> : ''}
+
+                { activeTab === 'request'  ? <RequestMovie /> : ''}
         
             </div>
         </div>

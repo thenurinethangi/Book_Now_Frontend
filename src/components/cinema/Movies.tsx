@@ -16,6 +16,7 @@ function Movies(props: any) {
         try {
             const res = await getAllMovies();
             setMovie(res.data.data);
+            props.setmanageMovies(res.data.data);
             console.log(res.data.data);
         }
         catch (e) {

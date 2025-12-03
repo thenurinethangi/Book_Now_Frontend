@@ -23,3 +23,9 @@ export const addMovie = async (data: {}) => {
     const res = await api.post('/movie/cinema/add', data, { headers: {'Content-Type': 'application/json'}, withCredentials: true});
     return res;
 }
+
+export const sendRequest = async (formdata: FormData) => {
+
+    const res = await api.post('/movie/cinema/request', formdata, { withCredentials: true});
+    return res;
+}
