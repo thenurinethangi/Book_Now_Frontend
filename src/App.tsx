@@ -81,9 +81,9 @@ function App() {
           <Route path='/owner/booking' element={<CinemaBooking />}></Route>
           <Route path='/owner/showtime' element={<CinemaShowTime />}></Route>
           <Route path='/owner/add/showtime' element={<CinemaAddShowtime />}></Route>
-          <Route path='/owner/movie' element={<CinemaMovie />}></Route>
-          <Route path='/owner/movie/add' element={<CinemaAddMovie />}></Route>
-          <Route path='/owner/movie/request' element={<CinemaRequestMovie />}></Route>
+          <Route path='/cinema/movie' element={<CinemaMovie />}></Route>
+          <Route path='/cinema/movie/add' element={<CinemaAddMovie />}></Route>
+          <Route path='/cinema/movie/request' element={<CinemaRequestMovie />}></Route>
           <Route path='/otp' element={<OTPModel />}></Route>
           <Route path='/qs' element={<RowColQsModel />}></Route>
         </Routes>

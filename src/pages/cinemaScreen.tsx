@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Tv, Search, Users } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import Screens from '../components/cinema/Screens';
