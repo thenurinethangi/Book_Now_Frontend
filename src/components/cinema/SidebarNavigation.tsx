@@ -20,7 +20,7 @@ function SidebarNavigation(props: any) {
     ];
 
     return (
-        <nav className="w-[65px] h-screen bg-[#121212] border-r border-gray-500 flex flex-col justify-between items-center fixed" style={{ paddingBlock: '17px' }}>
+        <nav className="w-[65px] h-screen bg-[#121212] border-r border-gray-800 flex flex-col justify-between items-center fixed" style={{ paddingBlock: '17px' }}>
             <div className="flex flex-col justify-start items-center gap-5">
                 {navItems.map((item) => (
                     <button

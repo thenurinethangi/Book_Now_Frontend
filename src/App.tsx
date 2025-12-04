@@ -41,6 +41,7 @@ import CinemaAddMovie from './pages/cinemaAddMovie'
 import CinemaRequestMovie from './pages/cinemaMovieRequest'
 import OTPModel from './components/cinema/OTPModel';
 import RowColQsModel from './components/cinema/RowColQsMpdel';
+import Temp from './pages/temp';
 
 function App() {
 
@@ -85,7 +86,7 @@ function App() {
           <Route path='/cinema/movie/add' element={<CinemaAddMovie />}></Route>
           <Route path='/cinema/movie/request' element={<CinemaRequestMovie />}></Route>
           <Route path='/otp' element={<OTPModel />}></Route>
-          <Route path='/qs' element={<RowColQsModel />}></Route>
+          <Route path='/qs' element={<Temp />}></Route>
         </Routes>
       </BrowserRouter>
     </>

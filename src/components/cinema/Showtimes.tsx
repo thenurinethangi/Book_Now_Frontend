@@ -187,7 +187,7 @@ function Showtimes(props: any) {
                     >
                         Previous
                     </button>
-                    <button className='px-3 py-2 bg-red-800 rounded-md text-[12px] text-white'>1</button>
+                    <button className='px-3 py-2 bg-gray-700 rounded-md text-[12px] text-white'>1</button>
                     <button className='px-2.5 py-1.5 border border-gray-800 rounded-md text-[12px] text-gray-400 hover:bg-[#252525]'>
                         Next
                     </button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Home, Tv, Clock, Search, Settings, Bell, User, Film, Tag, Wallet, Filter, DollarSign, CheckCircle, XCircle, AlertCircle, Calendar, Users, Eye } from 'lucide-react';
 
-function CinemaShowTime() {
+function Temp() {
     const [activeNav, setActiveNav] = useState('bookings');
 
     const navItems = [
@@ -296,4 +296,4 @@ function CinemaShowTime() {
     )
 }
 
-export default CinemaShowTime
+export default Temp
