@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { checkShowtimeAlreadyExist, getAllAvailableMovies, getAllAvailableScreens } from "../../services/cinema/showtimeService";
+import { addANewShowtime, checkShowtimeAlreadyExist, getAllAvailableMovies, getAllAvailableScreens, getAllShowtimes } from "../../services/cinema/showtimeService";
 import { toast } from "react-toastify";
 
-function AddShowtime() {
+function AddShowtime(props: any) {
 
     const [display, setDisplay] = useState('Add Showtime');
 
@@ -87,18 +87,18 @@ function AddShowtime() {
             }
         }
 
-        for (let i = 0; i < availableMovies.length; i++) {
-            const e: any = availableMovies[i].movieDetails;
-            ;
-            if (e._id === movie) {
-                for (let j = 0; j < e.formats.length; j++) {
-                    const a = e.formats[j];
-                    if (!arr.includes(a)) {
-                        arr.push(a);
-                    }
-                }
-            }
-        }
+        // for (let i = 0; i < availableMovies.length; i++) {
+        //     const e: any = availableMovies[i].movieDetails;
+        //     ;
+        //     if (e._id === movie) {
+        //         for (let j = 0; j < e.formats.length; j++) {
+        //             const a = e.formats[j];
+        //             if (!arr.includes(a)) {
+        //                 arr.push(a);
+        //             }
+        //         }
+        //     }
+        // }
 
         setAvailableFormats(arr);
         console.log(arr);
@@ -127,9 +127,14 @@ function AddShowtime() {
 
     async function handleContinue() {
 
+        if (!time) {
+            toast.warn('Please enter time!');
+            return;
+        }
+
         try {
-            const res = await checkShowtimeAlreadyExist({date, time, screen,movie});
-            if(!res.data.data){
+            const res = await checkShowtimeAlreadyExist({ date, time, screen, movie });
+            if (!res.data.data) {
                 toast.warn(`${screen} screen already have a show in selected time and date!`);
                 return;
             }
@@ -140,22 +145,41 @@ function AddShowtime() {
         }
     }
 
-    function handleAddNewShowtime() {
+    async function handleAddNewShowtime() {
 
         const data = {
             date,
             time,
             screenId: screen,
             movieId: movie,
+            format: selectedFormat,
             ticketPrices
         }
+        try {
+            const res = await addANewShowtime(data);
+            console.log(res.data.data);
+            toast.success(`New showtime scheduled!`);
+        }
+        catch (e) {
+            console.log(e);
+            toast.success(`Failed to add new showtime, please try again later!`);
+        }
 
-        try{
+        try {
+            const res = await getAllShowtimes();
+            props.setShowtimesList(res.data.data);
+        }
+        catch (e) {
 
         }
-        catch(e){
 
-        }
+        setTicketPrices({});
+        setSelectedFormat('');
+        setDate(today);
+        setTime('');
+        init();
+
+        setDisplay('Add Showtime');
     }
 
 

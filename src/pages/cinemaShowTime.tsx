@@ -88,7 +88,7 @@ function CinemaShowTime() {
                 { activeTab === 'showtimes' ? <Showtimes load={load} setLoad={setLoad} setShowtimesList={setShowtimesList} /> : '' }
 
                 {/* Form */}
-                { activeTab === 'add' ? <AddShowtime /> : '' }
+                { activeTab === 'add' ? <AddShowtime setShowtimesList={setShowtimesList} /> : '' }
 
             </div>
         </div>

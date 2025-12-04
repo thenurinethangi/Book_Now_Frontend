@@ -26,6 +26,6 @@ export const checkShowtimeAlreadyExist = async (data: {}) => {
 
 export const addANewShowtime = async (data: {}) => {
 
-    const res = await api.post('/showtime/cinema/check/availability', data, { headers: { "Content-Type": 'application/json'}, withCredentials: true });
+    const res = await api.post('/showtime/cinema/add', data, { headers: { "Content-Type": 'application/json'}, withCredentials: true });
     return res;
 }
