@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { MdSlideshow } from "react-icons/md";
 import { UserCog, Disc, Search, Layers, RotateCw, HelpCircle, Bell, MapPin, Tv, Star, Users, Check, X, Filter, CircleDot, Loader } from "lucide-react";
 import { House, SquareCheck, Layers2, CircleQuestionMark, MapPinHouse } from "lucide-react";
+import SidebarNavigation from '../components/admin/SidebarNavigation';
 
 function AdminCinema() {
 
@@ -75,35 +76,16 @@ function AdminCinema() {
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
 
             {/* nav bar */}
-            <nav className="w-[65px] max-h-screen bg-[#121212] border-r border-gray-500 flex flex-col justify-between items-center" style={{ paddingBlock: '17px' }}>
-                <div className="flex flex-col justify-start items-center gap-5">
-                    <NavLink to={'/'}><House className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/'}><MapPinHouse className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/'}><Tv className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/'}><MdSlideshow className="w-6 h-6 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/profile'}><UserCog className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/tasks/today'}><SquareCheck className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/promo'}><Disc className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/tasks/status'}><Layers2 className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                    <NavLink to={'/'}><Search className="w-5.5 h-5.5 text-gray-500 nav" /></NavLink>
-                </div>
-                <div className="flex flex-col justify-start items-center gap-4">
-                    <RotateCw className="w-5.5 h-5.5 text-gray-500" />
-                    <Bell className="w-5.5 h-5.5 text-gray-500" />
-                    <CircleQuestionMark className="w-5.5 h-5.5 text-gray-500" />
-                </div>
-            </nav>
+            <SidebarNavigation page={'cinema'} />
 
             {/* content right side */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto'>
+            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
                 {/* title */}
                 <div className='flex justify-between items-center mb-[17px]'>
                     <div>
-                        <div className="flex items-center space-x-2">
-                            <span className="text-gray-500 text-[18px] font-medium">Home</span>
-                            <span className="text-gray-600">&gt;</span>
-                            <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[18px] font-medium">
-                                Cinema
+                        <div className="flex items-center space-x-3">
+                            <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
+                                <span className='text-[18px] font-medium text-gray-500'>Home {`>`}</span>&nbsp;Cinema
                             </span>
                         </div>
                     </div>

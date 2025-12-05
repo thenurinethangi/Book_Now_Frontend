@@ -4,10 +4,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 
-import AdminDashboard from './pages/adminDashboard'
 import AdminSignin from './pages/adminSignIn'
 import AdminLanding from './pages/AdminLanding'
-import AdminDashboard2 from './pages/adminDashboard2'
+import AdminDashboard from './pages/adminDashboard'
 import AdminCinema from './pages/adminCinema'
 import AdminCinemaPending from './pages/adminCinemaPending'
 import AdminCinemaRejected from './pages/adminCinemaRejected'
@@ -52,11 +51,10 @@ function App() {
         <Routes>
           <Route path='/admin/landing' element={<AdminLanding />}></Route>
           <Route path='/admin/signin' element={<AdminSignin />}></Route>
-          <Route path='/dashboard1' element={<AdminDashboard />}></Route>
-          <Route path='/admin/home' element={<AdminDashboard2 />}></Route>
+          <Route path='/admin/home' element={<AdminDashboard />}></Route>
           <Route path='/admin/cinema' element={<AdminCinema />}></Route>
-          <Route path='/cinema/pending' element={<AdminCinemaPending />}></Route>
-          <Route path='/cinema/rejected' element={<AdminCinemaRejected />}></Route>
+          <Route path='/admin/cinema/pending' element={<AdminCinemaPending />}></Route>
+          <Route path='/admin/cinema/rejected' element={<AdminCinemaRejected />}></Route>
           <Route path='/screen' element={<AdminScreen />}></Route>
           <Route path='/movie' element={<AdminMovie />}></Route>
           <Route path='/movie/request' element={<AdminMovieRequest />}></Route>
