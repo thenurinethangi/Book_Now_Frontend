@@ -16,7 +16,7 @@ function SidebarNavigation(props: any) {
         { icon: <Clock className="w-5.5 h-5.5" />, label: 'Showtimes', id: 'showtimes' },
         { icon: <Tag className="w-5.5 h-5.5" />, label: 'Bookings', id: 'bookings' },
         { icon: <Wallet className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' },
-        { icon: <Search className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' }
+        { icon: <Search className="w-5.5 h-5.5" />, label: 'Transactions', id: 'tr' }
     ];
 
     return (
