@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 
 import { toast } from 'react-toastify';
-import { signUp } from '../../services/user/auth';
+import { signUp } from '../../services/cinema/auth';
 
 const SignUp = (props: any) => {
 

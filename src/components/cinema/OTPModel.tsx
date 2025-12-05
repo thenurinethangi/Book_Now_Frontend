@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { X, Mail } from "lucide-react";
 import { toast } from 'react-toastify';
-import { sendOTP, verifyUser } from '../../services/user/auth';
+import { sendOTP, verifyUser } from '../../services/cinema/auth';
 
 function OTPModel(props: any) {
 

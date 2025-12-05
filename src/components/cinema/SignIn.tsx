@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
-import { signIn } from '../../services/user/auth';
+import { signIn } from '../../services/cinema/auth';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
@@ -45,6 +45,7 @@ const SignIn = (props: any) => {
         const formdata = new FormData();
         formdata.append('email', email);
         formdata.append('password', password);
+        formdata.append('role','CINEMA');
 
         try {
             const res = await signIn(formdata);

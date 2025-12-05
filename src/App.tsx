@@ -53,7 +53,7 @@ function App() {
           <Route path='/admin/landing' element={<AdminLanding />}></Route>
           <Route path='/admin/signin' element={<AdminSignin />}></Route>
           <Route path='/dashboard1' element={<AdminDashboard />}></Route>
-          <Route path='/admin/dashboard2' element={<AdminDashboard2 />}></Route>
+          <Route path='/admin/home' element={<AdminDashboard2 />}></Route>
           <Route path='/admin/cinema' element={<AdminCinema />}></Route>
           <Route path='/cinema/pending' element={<AdminCinemaPending />}></Route>
           <Route path='/cinema/rejected' element={<AdminCinemaRejected />}></Route>

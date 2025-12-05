@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, User, Clapperboard, ChartLine, UsersRound, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
-import AdminSignin from './adminSignIn';
+import SignIn from '../components/admin/SignIn';
 
 interface Feature {
   icon: React.ReactNode;
@@ -247,7 +247,7 @@ const AdminLanding: React.FC = () => {
         </div>
       </footer>
 
-      { showSignin ? <AdminSignin setShowSignin={setShowSignin} /> : '' }
+      { showSignin ? <SignIn setShowSignin={setShowSignin} /> : '' }
 
       <style>{`
         @keyframes fadeInUp {
