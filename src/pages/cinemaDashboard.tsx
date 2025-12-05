@@ -1,33 +1,68 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Home, Tv, Clock, User, Bell, Settings, Search, Users, TvMinimalPlay, Tag, Coins, Wallet } from 'lucide-react';
 import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import Chart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
+import { getActiveScreen, getThisYearEachMonthRevenue, getTodayBooking, getTodayRevenue } from '../services/cinema/dashboardService';
 
 const CinemaOwnerDashboard = () => {
+
+    const [todayRevenue, setTodayRevenue] = useState<any>({});
+    const [todayBookings, setTodayBookings] = useState<any>({});
+    const [occupancyRate, setOccupancyRate] = useState('78%');
+    const [activeScreens, setActiveScreens] = useState<any>({});
+
+    const [weekRevenue, setWeekRevenue] = useState<any>({});
+
+    useEffect(() => {
+        init();
+    }, []);
+
+    async function init() {
+        try {
+            const res1 = await getTodayRevenue();
+            console.log(res1.data.data);
+            setTodayRevenue(res1.data.data);
+
+            const res2 = await getTodayBooking();
+            console.log(res2.data.data);
+            setTodayBookings(res2.data.data);
+
+            const res3 = await getActiveScreen();
+            console.log(res3.data.data);
+            setActiveScreens(res3.data.data);
+
+            const res4 = await getThisYearEachMonthRevenue();
+            console.log(res4.data.data);
+            setWeekRevenue(res4.data.data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     const stats = [
         {
             title: 'Today Revenue',
-            value: '$2,847',
-            change: '+18.2%',
+            value: `${todayRevenue.todayRevenue}`,
+            change: `${todayRevenue.change}%`,
             icon: <Coins className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-green-500'
         },
         {
             title: 'Today Bookings',
-            value: '147',
-            change: '+12.8%',
+            value: `${todayBookings.todayBooking}`,
+            change: `${todayBookings.change}%`,
             icon: <Tag className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-blue-500'
         },
         {
             title: 'Occupancy Rate',
-            value: '78%',
+            value: occupancyRate,
             change: '+5.3%',
             icon: <Users className="w-5.5 h-5.5" />,
             trend: 'up',
@@ -35,8 +70,8 @@ const CinemaOwnerDashboard = () => {
         },
         {
             title: 'Active Screens',
-            value: '8/10',
-            change: '80%',
+            value: `${activeScreens.activeScreens}/${activeScreens.allScreens}`,
+            change: `${activeScreens.change}%`,
             icon: <Tv className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-red-500'
@@ -92,15 +127,7 @@ const CinemaOwnerDashboard = () => {
             colors: ["transparent"],
         },
         xaxis: {
-            categories: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul"
-            ],
+            categories: weekRevenue.days,
             axisBorder: {
                 show: false,
             },
@@ -142,7 +169,7 @@ const CinemaOwnerDashboard = () => {
     const series = [
         {
             name: "Sales",
-            data: [168, 385, 201, 298, 187, 195, 250],
+            data: weekRevenue.values,
         },
     ];
 
@@ -153,7 +180,7 @@ const CinemaOwnerDashboard = () => {
             <SidebarNavigation page={'home'} />
 
             {/* Main Content */}
-            <div className='flex-1 ml-[65px] text-white px-7 py-4'>
+            <div className='flex-1 ml-[65px]  text-white px-7 py-4'>
 
                 {/* Header */}
                 <div className='flex justify-between items-center mb-6'>
@@ -210,8 +237,8 @@ const CinemaOwnerDashboard = () => {
 
                     <div className="col-span-2 max-w-full overflow-x-auto bg-[#1e1e1e] rounded-md border border-gray-700 p-5">
                         <div className="mb-5">
-                            <h3 className="text-[14.5px] font-medium mb-1">Screen Occupancy</h3>
-                            <p className="text-[12px] text-gray-400">Current utilization</p>
+                            <h3 className="text-[14.5px] font-medium mb-1">Weekly Revenue</h3>
+                            <p className="text-[12px] text-gray-400">Last 7 days performance</p>
                         </div>
 
                         <div id="chartOne" className="min-w-[1000px]">

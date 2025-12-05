@@ -1,7 +1,10 @@
 import { Home, Tv, Clock, User, Bell, Settings, Search, Users, TvMinimalPlay, Tag, Coins, Wallet } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function SidebarNavigation(props: any) {
+
+    const navigate = useNavigate();
 
     const [activeNav, setActiveNav] = useState('home');
 
@@ -16,8 +19,17 @@ function SidebarNavigation(props: any) {
         { icon: <Clock className="w-5.5 h-5.5" />, label: 'Showtimes', id: 'showtimes' },
         { icon: <Tag className="w-5.5 h-5.5" />, label: 'Bookings', id: 'bookings' },
         { icon: <Wallet className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' },
-        { icon: <Search className="w-5.5 h-5.5" />, label: 'Transactions', id: 'tr' }
+        { icon: <Search className="w-5.5 h-5.5" />, label: 'Search', id: 'search' }
     ];
+
+    function handleNavItemClick(e: React.MouseEvent<HTMLButtonElement>){
+        const item: string | undefined = e.currentTarget.dataset.item;
+        if(!item){
+            return;
+        }
+        setActiveNav(item);
+        navigate('/cinema/'+item);
+    }
 
     return (
         <nav className="w-[65px] h-screen bg-[#121212] border-r border-gray-800 flex flex-col justify-between items-center fixed" style={{ paddingBlock: '17px' }}>
@@ -25,7 +37,8 @@ function SidebarNavigation(props: any) {
                 {navItems.map((item) => (
                     <button
                         key={item.id}
-                        onClick={() => setActiveNav(item.id)}
+                        data-item = {item.id}
+                        onClick={handleNavItemClick}
                         className={`nav transition-colors ${activeNav === item.id ? 'text-red-700' : 'text-gray-500'}`}
                     >
                         {item.icon}

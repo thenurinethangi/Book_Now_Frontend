@@ -50,7 +50,7 @@ const SignIn = (props: any) => {
             const res = await signIn(formdata);
             localStorage.setItem('accessToken', res.data.data);
 
-            navigate('/cinema/dashboard');
+            navigate('/cinema/home');
         }
         catch (err: unknown) {
             if (err instanceof AxiosError) {

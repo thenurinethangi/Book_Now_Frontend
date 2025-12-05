@@ -75,14 +75,14 @@ function App() {
           <Route path='/user/signup' element={<UserSignup />}></Route>
           <Route path='/owner/signup' element={<OwnerSignup />}></Route>
           <Route path='/cinema/landing' element={<CinemaLanding />}></Route>
-          <Route path='/cinema/dashboard' element={<CinemaDashboard />}></Route>
-          <Route path='/cinema/screen' element={<CinemaScreen />}></Route>
+          <Route path='/cinema/home' element={<CinemaDashboard />}></Route>
+          <Route path='/cinema/screens' element={<CinemaScreen />}></Route>
           <Route path='/owner/screen/add' element={<CinemaScreenAdd />}></Route>
-          <Route path='/cinema/transaction' element={<CinemaTransaction />}></Route>
-          <Route path='/cinema/booking' element={<CinemaBooking />}></Route>
-          <Route path='/cinema/showtime' element={<CinemaShowTime />}></Route>
+          <Route path='/cinema/transactions' element={<CinemaTransaction />}></Route>
+          <Route path='/cinema/bookings' element={<CinemaBooking />}></Route>
+          <Route path='/cinema/showtimes' element={<CinemaShowTime />}></Route>
           <Route path='/cinema/add/showtime' element={<CinemaAddShowtime />}></Route>
-          <Route path='/cinema/movie' element={<CinemaMovie />}></Route>
+          <Route path='/cinema/movies' element={<CinemaMovie />}></Route>
           <Route path='/cinema/movie/add' element={<CinemaAddMovie />}></Route>
           <Route path='/cinema/movie/request' element={<CinemaRequestMovie />}></Route>
           <Route path='/otp' element={<OTPModel />}></Route>
