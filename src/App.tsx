@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 
 import AdminDashboard from './pages/adminDashboard'
 import AdminSignin from './pages/adminSignIn'
-import AdminLanding from './pages/userLanding'
+import AdminLanding from './pages/AdminLanding'
 import AdminDashboard2 from './pages/adminDashboard2'
 import AdminCinema from './pages/adminCinema'
 import AdminCinemaPending from './pages/adminCinemaPending'
@@ -50,11 +50,11 @@ function App() {
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={true} newestOnTop={false} closeOnClick pauseOnHover draggable pauseOnFocusLoss theme="dark" toastStyle={{ background: "#121212", color: "#ffffff", borderRadius: "8px", border: "1px solid #2a2a2a", padding: "14px 16px", fontSize: "14.5px", fontFamily: "Poppins, sans-serif", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.45)"}} progressStyle={{background: "#e50914"}} closeButton={false}/>
       <BrowserRouter>
         <Routes>
-          <Route path='/landing' element={<AdminLanding />}></Route>
-          <Route path='/signin' element={<AdminSignin />}></Route>
+          <Route path='/admin/landing' element={<AdminLanding />}></Route>
+          <Route path='/admin/signin' element={<AdminSignin />}></Route>
           <Route path='/dashboard1' element={<AdminDashboard />}></Route>
-          <Route path='/dashboard2' element={<AdminDashboard2 />}></Route>
-          <Route path='/cinema' element={<AdminCinema />}></Route>
+          <Route path='/admin/dashboard2' element={<AdminDashboard2 />}></Route>
+          <Route path='/admin/cinema' element={<AdminCinema />}></Route>
           <Route path='/cinema/pending' element={<AdminCinemaPending />}></Route>
           <Route path='/cinema/rejected' element={<AdminCinemaRejected />}></Route>
           <Route path='/screen' element={<AdminScreen />}></Route>

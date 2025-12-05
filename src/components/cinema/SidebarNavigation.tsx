@@ -39,7 +39,7 @@ function SidebarNavigation(props: any) {
                         key={item.id}
                         data-item = {item.id}
                         onClick={handleNavItemClick}
-                        className={`nav transition-colors ${activeNav === item.id ? 'text-red-700' : 'text-gray-500'}`}
+                        className={`nav transition-colors cursor-pointer ${activeNav === item.id ? 'text-red-700' : 'text-gray-500'}`}
                     >
                         {item.icon}
                     </button>

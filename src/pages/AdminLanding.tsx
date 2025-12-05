@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Film, Users, BarChart3, Calendar, ArrowRight, Sparkles, Play, User, Clapperboard, ChartLine, UsersRound, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
-import logo from '../assets/images/camera-roll-removebg-preview.png'
+import { ArrowRight, User, Clapperboard, ChartLine, UsersRound, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
+import AdminSignin from './adminSignIn';
 
 interface Feature {
   icon: React.ReactNode;
@@ -9,7 +10,9 @@ interface Feature {
 }
 
 const AdminLanding: React.FC = () => {
+
   const [isVisible, setIsVisible] = useState(false);
+  const [showSignin, setShowSignin] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -34,7 +37,7 @@ const AdminLanding: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white overflow-hidden">
+    <div className="min-h-screen bg-[#121212] text-white overflow-hidden relative">
       {/* Hero Section */}
       <div className="relative h-screen">
         {/* Background Image with Overlay */}
@@ -50,23 +53,20 @@ const AdminLanding: React.FC = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="relative z-10 flex items-center justify-between px-8 py-5 ">
+        <nav className="relative z-10 flex items-center justify-between px-8 pl-5 pt-1 ">
           <div className="flex items-center space-x-3 ml-4">
             <div className="flex items-center justify-center z-10">
-              <img src={logo} width={'46px'}></img>
+              <img src={logo2} width={'78px'}></img>
             </div>
-            <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[20px] font-[Luckiest Guy] font-medium -translate-x-18 z-0">
-              <span className='text-[25px] font-[Luckiest Guy] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-            </span>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 -translate-y-2">
             <User className="w-5 h-5 text-red-900 animate-pulse" />
-            <span className="text-sm text-gray-400">Login</span>
+            <span onClick={(e) => setShowSignin(true)} className="text-sm text-gray-400 cursor-pointer">Login</span>
           </div>
         </nav>
 
         {/* Hero Content */}
-        <div className={`relative z-10 flex flex-col items-center justify-start h-[calc(100vh-100px)] px-4 pt-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`relative z-10 flex flex-col items-center justify-start h-[calc(100vh-100px)] px-4 pt-9 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="text-center max-w-4xl mx-auto">
             {/* <div className="inline-block mb-4 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
               <span className="text-sm text-purple-300 font-medium">✨ Welcome to the Future of Cinema Management</span>
@@ -74,7 +74,7 @@ const AdminLanding: React.FC = () => {
 
             <h1 className="text-[40px] md:text-[50px] font-black mb-6 leading-tight font-[Poppins]">
               <span className="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                BOOKNOW <span className='font-medium'>ADMIN CENTER</span>
+                SYNEMA <span className='font-medium'>ADMIN CENTER</span>
               </span>
             </h1>
 
@@ -83,7 +83,7 @@ const AdminLanding: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <button className="group relative px-[23px] py-[14px] bg-transparent rounded-md border-r-[1.5px] border-b-[1.5px] border-t-[1.5px] border-l-[1.5px] font-medium text-[16px] font-[Poppins] shadow-2xl shadow-red-500/50 hover:shadow-red-500/60 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2">
+              <button onClick={(e) => setShowSignin(true)} className="group relative px-[23px] py-[14px] bg-transparent rounded-md border-r-[1.5px] border-b-[1.5px] border-t-[1.5px] border-l-[1.5px] font-medium text-[16px] font-[Poppins] shadow-2xl shadow-red-500/50 hover:shadow-red-500/60 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2">
                 <span>Login to Dashboard</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -124,7 +124,7 @@ const AdminLanding: React.FC = () => {
       <div className="relative z-10 px-8 py-24 -mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[47px] font-bold mb-4 bg-gradient-to-r from-red-900 to-red-300 bg-clip-text text-transparent font-[Poppins]">
+            <h2 className="text-[47px] font-bold mb-4 bg-gradient-to-r from-white to-purple-100 bg-clip-text text-transparent font-[Poppins]">
               Powerful Admin Tools
             </h2>
             <p className="text-gray-400 text-lg">Everything you need to run a successful cinema business</p>
@@ -159,28 +159,25 @@ const AdminLanding: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             {/* Brand Column */}
             <div className="md:col-span-1">
-              <div className="flex items-center space-x-3 ml-4">
+              <div className="flex items-center space-x-3 ml-1">
                 <div className="flex items-center justify-center z-10">
-                  <img src={logo} width={'46px'}></img>
+                  <img src={logo2} width={'80px'} alt="logo"></img>
                 </div>
-                <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[20px] font-[Luckiest Guy] font-medium -translate-x-18 z-0">
-                  <span className='text-[25px] font-[Luckiest Guy] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                </span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed mb-4">
                 The most advanced cinema booking management platform for modern theaters.
               </p>
               <div className="flex space-x-3">
-                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
+                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-md flex items-center justify-center transition-all duration-300 group">
                   <Facebook className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
                 </a>
-                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
+                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-md flex items-center justify-center transition-all duration-300 group">
                   <Twitter className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
                 </a>
-                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
+                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-md flex items-center justify-center transition-all duration-300 group">
                   <Instagram className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
                 </a>
-                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
+                <a href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-md flex items-center justify-center transition-all duration-300 group">
                   <Youtube className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
                 </a>
               </div>
@@ -249,6 +246,8 @@ const AdminLanding: React.FC = () => {
           </div>
         </div>
       </footer>
+
+      { showSignin ? <AdminSignin setShowSignin={setShowSignin} /> : '' }
 
       <style>{`
         @keyframes fadeInUp {
