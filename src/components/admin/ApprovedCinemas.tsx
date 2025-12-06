@@ -1,13 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { MapPin, Tv, Star } from "lucide-react";
-import { getAllActiveCinemas } from '../../services/admin/cinemaService';
+import { Trash2, Edit3, CheckCircle, XCircle } from "lucide-react";
+import { deactivateACinema, getAllActiveCinemas } from '../../services/admin/cinemaService';
+import { toast } from "react-toastify";
+
+const ConfirmToast = (props: any) => {
+    const { closeToast, onConfirm } = props;
+
+    return (
+        <div className='font-[Poppins]'>
+            <p className='text-[17px] mb-1.5'>Deactivate cinema?</p>
+            <p className='text-[14px] text-gray-500'>Does this cinema violate the rules? If so, you can proceed with deactivation; otherwise, you cannot.</p>
+            <div className="flex gap-3 mt-3">
+                <button onClick={closeToast} className='text-[13px] font-medium px-2 py-2 border border-gray-800 rounded-md'>Cancel</button>
+                <button onClick={() => { onConfirm(); closeToast(); }} className='text-[13px] font-medium px-2 h-[32px] bg-red-700 rounded-md'>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export function askConfirm(onConfirm: () => void) {
+    toast((toastProps: any) => (
+        <ConfirmToast {...toastProps} onConfirm={onConfirm} />
+    ));
+}
+
 
 function ApprovedCinemas() {
 
     const [approvedCinemas, setApprovedCinemas] = useState([]);
+    const [activeOptionsId, setActiveOptionsId] = useState('');
 
     useEffect(() => {
         loadAllApprovedCinemas();
+    }, []);
+
+    useEffect(() => {
+        const close = () => setActiveOptionsId('');
+        window.addEventListener("click", close);
+        return () => window.removeEventListener("click", close);
     }, []);
 
     async function loadAllApprovedCinemas() {
@@ -21,80 +54,34 @@ function ApprovedCinemas() {
         }
     }
 
-    const c = [
-        {
-            id: 1,
-            name: 'Backstone',
-            location: '63 Mall, Nupe Matara',
-            image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80',
-            tags: ['3D', 'LUX'],
-            screens: 5,
-            rating: 4.8,
-            status: 'approved'
-        },
-        {
-            id: 2,
-            name: 'Silverscreen',
-            location: 'City Center, Colombo',
-            image: 'https://images.unsplash.com/photo-1574267432644-f610f4ac60b4?w=800&q=80',
-            tags: ['3D', 'IMAX'],
-            screens: 8,
-            rating: 4.9,
-            status: 'approved'
-        },
-        {
-            id: 3,
-            name: 'Palace Cinema',
-            location: 'Marine Drive, Galle',
-            image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=800&q=80',
-            tags: ['3D', '4DX'],
-            screens: 6,
-            rating: 4.7,
-            status: 'approved'
-        },
-        {
-            id: 4,
-            name: 'Vista Theatres',
-            location: 'Liberty Plaza, Kollupitiya',
-            image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=800&q=80',
-            tags: ['3D', 'LUX'],
-            screens: 4,
-            rating: 4.6,
-            status: 'approved'
-        },
-        {
-            id: 5,
-            name: 'Majestic Cinema',
-            location: 'Beach Road, Negombo',
-            image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80',
-            tags: ['3D', 'ATMOS'],
-            screens: 7,
-            rating: 4.8,
-            status: 'approved'
-        },
-        {
-            id: 6,
-            name: 'Royal Theatre',
-            location: 'Main Street, Kandy',
-            image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&q=80',
-            tags: ['3D', 'LUX'],
-            screens: 3,
-            rating: 4.5,
-            status: 'approved'
-        }
-    ];
+    function handleDeactivateCinema(e: React.MouseEvent<HTMLButtonElement>) {
+        // e.stopPropagation();
+
+        askConfirm(async () => {
+            try {
+                const res = await deactivateACinema(activeOptionsId);
+                toast.success(`Successfully Deactivated Cinema ID ${activeOptionsId}`);
+                setActiveOptionsId('');
+                loadAllApprovedCinemas();
+            }
+            catch (e) {
+                toast.error(`Failed to Deactivated Cinema ID ${activeOptionsId}`);
+            }
+        });
+    }
+
 
     return (
         <div className='grid grid-cols-5 gap-[12px]'>
             {approvedCinemas.map((cinema: any) => (
-                <div key={cinema._id} className='rounded-lg bg-[#1e1e1e] h-[350px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden'>
+                <div key={cinema._id} className='rounded-lg bg-[#1e1e1e] h-[350px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
                     <div className='h-[45%] relative overflow-hidden'>
                         <div className='absolute top-0 left-0 right-0 p-2.5 flex justify-between items-start z-10'>
                             <div className='flex items-center gap-1 px-2 py-1 bg-black/50 backdrop-blur-sm rounded text-[9px] font-bold text-white/88'>
                                 <Star className='w-3 h-3 fill-white/88' />
                                 {4.5}
                             </div>
-                            <button className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
+                            <button onClick={(e) => { setActiveOptionsId(cinema._id); e.stopPropagation(); }} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
                                 <svg className='w-4 h-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                     <circle cx='12' cy='6' r='1.5' />
                                     <circle cx='12' cy='12' r='1.5' />
@@ -137,6 +124,21 @@ function ApprovedCinemas() {
                             <svg className='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
                             </svg>
+                        </button>
+                    </div>
+
+                    {/* options */}
+                    <div className={`flex flex-col shadow-2xl absolute top-10 right-0 z-[300] bg-[#1e1e1e] border border-gray-700 rounded-md overflow-hidden min-w-[160px] ${activeOptionsId && activeOptionsId === cinema._id ? "" : "hidden"}`}>
+
+                        {/* Delete Option */}
+                        <button
+                            onClick={handleDeactivateCinema}
+                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
+                        >
+                            <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
+                            <p className="text-[13px] text-gray-300 group-hover:text-red-300">
+                                Deactivate
+                            </p>
                         </button>
                     </div>
                 </div>
