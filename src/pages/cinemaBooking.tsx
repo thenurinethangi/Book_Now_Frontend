@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Home, Tv, Clock, Search, Settings, Bell, User, Film, Tag, Wallet, Download, Filter, Calendar, DollarSign, TrendingUp, CheckCircle, XCircle, AlertCircle, Users, Eye } from 'lucide-react';
+import { Search, Tag, Download, CheckCircle, XCircle, AlertCircle, Users, Eye } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import { getAllBookings } from '../services/cinema/bookingService';
 
