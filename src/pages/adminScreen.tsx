@@ -9,7 +9,7 @@ function AdminScreen() {
     const [activeTab, setActiveTab] = useState('manage');
 
     return (
-        <div className='bg-[#121212] flex font-[Poppins] overflow-hidden'>
+        <div className='bg-[#121212] flex font-[Poppins] overflow-hidden min-h-screen'>
 
             {/* nav bar */}
             <SidebarNavigation page={'screen'} />

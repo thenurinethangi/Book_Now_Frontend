@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MapPin, Tv, Star } from "lucide-react";
-import { Trash2, Edit3, CheckCircle, XCircle } from "lucide-react";
+import { MapPin, Tv, Star, Trash2, X } from "lucide-react";
 import { deactivateACinema, getAllActiveCinemas } from '../../services/admin/cinemaService';
 import { toast } from "react-toastify";
 
@@ -136,7 +135,7 @@ function ApprovedCinemas(props: any) {
                             onClick={handleDeactivateCinema}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
                         >
-                            <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
+                            <X className="w-4 h-4 text-red-400 group-hover:text-red-300" />
                             <p className="text-[13px] text-gray-300 group-hover:text-red-300">
                                 Deactivate
                             </p>

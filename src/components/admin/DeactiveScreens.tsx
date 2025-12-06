@@ -1,18 +1,51 @@
 import { useEffect, useState } from 'react'
-import { getAllActiveScreens } from '../../services/admin/screenService';
+import { activateAScreen, getAllActiveScreens, getAllDeactiveScreens } from '../../services/admin/screenService';
+import { Check } from "lucide-react";
+import { toast } from 'react-toastify';
+
+const ConfirmToast = (props: any) => {
+    const { closeToast, onConfirm } = props;
+
+    return (
+        <div className='font-[Poppins]'>
+            <p className='text-[17px] mb-1.5'>Activate screen?</p>
+            <p className='text-[14px] text-gray-500'>Reactivating this screen will allow cinema administrators to add showtimes to it again.</p>
+            <div className="flex gap-3 mt-3">
+                <button onClick={closeToast} className='text-[13px] font-medium px-2 py-2 border border-gray-800 rounded-md'>Cancel</button>
+                <button onClick={() => { onConfirm(); closeToast(); }} className='text-[13px] font-medium px-2 h-[32px] bg-red-700 rounded-md'>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export function askConfirm(onConfirm: () => void) {
+    toast((toastProps: any) => (
+        <ConfirmToast {...toastProps} onConfirm={onConfirm} />
+    ));
+}
+
 
 function DeactiveScreens() {
 
-    const [activeScreens, setActiveScreens] = useState([]);
+    const [deactiveScreens, setDeactiveScreens] = useState([]);
+    const [activeOptionsId, setActiveOptionsId] = useState('');
 
     useEffect(() => {
-        loadAllActiveScreens();
+        const close = () => setActiveOptionsId('');
+        window.addEventListener("click", close);
+        return () => window.removeEventListener("click", close);
     }, []);
 
-    async function loadAllActiveScreens() {
+    useEffect(() => {
+        loadAllDeactiveScreens();
+    }, []);
+
+    async function loadAllDeactiveScreens() {
         try {
-            const res = await getAllActiveScreens();
-            setActiveScreens(res.data.data);
+            const res = await getAllDeactiveScreens();
+            setDeactiveScreens(res.data.data);
             console.log(res.data.data);
         }
         catch (e) {
@@ -20,13 +53,28 @@ function DeactiveScreens() {
         }
     }
 
+    function handleActivateScreen() {
+
+        askConfirm(async () => {
+            try {
+                const res = await activateAScreen(activeOptionsId);
+                toast.success(`Successfully Reactivated Screen ID ${activeOptionsId}`);
+                setActiveOptionsId('');
+                loadAllDeactiveScreens();
+            }
+            catch (e) {
+                toast.error(`Failed to Activate Screen ID ${activeOptionsId}`);
+            }
+        });
+    }
+
 
     return (
         <div className='grid grid-cols-5 gap-[12px] mt-6'>
-            {activeScreens.map((screen: any) => (
+            {deactiveScreens.map((screen: any) => (
                 <div key={screen._id} className='rounded-md bg-[#1e1e1e] h-[405px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
                     <div className='h-[45%] relative overflow-hidden'>
-                        <button className='absolute right-1 top-1 z-[50] w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
+                        <button onClick={(e) => { setActiveOptionsId(screen._id); e.stopPropagation(); }} className='absolute right-1 top-1 z-[50] w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
                             <svg className='w-4 h-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                 <circle cx='12' cy='6' r='1.5' />
                                 <circle cx='12' cy='12' r='1.5' />
@@ -55,6 +103,21 @@ function DeactiveScreens() {
                             <svg className='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
                             </svg>
+                        </button>
+                    </div>
+
+                    {/* options */}
+                    <div className={`flex flex-col shadow-2xl absolute top-10 right-0 z-[300] bg-[#1e1e1e] border border-gray-700 rounded-md overflow-hidden min-w-[160px] ${activeOptionsId && activeOptionsId === screen._id ? "" : "hidden"}`}>
+
+                        {/* Delete Option */}
+                        <button
+                            onClick={handleActivateScreen}
+                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-green-900/20 transition-colors group"
+                        >
+                            <Check className="w-4 h-4 text-green-400 group-hover:text-green-300" />
+                            <p className="text-[13px] text-gray-300 group-hover:text-green-300">
+                                Activate
+                            </p>
                         </button>
                     </div>
                 </div>
