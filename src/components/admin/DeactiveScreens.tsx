@@ -27,7 +27,7 @@ export function askConfirm(onConfirm: () => void) {
 }
 
 
-function DeactiveScreens() {
+function DeactiveScreens(props: any) {
 
     const [deactiveScreens, setDeactiveScreens] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState('');
@@ -47,6 +47,7 @@ function DeactiveScreens() {
             const res = await getAllDeactiveScreens();
             setDeactiveScreens(res.data.data);
             console.log(res.data.data);
+            props.setStatsUpdate(props.statsUpdate+1);
         }
         catch (e) {
             console.log(e);

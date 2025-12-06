@@ -27,7 +27,7 @@ export function askConfirm(onConfirm: () => void) {
 }
 
 
-function ActiveScreens() {
+function ActiveScreens(props: any) {
 
     const [activeScreens, setActiveScreens] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState('');
@@ -47,6 +47,7 @@ function ActiveScreens() {
             const res = await getAllActiveScreens();
             setActiveScreens(res.data.data);
             console.log(res.data.data);
+            props.setStatsUpdate(props.statsUpdate+1);
         }
         catch (e) {
             console.log(e);
