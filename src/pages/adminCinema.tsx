@@ -1,14 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Search, MapPin, Check, X, Loader } from "lucide-react";
 import SidebarNavigation from '../components/admin/SidebarNavigation';
 import ApprovedCinemas from '../components/admin/ApprovedCinemas';
 import PendingCinemas from '../components/admin/PendingCinemas';
 import RejectedCinemas from '../components/admin/RejectedCinemas';
+import { getAllActiveCinemas, getAllPendingCinemas, getAllRejectedCinemas } from '../services/admin/cinemaService';
 
 function AdminCinema() {
 
     const [activeTab, setActiveTab] = useState('approved');
+    const [statsUpdate, setStatsUpdate] = useState(0);
+    const [actCinema, setActCinema] = useState([]);
+    const [pendCinema, setPendCinema] = useState([]);
+    const [rejCinema, setRejCinema] = useState([]);
 
+    useEffect(() => {
+        initStats();
+    }, [statsUpdate])
+
+    async function initStats() {
+        try {
+            const res1 = await getAllActiveCinemas();
+            setActCinema(res1.data.data);
+
+            const res2 = await getAllPendingCinemas();
+            setPendCinema(res2.data.data);
+
+            const res3 = await getAllRejectedCinemas();
+            setRejCinema(res3.data.data);
+        }
+        catch (e) {
+
+        }
+    }
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -46,7 +70,7 @@ function AdminCinema() {
                             <MapPin className='w-8 h-8 text-red-700 opacity-20' />
                             <div className='flex flex-col items-center justify-center'>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Cinemas</p>
-                                <p className='text-[18px] font-medium text-white'>24</p>
+                                <p className='text-[18px] font-medium text-white'>{actCinema.length+pendCinema.length+rejCinema.length}</p>
                             </div>
                         </div>
                     </div>
@@ -57,7 +81,7 @@ function AdminCinema() {
                             </div>
                             <div className='flex flex-col items-center justify-center'>
                                 <p className='text-[12px] text-gray-500 mb-1'>Approved</p>
-                                <p className='text-[18px] font-medium text-green-500'>18</p>
+                                <p className='text-[18px] font-medium text-green-500'>{actCinema.length}</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +91,7 @@ function AdminCinema() {
                             {/* <div className='w-2 h-2 bg-orange-500 rounded-full animate-pulse' /> */}
                             <div className='flex flex-col items-center justify-center'>
                                 <p className='text-[12px] text-gray-500 mb-1'>Pending</p>
-                                <p className='text-[18px] font-medium text-yellow-600'>4</p>
+                                <p className='text-[18px] font-medium text-yellow-600'>{pendCinema.length}</p>
                             </div>
                         </div>
                     </div>
@@ -78,7 +102,7 @@ function AdminCinema() {
                             </div>
                             <div className='flex flex-col items-center justify-center'>
                                 <p className='text-[12px] text-gray-500 mb-1'>Rejected</p>
-                                <p className='text-[18px] font-medium text-red-500'>2</p>
+                                <p className='text-[18px] font-medium text-red-500'>{rejCinema.length}</p>
                             </div>
                         </div>
                     </div>
@@ -107,13 +131,13 @@ function AdminCinema() {
                 </div>
 
                 {/* cinema container */}
-                { activeTab === 'approved' ? <ApprovedCinemas /> : '' }
+                {activeTab === 'approved' ? <ApprovedCinemas statsUpdate={statsUpdate} setStatsUpdate={setStatsUpdate} /> : ''}
 
                 {/* cinema container */}
-                { activeTab === 'pending' ? <PendingCinemas /> : '' }
+                {activeTab === 'pending' ? <PendingCinemas statsUpdate={statsUpdate} setStatsUpdate={setStatsUpdate} /> : ''}
 
                 {/* cinema container */}
-                { activeTab === 'rejected' ? <RejectedCinemas /> : '' }
+                {activeTab === 'rejected' ? <RejectedCinemas statsUpdate={statsUpdate} setStatsUpdate={setStatsUpdate} /> : ''}
 
             </div>
         </div>

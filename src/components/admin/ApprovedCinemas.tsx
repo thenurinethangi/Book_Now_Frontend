@@ -28,7 +28,7 @@ export function askConfirm(onConfirm: () => void) {
 }
 
 
-function ApprovedCinemas() {
+function ApprovedCinemas(props: any) {
 
     const [approvedCinemas, setApprovedCinemas] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState('');
@@ -48,6 +48,7 @@ function ApprovedCinemas() {
             const res = await getAllActiveCinemas();
             console.log(res.data.data);
             setApprovedCinemas(res.data.data);
+            props.setStatsUpdate(props.statsUpdate+1);
         }
         catch (e) {
             console.log(e);

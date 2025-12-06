@@ -27,7 +27,7 @@ export function askConfirm(onConfirm: () => void, title: string, desc: string) {
 }
 
 
-function PendingCinemas() {
+function PendingCinemas(props: any) {
 
     const [pendingCinemas, setPendingCinemas] = useState([]);
 
@@ -40,6 +40,7 @@ function PendingCinemas() {
             const res = await getAllPendingCinemas();
             console.log(res.data.data);
             setPendingCinemas(res.data.data);
+            props.setStatsUpdate(props.statsUpdate+1);
         }
         catch (e) {
             console.log(e);

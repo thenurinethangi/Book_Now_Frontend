@@ -27,7 +27,7 @@ export function askConfirm(onConfirm: () => void, title: string, desc: string) {
 }
 
 
-function RejectedCinemas() {
+function RejectedCinemas(props: any) {
 
     const [rejectedCinemas, setRejectedCinemas] = useState([]);
 
@@ -40,6 +40,7 @@ function RejectedCinemas() {
             const res = await getAllRejectedCinemas();
             console.log(res.data.data);
             setRejectedCinemas(res.data.data);
+            props.setStatsUpdate(props.statsUpdate+1);
         }
         catch (e) {
             console.log(e);
