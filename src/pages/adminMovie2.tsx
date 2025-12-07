@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Home, UserCog, Settings, Disc, Search, Layers, RotateCw, HelpCircle, Bell, MapPin, Tv, Trash, Edit, Eye, Clock, Calendar, Star, Film, Filter, Plus } from "lucide-react";
 
-function AdminMovie() {
+function AdminMovie2() {
     const [activeTab, setActiveTab] = useState('manage');
 
     const movies = [
@@ -248,4 +248,4 @@ function AdminMovie() {
     )
 }
 
-export default AdminMovie
+export default AdminMovie2

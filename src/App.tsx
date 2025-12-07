@@ -56,8 +56,8 @@ function App() {
           <Route path='/admin/cinema/pending' element={<AdminCinemaPending />}></Route>
           <Route path='/admin/cinema/rejected' element={<AdminCinemaRejected />}></Route>
           <Route path='/admin/screen' element={<AdminScreen />}></Route>
-          <Route path='/movie' element={<AdminMovie />}></Route>
-          <Route path='/movie/request' element={<AdminMovieRequest />}></Route>
+          <Route path='/admin/movie' element={<AdminMovie />}></Route>
+          <Route path='/admin/movie/request' element={<AdminMovieRequest />}></Route>
           <Route path='/admin/user' element={<AdminUser />}></Route>
           <Route path='/admin/owner' element={<AdminCinemaOwner />}></Route>
           <Route path='/admin/admin' element={<AdminAdmin />}></Route>
