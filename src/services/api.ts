@@ -41,12 +41,12 @@ api.interceptors.response.use(
                 return axios(originalRequest)
             }
             catch (refreshErr) {
-                console.log(refreshErr)
-                localStorage.removeItem("refreshToken")
-                localStorage.removeItem("accessToken")
-                window.location.href = "/login"
-                console.error(refreshErr)
-                return Promise.reject(refreshErr)
+                // console.log(refreshErr)
+                // localStorage.removeItem("refreshToken")
+                // localStorage.removeItem("accessToken")
+                // window.location.href = "/login"
+                // console.error(refreshErr)
+                // return Promise.reject(refreshErr)
             }
         }
         return Promise.reject(error)
