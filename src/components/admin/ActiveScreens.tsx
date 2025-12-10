@@ -77,7 +77,7 @@ function ActiveScreens(props: any) {
     return (
         <div className='grid grid-cols-5 gap-[12px] mt-6'>
             {activeScreens.map((screen: any) => (
-                <div key={screen._id} className='rounded-md bg-[#1e1e1e] h-[405px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
+                <div key={screen._id} className='rounded-md bg-[#1e1e1e] h-[360px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
                     <div className='h-[45%] relative overflow-hidden'>
                         <button onClick={(e) => { setActiveOptionsId(screen._id); e.stopPropagation(); }} className='absolute right-1 top-1 z-[50] w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
                             <svg className='w-4 h-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
@@ -86,6 +86,7 @@ function ActiveScreens(props: any) {
                                 <circle cx='12' cy='18' r='1.5' />
                             </svg>
                         </button>
+                        <p className={`absolute left-2 top-2 z-[50] text-[10px] text-black px-[9px] py-[3px] rounded-xl font-medium inline ${screen.status === 'ACTIVE' ? 'bg-green-500/20 text-green-500' : screen.status === 'UNAVAILABLE' ? 'bg-red-700/20 text-red-700' : screen.status === 'MAINTENANCE' ? 'bg-yellow-400/20 text-yellow-400' : 'bg-blue-400/20 text-blue-400'}`}>{capitalize(screen.status)}</p>
                         <div className='absolute inset-0 bg-gradient-to-t from-[#1e1e1e] via-transparent to-transparent z-[1]' />
                         <img src={screen.screenImageUrl} className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'></img>
                     </div>
@@ -95,7 +96,7 @@ function ActiveScreens(props: any) {
                             <div>
                                 <p className='text-[12px] text-[#999]'>Cinema: {screen.cinemaId.cinemaName}</p>
                                 <p className='text-[12px] text-[#999]'>Seats: {screen.numberOfSeats}</p>
-                                <p className={`text-[10.5px] text-black px-1 py-[1px] rounded-xs font-medium inline ${screen.status === 'ACTIVE' ? 'bg-[#0c9a8e]' : screen.status === 'UNAVAILABLE' ? 'bg-red-700' : screen.status === 'MAINTENANCE' ? 'bg-yellow-400' : 'bg-blue-400'}`}>{capitalize(screen.status)}</p>
+                                {/* <p className={`text-[10.5px] text-black px-1 py-[1px] rounded-xs font-medium inline ${screen.status === 'ACTIVE' ? 'bg-[#0c9a8e]' : screen.status === 'UNAVAILABLE' ? 'bg-red-700' : screen.status === 'MAINTENANCE' ? 'bg-yellow-400' : 'bg-blue-400'}`}>{capitalize(screen.status)}</p> */}
                             </div>
                             <div className='flex flex-wrap items-center gap-2 mt-2'>
                                 {screen.screenTypes.map((t: string, index: number) => (
