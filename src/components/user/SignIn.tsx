@@ -11,9 +11,17 @@ const SignIn: React.FC = (props: any) => {
         setTimeout(() => setIsVisible(true), 10);
     }, []);
 
-    function handleCloseSignInModel(){
+    function handleCloseSignInModel() {
         setIsVisible(false);
         setTimeout(() => props.setSignInVisible(false), 150);
+    }
+
+    function handleOpenSignUpModel() {
+        setIsVisible(false);
+        setTimeout(() => {
+            props.setSignUpVisible(true);
+            props.setSignInVisible(false);
+        }, 150);
     }
 
     return (
@@ -40,7 +48,7 @@ const SignIn: React.FC = (props: any) => {
 
                 <div className='-translate-y-1'>
                     <p className='font-[Poppins] text-[14.5px] text-[#999]'>Forgot password? <span className='text-red-700 cursor-pointer'>Get help now</span></p>
-                    <p className='font-[Poppins] text-[14.5px] text-[#999]'>Don't have an account? <span className='text-red-700 cursor-pointer'>Sign Up</span></p>
+                    <p className='font-[Poppins] text-[14.5px] text-[#999]'>Don't have an account? <span onClick={handleOpenSignUpModel} className='text-red-700 cursor-pointer'>Sign Up</span></p>
                 </div>
 
                 <div className='w-[440px] mt-14'>

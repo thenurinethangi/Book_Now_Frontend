@@ -210,7 +210,7 @@ function AdminHeroPosters() {
                     </div>
                     <button
                         onClick={() => setShowAddModal(true)}
-                        className="px-4 py-2 bg-transparent border-[1.5px] mt-1 border-[#2a2a2a] text-white/90 rounded text-[13px] font-medium transition-colors flex items-center gap-2"
+                        className="px-4 py-2 bg-transparent border border-gray-500 text-gray-200 rounded text-[13px] transition-colors flex items-center gap-2"
                     >
                         <Plus className="w-4 h-4" />
                         Add New Hero Poster
