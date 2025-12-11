@@ -14,6 +14,6 @@ export const getAllComingSoonMovies = async () => {
 
 export const getMovieDetails = async (id: string) => {
 
-    const res = await api.get('movie/'+id);
+    const res = await api.get('movie/' + id);
     return res;
 }

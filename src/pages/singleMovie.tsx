@@ -122,7 +122,7 @@ function SingleMovie() {
 
             </div>
 
-            <Showtimes />
+            <Showtimes id={id} />
 
             {/* Footer */}
             <Footer />

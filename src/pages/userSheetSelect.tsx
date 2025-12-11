@@ -36,53 +36,101 @@ import play1 from '../assets/images/play.png'
 import play2 from '../assets/images/play-button.png'
 import arrow from '../assets/images/play (5).png'
 import screen from '../assets/images/front-screen.svg'
+import Navigation from '../components/user/Navigation';
+import { useParams } from 'react-router-dom';
+import SignIn from '../components/user/SignIn';
+import SignUp from '../components/user/SignUp';
+import { getShowtimeDetailsById } from '../services/user/showtimeService';
 
 function UserSheetSelect() {
+
+    const { id } = useParams();
+
+    const [signInVisible, setSignInVisible] = useState(false);
+    const [signUpVisible, setSignUpVisible] = useState(false);
+
+    const [showtimeDeatils, setShowtimeDeatils] = useState<any>({});
+
+    useEffect(() => {
+        loadShowtimeDetails();
+    }, []);
+
+    async function loadShowtimeDetails() {
+        if (!id) {
+            //load error page
+            return;
+        }
+        try {
+            const res = await getShowtimeDetailsById(id);
+            console.log(res.data.data);
+            setShowtimeDeatils(res.data.data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    function formatToTime12h(dateString: string) {
+        const date = new Date(dateString);
+
+        return date.toLocaleString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+        });
+    }
+
+    function formatShowDate(dateStr: string) {
+        const slDate = new Date(
+            new Date(dateStr).toLocaleString("en-US", { timeZone: "Asia/Colombo" })
+        );
+
+        const todaySL = new Date(
+            new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" })
+        );
+
+        const isToday =
+            slDate.getFullYear() === todaySL.getFullYear() &&
+            slDate.getMonth() === todaySL.getMonth() &&
+            slDate.getDate() === todaySL.getDate();
+
+        if (isToday) {
+            return "Today";
+        }
+
+        return slDate.toLocaleDateString("en-GB", {
+            weekday: "short",
+            day: "2-digit",
+            month: "short"
+        }).replace(",", "");
+    }
+
 
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-50'>
 
             {/* navigation */}
-            <div className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
-                <div className='flex items-center gap-10'>
-                    <div className="flex items-center space-x-3 ml-4">
-                        <div className="flex items-center justify-center z-10">
-                            <img src={logo2} width={'80px'} alt="logo"></img>
-                        </div>
-                        {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[20px] font-[Luckiest Guy] font-medium -translate-x-18 z-1">
-                            <span className='text-[25px] font-[Luckiest Guy] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                        </span> */}
-                    </div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Movie</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Cinema</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Showtime</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>About Us</div>
-                </div>
-                <div className='flex items-center gap-5'>
-                    <Search className='w-[20px] h-[20px] cursor-pointer' />
-                    <User className='w-[18px] h-[18px] cursor-pointer' />
-                </div>
-            </div>
+            <Navigation setSignInVisible={setSignInVisible} />
 
             {/* hero */}
             <div className='relative w-full h-[320px] overflow-x-hidden overflow-y-auto'>
                 <div className='w-full h-full'>
-                    <img src={movie4} className='w-full h-full object-cover blur-xs'></img>
+                    <img src={showtimeDeatils.movieId?.bannerImageUrl} className='w-full h-full object-cover blur-xs'></img>
                 </div>
                 <div className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent flex justify-center items-end'>
                     <div className='flex items-start gap-5 pb-7'>
                         <div>
-                            <img src={poster1} width={'122px'} className='rounded-xs'></img>
+                            <img src={showtimeDeatils.movieId?.posterImageUrl} width={'122px'} className='rounded-xs'></img>
                         </div>
                         <div>
                             <p className='bg-blue-300 text-black mb-1.5 rounded-xs text-[10px] font-semibold p-1 inline'>PROCESSING</p>
-                            <p className='text-[29px] font-medium'>Zootopia 2</p>
-                            <p className='text-[15px]'>Skylight: <span>Skyline 01</span></p>
-                            <p className='text-[15px] mb-2'>Thu 27 Nov 09:00 AM</p>
+                            <p className='text-[29px] font-medium'>{showtimeDeatils.movieId?.title}</p>
+                            <p className='text-[15px]'>{showtimeDeatils.cinemaId?.cinemaName}: <span>{showtimeDeatils.screenId?.screenName}</span></p>
+                            <p className='text-[15px] mb-2'>{formatShowDate(showtimeDeatils.date)} {formatToTime12h(showtimeDeatils.time)}</p>
                             <div className='flex items-center gap-1 flex-wrap w-[80%]'>
-                                <p className='text-[12px] text-black/80 px-1 py-0.5 bg-gray-200 rounded-xs inline'>ODC Full: <span>1000LKR</span></p>
-                                <p className='text-[12px] text-black/80 px-1 py-0.5 bg-gray-200 rounded-xs inline'>ODC Half: <span>700LKR</span></p>
-                                <p className='text-[12px] text-black/80 px-1 py-0.5 bg-gray-200 rounded-xs inline'>BOX: <span>2500LKR</span></p>
+                                {Object.keys(showtimeDeatils.ticketPrices ?? {}).map((key: string, index: number) => (
+                                    <p className='text-[12px] text-black/80 px-1 py-0.5 bg-gray-200 rounded-xs inline'>{key}: <span>{showtimeDeatils.ticketPrices[key]}</span></p>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -233,6 +281,12 @@ function UserSheetSelect() {
                 </div>
 
             </div>
+
+            {/* sign in model */}
+            {signInVisible ? <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* sign up model */}
+            {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
 
         </div>
     )
