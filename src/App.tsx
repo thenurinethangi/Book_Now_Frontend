@@ -65,7 +65,7 @@ function App() {
           <Route path='/admin/booking' element={<AdminBooking />}></Route>
           <Route path='/admin/genre' element={<AdminGenre />}></Route>
           <Route path='/' element={<Home />}></Route>
-          <Route path='/single/movie' element={<SingleMovie />}></Route>
+          <Route path='/single/movie/:id' element={<SingleMovie />}></Route>
           <Route path='/sheet' element={<UserSheetSelect />}></Route>
           <Route path='/ticket' element={<UserTicketSelect />}></Route>
           <Route path='/user/signin' element={<UserSignin />}></Route>

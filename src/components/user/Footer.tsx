@@ -20,11 +20,11 @@ function Footer() {
                             Empowering users with a cutting edge digital platform for booking movie tickets.
                         </p>
                         <div className="flex space-x-3">
-                            {[Facebook, Twitter, Instagram, Youtube].map((Icon, index) => (
-                                <a key={index} href="#" className="w-9 h-9 bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-full flex items-center justify-center transition-all duration-300 group">
+                            {/* {[Facebook, Twitter, Instagram, Youtube].map((Icon, index) => (
+                                <a key={index} href="#" className="w-[33px] h-[33px] bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
                                     <Icon className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
                                 </a>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
 

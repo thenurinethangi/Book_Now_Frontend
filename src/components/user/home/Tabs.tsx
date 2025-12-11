@@ -2,13 +2,13 @@ import React from 'react'
 import { MdGridView, MdViewList } from "react-icons/md";
 import { BiSortAlt2 } from "react-icons/bi";
 
-function Tabs() {
+function Tabs(props: any) {
 
     return (
         <div className='mt-7 px-15 flex justify-between items-center'>
             <div className='flex items-center'>
-                <div className='px-2.5 pb-2 opacity-95 text-[22px] font-medium border-b-2 border-[#ff2e38]'>Now Showing</div>
-                <div className='px-2.5 pb-2 opacity-70 text-[22px] font-medium'>Coming Soon</div>
+                <div onClick={(e) => props.setTab('Now Showing')} className={`px-2.5 pb-2 text-[22px] font-medium cursor-pointer ${props.tab === 'Now Showing' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Now Showing</div>
+                <div onClick={(e) => props.setTab('Coming Soon')} className={`px-2.5 pb-2 opacity-70 text-[22px] font-medium cursor-pointer ${props.tab === 'Coming Soon' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Coming Soon</div>
             </div>
             <div className='flex items-center gap-5'>
                 <div className='relative'>

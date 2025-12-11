@@ -44,6 +44,7 @@ function RequestedMovies() {
         formats: [],
         directors: [],
         production: [],
+        cast: [],
         posterImageUrl: '',
         bannerImageUrl: '',
         trailerUrl: '',
@@ -96,6 +97,7 @@ function RequestedMovies() {
             formats: [],
             directors: request.directors,
             production: [],
+            cast: [],
             posterImageUrl: '',
             bannerImageUrl: '',
             trailerUrl: request.trailerUrl,
@@ -131,6 +133,7 @@ function RequestedMovies() {
         data.append('formats', JSON.stringify(formData.formats));
         data.append('directors', JSON.stringify(formData.directors));
         data.append('production', JSON.stringify(formData.production));
+        data.append('cast', JSON.stringify(formData.cast));
         data.append('posterImageUrl', posterImage);
         data.append('bannerImageUrl', bannerImage);
         data.append('trailerUrl', formData.trailerUrl);
@@ -470,6 +473,21 @@ function RequestedMovies() {
                                             }
                                             className="w-full bg-[#151515] border border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-white focus:outline-none focus:border-[#f5cc50]"
                                             placeholder="e.g., Warner Bros, Legendary"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[12px] text-[#aaa] mb-1.5 block">
+                                            Cast * (comma separated)
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={formData.cast.join(", ")}
+                                            onChange={(e) =>
+                                                handleArrayInput("cast", e.target.value)
+                                            }
+                                            className="w-full bg-[#151515] border border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-white focus:outline-none focus:border-[#f5cc50]"
+                                            placeholder="e.g., Jason Bateman, Sam Smith"
                                         />
                                     </div>
 

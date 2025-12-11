@@ -14,7 +14,7 @@ export const addNewHeroPoster = async (formdata: FormData) => {
 
 export const getAllHeros = async () => {
 
-    const res = await api.get('/hero/all', { withCredentials: true });
+    const res = await api.get('/hero/all/admin', { withCredentials: true });
     return res;
 }
 

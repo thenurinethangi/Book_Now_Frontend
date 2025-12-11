@@ -34,48 +34,84 @@ import { MdPlayArrow, MdPlayCircleFilled, MdPlayCircle } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import play1 from '../assets/images/play.png'
 import play2 from '../assets/images/play-button.png'
+import Navigation from '../components/user/Navigation';
+import SignIn from '../components/user/SignIn';
+import SignUp from '../components/user/SignUp';
+import TrailerModal from '../components/user/Movie/TrailerModel';
+import { useParams } from 'react-router-dom';
+import { getMovieDetails } from '../services/user/movieService';
 
 function SingleMovie() {
+
+    const { id } = useParams();
+
+    const [signInVisible, setSignInVisible] = useState(false);
+    const [signUpVisible, setSignUpVisible] = useState(false);
+    const [trailerVisible, setTrailerVisible] = useState(false);
+
+    const [movie, setMovie] = useState<any>({});
+
+    useEffect(() => {
+        loadMovieDetails();
+    }, []);
+
+    async function loadMovieDetails() {
+        if (!id) {
+            //show not found page
+            return;
+        }
+
+        try {
+            const res = await getMovieDetails(id);
+            console.log(res.data.data);
+            setMovie(res.data.data);
+        }
+        catch (e) {
+            //show not found page
+            console.log(e);
+        }
+    }
+
+    function formatDate(dateStr: string) {
+        return new Date(dateStr).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        })
+    }
+
+    function arrayToCommaString(arr: string[] = []) {
+        return arr.join(", ");
+    }
+
 
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-50'>
 
             {/* navigation */}
-            <div className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
-                <div className='flex items-center gap-10'>
-                    <div className="flex items-center space-x-3 ml-4">
-                        <div className="flex items-center justify-center z-10">
-                            <img src={logo2} width={'80px'} alt="logo"></img>
-                        </div>
-                        {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[20px] font-[Luckiest Guy] font-medium -translate-x-18 z-1">
-                            <span className='text-[25px] font-[Luckiest Guy] font-medium'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                        </span> */}
-                    </div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Movie</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Cinema</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Showtime</div>
-                    <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>About Us</div>
-                </div>
-                <div className='flex items-center gap-5'>
-                    <Search className='w-[20px] h-[20px] cursor-pointer' />
-                    <User className='w-[18px] h-[18px] cursor-pointer' />
-                </div>
-            </div>
+            <Navigation setSignInVisible={setSignInVisible} />
 
             {/* hero */}
             <div className='relative w-full h-[500px] overflow-x-hidden overflow-y-auto'>
                 <div className='w-full h-full'>
-                    <img src={movie4} className='w-full h-full object-cover'></img>
+                    <img src={movie.bannerImageUrl} className='w-full h-full object-cover'></img>
                 </div>
-                <div className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/75 via-black/1 to-transparent flex justify-center items-center'>
-                    <img src={play1} width={'60px'}></img>
+                <div 
+                    className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/75 via-black/1 to-transparent flex justify-center items-center cursor-pointer group'
+                    onClick={() => setTrailerVisible(true)}
+                >
+                    <img 
+                        src={play1} 
+                        width={'60px'} 
+                        className='transition-all duration-300 group-hover:scale-110 group-hover:opacity-80'
+                    />
                 </div>
             </div>
 
             <div className='px-13 -translate-y-30 flex gap-10'>
                 <div className='mr-5'>
                     <div className="w-[200px] h-[300px] relative overflow-hidden">
-                        <img src={poster1} className="w-full h-full object-cover rounded-[1.5px]" />
+                        <img src={movie.posterImageUrl} className="w-full h-full object-cover rounded-[1.5px]" />
                         <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(0,0,0,0)_0%,_rgba(0,0,0,0.2)_100%)] transition-all duration-500"></div>
                     </div>
                     <div className='flex flex-col gap-2.5 mt-6'>
@@ -84,34 +120,34 @@ function SingleMovie() {
                 </div>
 
                 <div className='w-[60%] pt-23 flex flex-col items-start gap-4'>
-                    <h1 className='text-[32px] font-medium'>Zootopia 2</h1>
+                    <h1 className='text-[32px] font-medium'>{movie.title}</h1>
                     <div>
                         <p className='text-white/70 mb-[1px]'>DIRECTORS</p>
-                        <p className='text-[15px] tracking-normal text-white/95'>Byron Howard, Jared Bush</p>
+                        <p className='text-[15px] tracking-normal text-white/95'>{arrayToCommaString(movie.directors || [])}</p>
                     </div>
                     <div>
                         <p className='text-white/70 mb-[1px]'>CAST</p>
-                        <p className='text-[15px] leading-relaxed tracking-normal text-white/95'>Jason Bateman, Ginnifer Goodwin, Rolando Davila-Beltran, Fortune Feimster, Shakira , Ke Huy Quan</p>
+                        <p className='text-[15px] leading-relaxed tracking-normal text-white/95'>{arrayToCommaString(movie.cast || [])}</p>
                     </div>
                     <div>
                         <p className='text-white/70 mb-[1px]'>SYNOPSIS</p>
-                        <p className='text-[15px] leading-relaxed tracking-normal text-white/95'>Brave rabbit cop Judy Hopps and her friend, the fox Nick Wilde, team up again to crack a new case, the most perilous and intricate of their careers.</p>
+                        <p className='text-[15px] leading-relaxed tracking-normal text-white/95'>{movie.description}</p>
                     </div>
                 </div>
 
                 <div className='flex flex-col items-start gap-4 -translate-y-1 translate-x-3'>
                     <div>
                         <p className='text-white/80 mb-[1px]'>DUNTIME</p>
-                        <p className='text-[15px]'>120 min</p>
+                        <p className='text-[15px]'>{movie.duration}</p>
                     </div>
                     <div>
                         <p className='text-white/80 mb-[1px]'>RELEASE DATE</p>
-                        <p className='text-[15px]'>28 November 2025</p>
+                        <p className='text-[15px]'>{formatDate(movie.releaseDate)}</p>
                     </div>
                     <div className='flex flex-wrap gap-2'>
-                        <p className='text-[14px] px-1 py-px border border-white/70 rounded-xs'>Animation</p>
-                        <p className='text-[14px] px-1 py-px border border-white/70 rounded-xs'>Comedy</p>
-                        <p className='text-[14px] px-1 py-px border border-white/70 rounded-xs'>Family</p>
+                        {movie.genres?.map((genre: any, index: number) => (
+                            <p key={index} className='text-[14px] px-1 py-px border border-white/70 rounded-xs'>{genre}</p>
+                        ))}
                     </div>
                 </div>
 
@@ -238,6 +274,19 @@ function SingleMovie() {
                 </div>
 
             </div>
+
+            {/* Trailer Modal */}
+            <TrailerModal 
+                trailerUrl={movie.trailerUrl || ''} 
+                isVisible={trailerVisible} 
+                onClose={() => setTrailerVisible(false)} 
+            />
+
+            {/* sign in model */}
+            {signInVisible ? <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* sign up model */}
+            {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
 
         </div>
     )
