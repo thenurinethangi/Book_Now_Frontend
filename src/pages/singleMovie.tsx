@@ -1,37 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Search, User, Tags, Bookmark, ChevronLeft, ChevronRight, ListFilterPlus } from "lucide-react";
-import logo from '../assets/images/camera-roll-removebg-preview.png'
-import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
-import logo3 from '../assets/images/logo-2-removebg-preview.png'
-import movie1 from '../assets/images/movie-1.jpg'
-import movie2 from '../assets/images/movie-3.jpg'
-import movie3 from '../assets/images/movie-2.jpg'
-import movie4 from '../assets/images/movie-4.png'
-import movie5 from '../assets/images/movie-7.jpg'
-import movie6 from '../assets/images/movie-8.jpg'
-import trailer1 from '../assets/videos/AvatarFireAsh-Trailer.mp4'
-import trailer2 from '../assets/videos/WickedForGood-Trailer.mp4'
-import trailer3 from '../assets/videos/ZOOTOPIA-2-Trailer.mp4'
-import trailer4 from '../assets/videos/Conjuring4-Trailer.mp4'
-import trailer5 from '../assets/videos/PREDATOR-BADLANDS-Trailer.mp4'
-import {
-    SlidersHorizontal,
-    ArrowUpDown,
-    List,
-    Grid3x3
-} from "lucide-react";
-import { MdGridView } from "react-icons/md";
-import { MdViewList } from "react-icons/md";
-import { BiSortAlt2 } from "react-icons/bi";
-import { TbLayoutGrid } from "react-icons/tb";
-import poster1 from '../assets/images/zootopia-poster.jpg'
-import poster2 from '../assets/images/wicked-for-good-poster.jpg'
-import poster3 from '../assets/images/the-conjuring-last-rites-poster.jpg'
-import poster4 from '../assets/images/predator-badlands-poster.jpg'
-import { RiTicket2Line } from "react-icons/ri";
-import { AiOutlineHeart } from "react-icons/ai";
-import { MdPlayArrow, MdPlayCircleFilled, MdPlayCircle } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
 import play1 from '../assets/images/play.png'
 import play2 from '../assets/images/play-button.png'
 import Navigation from '../components/user/Navigation';
@@ -40,6 +7,8 @@ import SignUp from '../components/user/SignUp';
 import TrailerModal from '../components/user/Movie/TrailerModel';
 import { useParams } from 'react-router-dom';
 import { getMovieDetails } from '../services/user/movieService';
+import Footer from '../components/user/Footer';
+import Showtimes from '../components/user/Movie/Showtimes';
 
 function SingleMovie() {
 
@@ -86,7 +55,7 @@ function SingleMovie() {
 
 
     return (
-        <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-50'>
+        <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative'>
 
             {/* navigation */}
             <Navigation setSignInVisible={setSignInVisible} />
@@ -96,13 +65,13 @@ function SingleMovie() {
                 <div className='w-full h-full'>
                     <img src={movie.bannerImageUrl} className='w-full h-full object-cover'></img>
                 </div>
-                <div 
+                <div
                     className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/75 via-black/1 to-transparent flex justify-center items-center cursor-pointer group'
                     onClick={() => setTrailerVisible(true)}
                 >
-                    <img 
-                        src={play1} 
-                        width={'60px'} 
+                    <img
+                        src={play1}
+                        width={'60px'}
                         className='transition-all duration-300 group-hover:scale-110 group-hover:opacity-80'
                     />
                 </div>
@@ -153,133 +122,16 @@ function SingleMovie() {
 
             </div>
 
-            <div className='px-13 flex items-center justify-between'>
-                <div>
-                    <ChevronLeft />
-                </div>
-                <div className='flex items-center justify-between w-[85%]'>
-                    <div className='text-[#BDBDBD]'>TODAY</div>
-                    <div className='border-b-4 border-b-red-500 pb-3.5 px-3 text-red-600'>Thu 27 Nov</div>
-                    <div>Fri 28 Nov</div>
-                    <div>Sat 29 Nov</div>
-                    <div>Sun 30 Nov</div>
-                    <div>Mon 1 Dec</div>
-                    <div>Tue 2 Dec</div>
-                </div>
-                <div>
-                    <ChevronRight />
-                </div>
-            </div>
+            <Showtimes />
 
-            <div className='px-14.5 flex flex-col gap-[3px] mt-8'>
-                <hr className='border-red-400/20'></hr>
-                <hr className='border-red-400/20'></hr>
-            </div>
-
-            <div className='mt-6 flex justify-end items-start px-14'>
-                <ListFilterPlus className='w-5.5 h-5.5 text-white/95' />
-            </div>
-
-            <div className='px-14 mt-2'>
-                {/* single cinema show time */}
-                <div className='flex items-center gap-5 mb-7'>
-                    <div className='w-[25%]'>
-                        <p className='text-[16.8px] font-normal'>Bankstown: Screen 01</p>
-                    </div>
-                    <div className='flex items-center gap-5'>
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* single cinema show time */}
-                <div className='flex items-center gap-5 mb-7'>
-                    <div className='w-[25%]'>
-                        <p className='text-[16.8px] font-normal'>Sundawn SX</p>
-                    </div>
-                    <div className='flex items-center gap-5'>
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* single cinema show time */}
-                <div className='flex items-center gap-5 mb-7'>
-                    <div className='w-[25%]'>
-                        <p className='text-[16.8px] font-normal'>Scope: CCS</p>
-                    </div>
-                    <div className='flex items-center gap-5'>
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* single cinema show time */}
-                <div className='flex items-center gap-5 mb-7'>
-                    <div className='w-[25%]'>
-                        <p className='text-[16.8px] font-normal'>Skylight 3D</p>
-                    </div>
-                    <div className='flex items-center gap-5'>
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-
-                        <div className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
-                            <p className='px-1.5 text-[23px] font-medium'>09:00</p>
-                            <button className='text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            {/* Footer */}
+            <Footer />
 
             {/* Trailer Modal */}
-            <TrailerModal 
-                trailerUrl={movie.trailerUrl || ''} 
-                isVisible={trailerVisible} 
-                onClose={() => setTrailerVisible(false)} 
+            <TrailerModal
+                trailerUrl={movie.trailerUrl || ''}
+                isVisible={trailerVisible}
+                onClose={() => setTrailerVisible(false)}
             />
 
             {/* sign in model */}
