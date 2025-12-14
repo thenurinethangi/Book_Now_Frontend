@@ -2,13 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import logo from '../assets/images/camera-roll-removebg-preview.png'
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
+import { getAllCinemas } from '../services/user/cinemaService';
 
 const UserSignup: React.FC = () => {
+
     const [isVisible, setIsVisible] = useState(false);
+
+    const [cinemaList, setCinemaList] = useState([]);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [postCode, setPostCode] = useState('');
+    const [gender, setGender] = useState('');
+    const [primaryCinema, setPrimaryCinema] = useState('');
 
     useEffect(() => {
         setIsVisible(true);
+        loadAllCinemas();
     }, []);
+
+    async function loadAllCinemas() {
+        try {
+            const res = await getAllCinemas();
+            console.log(res.data.data);
+            setCinemaList(res.data.data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <div className="min-h-screen w-screen bg-[#121212] text-white overflow-x-hidden flex justify-end items-center">
@@ -20,9 +46,6 @@ const UserSignup: React.FC = () => {
                     <div className="flex items-center justify-center z-10">
                         <img src={logo2} width={'120px'}></img>
                     </div>
-                    {/* <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[25px] font-[Luckiest Guy] font-semibold -translate-x-20 z-0">
-                        <span className='text-[29px] font-[Luckiest Guy] font-semibold'>B</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOKNOW
-                    </span> */}
                 </div>
 
                 <div>

@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 import { Link, useNavigate } from 'react-router-dom';
+import { signIn } from '../../services/user/authService';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 const SignIn: React.FC = (props: any) => {
 
+    const navigate = useNavigate();
+
     const [isVisible, setIsVisible] = useState(false);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         setTimeout(() => setIsVisible(true), 10);
@@ -24,6 +32,47 @@ const SignIn: React.FC = (props: any) => {
         }, 150);
     }
 
+    async function handleSignIn(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const formdata = new FormData();
+        formdata.append('email', email);
+        formdata.append('password', password);
+        formdata.append('role', 'USER');
+
+        try {
+            const res = await signIn(formdata);
+            localStorage.setItem('accessToken', res.data.data);
+
+            setIsVisible(false);
+            setTimeout(() => {
+                props.setSignInVisible(false);
+                props.setUserEmail('');
+            }, 150);
+            toast.success('Successfully Sign In!');
+        }
+        catch (err: unknown) {
+            if (err instanceof AxiosError) {
+                toast.error(err.response?.data?.message);
+
+                if (
+                    err.response?.status === 401 &&
+                    err.response?.data?.message === 'Authentication failed, verify your email!'
+                ) {
+                    setIsVisible(false);
+                    setTimeout(() => {
+                        props.setSignInVisible(false);
+                        props.setOtpVisible(true);
+                        props.setUserEmail(err.response?.data?.data?.email);
+                    }, 150);
+                }
+            } else {
+                console.error(err);
+                toast.error("Something went wrong");
+            }
+        }
+    }
+
     return (
         <div className={`fixed inset-0 w-screen h-screen bg-black/40 backdrop-blur-md flex justify-end items-center z-[100] transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
             <div className={`h-screen py-10 px-7 bg-black shadow-2xl rounded-lg flex flex-col justify-start items-center gap-5 relative transition-transform duration-300 ${isVisible ? "translate-x-0" : "translate-x-20"}`}>
@@ -40,9 +89,9 @@ const SignIn: React.FC = (props: any) => {
                     <p className='text-[20px] font-[Poppins] font-medium mb-0.5'>Sign in to your account</p>
                 </div>
 
-                <form className='flex flex-col gap-4 font-[Poppins]'>
-                    <input type='email' placeholder='Email' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
-                    <input type='password' placeholder='Password' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                <form onSubmit={handleSignIn} className='flex flex-col gap-4 font-[Poppins]'>
+                    <input onChange={(e) => setEmail(e.target.value)} value={email} type='email' placeholder='Email' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                    <input onChange={(e) => setPassword(e.target.value)} value={password} type='password' placeholder='Password' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
                     <button className='w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3 cursor-pointer'>Sign in</button>
                 </form>
 

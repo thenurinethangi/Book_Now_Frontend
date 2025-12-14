@@ -258,22 +258,22 @@ function AddShowtime(props: any) {
                             {selectedScreenData?.seatTypes?.map((type: string) => (
                                 type.toLowerCase() !== "box" ? (
                                     <>
-                                        <div key={type + "-full"}>
+                                        <div key={type + "-Full"}>
                                             <label className="mb-1.5 block text-sm text-gray-500 dark:text-gray-400">
                                                 {type} Full
                                             </label>
-                                            <input onChange={handlePrices} data-type={type + '-full'}
+                                            <input onChange={handlePrices} data-type={type + '-Full'}
                                                 className="bg-[#121212] border border-gray-700 h-11 w-full rounded-lg px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0"
                                                 type="text"
                                                 placeholder={`Enter ${type} full price (LKR)`}
                                             />
                                         </div>
 
-                                        <div key={type + "-half"}>
+                                        <div key={type + "-Half"}>
                                             <label className="mb-1.5 block text-sm text-gray-500 dark:text-gray-400">
                                                 {type} Half
                                             </label>
-                                            <input onChange={handlePrices} data-type={type + '-half'}
+                                            <input onChange={handlePrices} data-type={type + '-Half'}
                                                 className="bg-[#121212] border border-gray-700 h-11 w-full rounded-lg px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0"
                                                 type="text"
                                                 placeholder={`Enter ${type} half price (LKR)`}

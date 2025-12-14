@@ -2,14 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 import { Link } from 'react-router-dom';
+import { getAllCinemas } from '../../services/user/cinemaService';
+import { signUp } from '../../services/user/authService';
 
 const SignUp = (props: any) => {
 
     const [isVisible, setIsVisible] = useState(false);
 
+    const [cinemaList, setCinemaList] = useState([]);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [postCode, setPostCode] = useState('');
+    const [gender, setGender] = useState('');
+    const [primaryCinema, setPrimaryCinema] = useState('');
+
     useEffect(() => {
+        loadAllCinemas();
         setTimeout(() => setIsVisible(true), 10);
     }, []);
+
+    async function loadAllCinemas() {
+        try {
+            const res = await getAllCinemas();
+            console.log(res.data.data);
+            setCinemaList(res.data.data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     function handleCloseSignUpModel() {
         setIsVisible(false);
@@ -22,6 +48,36 @@ const SignUp = (props: any) => {
             props.setSignInVisible(true);
             props.setSignUpVisible(false);
         }, 150);
+    }
+
+    async function handleUserSignUp(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const formdata = new FormData();
+        formdata.append('email', email);
+        formdata.append('password', password);
+        formdata.append('firstName', firstName);
+        formdata.append('lastName', lastName);
+        formdata.append('mobile', mobile);
+        formdata.append('dateOfBirth', dateOfBirth);
+        formdata.append('postCode', postCode);
+        formdata.append('gender', gender);
+        formdata.append('primaryCinema', primaryCinema);
+
+        try {
+            const res = await signUp(formdata);
+            console.log(res.data.data);
+
+            setIsVisible(false);
+            setTimeout(() => {
+                props.setSignUpVisible(false);
+                props.setUserEmail(res.data.data.email);
+                props.setOtpVisible(true);
+            }, 150);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -40,39 +96,40 @@ const SignUp = (props: any) => {
                     <p className='text-[20px] font-[Poppins] font-medium mb-0.5'>Create a new account</p>
                 </div>
 
-                <form className='flex flex-col gap-4 font-[Poppins]'>
-                    <input type='email' placeholder='Email' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                <form onSubmit={handleUserSignUp} className='flex flex-col gap-4 font-[Poppins]'>
+                    <input onChange={(e) => setEmail(e.target.value)} value={email} type='email' placeholder='Email' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
                     <div>
-                        <input type='password' placeholder='Password' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                        <input onChange={(e) => setPassword(e.target.value)} value={password} type='password' placeholder='Password' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
                         <p className='text-[12px] text-[#9E9E9E] mt-1.5 mb-0.5'>Minimum of 6 characters</p>
                     </div>
-                    <input type='text' placeholder='First name' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
-                    <input type='text' placeholder='Last name' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
-                    <input type='text' placeholder='Phone no' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                    <input onChange={(e) => setFirstName(e.target.value)} value={firstName} type='text' placeholder='First name' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                    <input onChange={(e) => setLastName(e.target.value)} value={lastName} type='text' placeholder='Last name' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                    <input onChange={(e) => setMobile(e.target.value)} value={mobile} type='text' placeholder='Phone no' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
                     <div className='flex items-center gap-2'>
-                        <input type='text' placeholder='Date of birth(MM/YYYY)' className='w-[215px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
-                        <input type='text' placeholder='Post code' className='w-[215px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                        <input onChange={(e) => setDateOfBirth(e.target.value)} value={dateOfBirth} type='text' placeholder='Date of birth(MM/YYYY)' required className='w-[215px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                        <input onChange={(e) => setPostCode(e.target.value)} value={postCode} type='text' placeholder='Post code' required className='w-[215px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
                     </div>
                     <div className='mt-3'>
                         <p className='text-[14px] text-white/90 mb-4'>How do you identify?</p>
-                        <label className='text-[14.5px] block flex items-center gap-4 mb-3'><input type="radio" name="gender" value="female" className="sex w-[22px] h-[22px] bg-[#353535]" /> Female</label>
-                        <label className='text-[14.5px] block flex items-center gap-4 mb-3'><input type="radio" name="gender" value="male" className="sex w-[22px] h-[22px] bg-[#353535]" /> Male</label>
-                        <label className='text-[14.5px] block flex items-center gap-4 mb-3'><input type="radio" name="gender" value="other" className="sex w-[22px] h-[22px] bg-[#353535]" /> Other</label>
+                        <label className='text-[14.5px] block flex items-center gap-4 mb-3'><input onChange={(e) => setGender(e.target.value)} type="radio" name="gender" value="female" required className="sex w-[22px] h-[22px] bg-[#353535]" /> Female</label>
+                        <label className='text-[14.5px] block flex items-center gap-4 mb-3'><input onChange={(e) => setGender(e.target.value)} type="radio" name="gender" value="male" required className="sex w-[22px] h-[22px] bg-[#353535]" /> Male</label>
+                        <label className='text-[14.5px] block flex items-center gap-4 mb-3'><input onChange={(e) => setGender(e.target.value)} type="radio" name="gender" value="other" required className="sex w-[22px] h-[22px] bg-[#353535]" /> Other</label>
                     </div>
                     <div className='mt-0.5'>
-                        <select className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'>
-                            <option>Preferred cinema</option>
-                            <option>1</option>
-                            <option>2</option>
+                        <select onChange={(e) => setPrimaryCinema(e.target.value)} value={primaryCinema} required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'>
+                            <option value={''}>Preferred cinema</option>
+                            {cinemaList.map((cinema: any, index: number) => (
+                                <option key={index} value={cinema.cinemaName}>{cinema.cinemaName}</option>
+                            ))}
                         </select>
                     </div>
                     <div className='w-[440px] mt-5 mb-4 flex flex-col gap-2.5'>
                         <div className='flex items-start gap-3'>
-                            <input type='checkbox' className='w-5 h-5'></input>
+                            <input type='checkbox' required className='w-5 h-5'></input>
                             <p className='text-[14.5px] text-[#9E9E9E]'>Yes, I would like to receive offers from SYNEMA</p>
                         </div>
                         <div className='flex items-start gap-3'>
-                            <input type='checkbox' className='w-6 h-6'></input>
+                            <input type='checkbox' required className='w-6 h-6'></input>
                             <p className='text-[14.5px] text-[#9E9E9E]'>I have read and agree to the Terms & Conditions and Privacy Policy</p>
                         </div>
                     </div>

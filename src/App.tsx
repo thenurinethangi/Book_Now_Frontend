@@ -42,6 +42,8 @@ import OTPModel from './components/cinema/OTPModel';
 import RowColQsModel from './components/cinema/RowColQsMpdel';
 import Temp from './pages/temp';
 import AdminHeroPosters from './pages/adminHero';
+import Payment from './components/user/booking/Payment';
+import PaymentTwo from './components/user/booking/py';
 
 function App() {
 
@@ -86,6 +88,7 @@ function App() {
           <Route path='/cinema/movie/request' element={<CinemaRequestMovie />}></Route>
           <Route path='/otp' element={<OTPModel />}></Route>
           <Route path='/admin/hero' element={<AdminHeroPosters />}></Route>
+          <Route path='/payment' element={<PaymentTwo />}></Route>
         </Routes>
       </BrowserRouter>
     </>

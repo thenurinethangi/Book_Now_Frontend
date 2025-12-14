@@ -4,11 +4,11 @@ import play2 from '../assets/images/play-button.png'
 import Navigation from '../components/user/Navigation';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
-import TrailerModal from '../components/user/Movie/TrailerModel';
+import TrailerModal from '../components/user/movie/TrailerModel';
 import { useParams } from 'react-router-dom';
 import { getMovieDetails } from '../services/user/movieService';
 import Footer from '../components/user/Footer';
-import Showtimes from '../components/user/Movie/Showtimes';
+import Showtimes from '../components/user/movie/Showtimes';
 
 function SingleMovie() {
 

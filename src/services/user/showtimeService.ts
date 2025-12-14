@@ -11,3 +11,9 @@ export const getShowtimeDetailsById = async (id: string) => {
     const res = await api.get('/showtime/'+id);
     return res;
 }
+
+export const getUnavailableSeats = async (id: string) => {
+
+    const res = await api.get('/showtime/bookings/'+id);
+    return res;
+}

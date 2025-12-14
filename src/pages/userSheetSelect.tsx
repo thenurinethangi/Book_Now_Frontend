@@ -1,55 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Search, User, Tags, Bookmark, ChevronLeft, ChevronRight, ListFilterPlus } from "lucide-react";
-import logo from '../assets/images/camera-roll-removebg-preview.png'
-import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
-import logo3 from '../assets/images/logo-2-removebg-preview.png'
-import movie1 from '../assets/images/movie-1.jpg'
-import movie2 from '../assets/images/movie-3.jpg'
-import movie3 from '../assets/images/movie-2.jpg'
-import movie4 from '../assets/images/movie-4.png'
-import movie5 from '../assets/images/movie-7.jpg'
-import movie6 from '../assets/images/movie-8.jpg'
-import trailer1 from '../assets/videos/AvatarFireAsh-Trailer.mp4'
-import trailer2 from '../assets/videos/WickedForGood-Trailer.mp4'
-import trailer3 from '../assets/videos/ZOOTOPIA-2-Trailer.mp4'
-import trailer4 from '../assets/videos/Conjuring4-Trailer.mp4'
-import trailer5 from '../assets/videos/PREDATOR-BADLANDS-Trailer.mp4'
-import {
-    SlidersHorizontal,
-    ArrowUpDown,
-    List,
-    Grid3x3
-} from "lucide-react";
-import { MdGridView } from "react-icons/md";
-import { MdViewList } from "react-icons/md";
-import { BiSortAlt2 } from "react-icons/bi";
-import { TbLayoutGrid } from "react-icons/tb";
-import poster1 from '../assets/images/zootopia-poster.jpg'
-import poster2 from '../assets/images/wicked-for-good-poster.jpg'
-import poster3 from '../assets/images/the-conjuring-last-rites-poster.jpg'
-import poster4 from '../assets/images/predator-badlands-poster.jpg'
-import { RiTicket2Line } from "react-icons/ri";
-import { AiOutlineHeart } from "react-icons/ai";
-import { MdPlayArrow, MdPlayCircleFilled, MdPlayCircle } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
-import play1 from '../assets/images/play.png'
-import play2 from '../assets/images/play-button.png'
+import React, { useState, useEffect } from 'react'
+import { X, Check } from "lucide-react";
 import arrow from '../assets/images/play (5).png'
-import screen from '../assets/images/front-screen.svg'
 import Navigation from '../components/user/Navigation';
 import { useParams } from 'react-router-dom';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
-import { getShowtimeDetailsById } from '../services/user/showtimeService';
+import { getShowtimeDetailsById, getUnavailableSeats } from '../services/user/showtimeService';
+import UserTicketSelect from './userTicketSelect';
+import OTPModel from '../components/user/OTPModel';
+import Payment from '../components/user/booking/Payment';
+import { Elements } from '@stripe/react-stripe-js';
+import { stripePromise } from '../config/stripe';
 
 function UserSheetSelect() {
 
     const { id } = useParams();
 
+    const alphabetUpper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    const pastelColors = ["border-[#FFB3BA] bg-[#FFB3BA]", "border-[#FFDFBA] bg-[#FFDFBA]", "border-[#FFFFBA] bg-[#FFFFBA]", "border-[#BAFFC9] bg-[#BAFFC9]", "border-[#BAE1FF] bg-[#BAE1FF]", "border-[#E2BAFF] bg-[#E2BAFF]", "border-[#FFD6E0] bg-[#FFD6E0]", "border-[#D6F5FF] bg-[#D6F5FF]", "border-[#E8FFD6] bg-[#E8FFD6]", "border-[#F3D9FF] bg-[#F3D9FF]", "border-[#FFF0D9] bg-[#FFF0D9]", "border-[#D9FFF8] bg-[#D9FFF8]"];
+
+    const [activeTab, setActiveTab] = useState('Seats');
+
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 
     const [showtimeDeatils, setShowtimeDeatils] = useState<any>({});
+    const [seatTypes, setSeatTypes] = useState<any>([]);
+    const [unavailableSeats, setUnavailableSeats] = useState<any>([]);
+    const [selectedSeats, setSelectedSeats] = useState<any>([]);
+    const [selectedSeatsTypes, setSelectedSeatsTypes] = useState<any>([]);
+
+    const [choosedTicketTypesCount, setChoosedTicketTypesCount] = useState<any>(null);
+    const [totalPayable, setTotalPayable] = useState<any>('');
 
     useEffect(() => {
         loadShowtimeDetails();
@@ -64,6 +48,32 @@ function UserSheetSelect() {
             const res = await getShowtimeDetailsById(id);
             console.log(res.data.data);
             setShowtimeDeatils(res.data.data);
+
+            let arr: any = [];
+            for (let i = 0; i < res.data.data.seats.length; i++) {
+                const row = res.data.data.seats[i];
+                for (let j = 0; j < row.length; j++) {
+                    const e = row[j];
+                    if (e && !arr.includes(e.type)) {
+                        arr.push(e.type);
+                    }
+                }
+            }
+            console.log(arr);
+            setSeatTypes(arr);
+
+            const res2 = await getUnavailableSeats(id);
+
+            let arr2 = [];
+            for (let i = 0; i < res2.data.datalength; i++) {
+                const e = res2.data.data[i];
+                for (let j = 0; j < e.seatsDetails.seats.length; j++) {
+                    const seatId = e.seatsDetails.seats[j];
+                    arr2.push(seatId);
+                }
+            }
+            console.log(arr2);
+            setUnavailableSeats(arr2);
         }
         catch (e) {
             console.log(e);
@@ -105,9 +115,87 @@ function UserSheetSelect() {
         }).replace(",", "");
     }
 
+    function getSeatColor(type: string) {
+        for (let i = 0; i < seatTypes.length; i++) {
+            const t = seatTypes[i];
+            if (t === type) {
+                return `border ${pastelColors[i]} hover:bg-red-500 hover:border-red-500`;
+            }
+        }
+        return 'border border-[#E0E0E0] bg-[#E0E0E0]';
+    }
+
+    function getSeatStyle(type: string) {
+        const index = seatTypes.indexOf(type);
+
+        if (index === -1) {
+            return {
+                border: "1px solid #E0E0E0",
+                backgroundColor: "#E0E0E0"
+            };
+        }
+
+        return {
+            border: `1px solid ${pastelColors[index]}`,
+            backgroundColor: pastelColors[index]
+        };
+    }
+
+    function checkAvailabilityOfASeat(seatId: string) {
+
+        if (unavailableSeats.includes(seatId)) {
+            return `border border-[#d8d8d8] bg-[#d8d8d8] pointer-events-none`;
+        }
+        return '';
+    }
+
+    function checkIsSeatSelect(seatId: string) {
+
+        if (selectedSeats.includes(seatId)) {
+            return `border border-red-500 bg-red-500`;
+        }
+        return '';
+    }
+
+    function handleSeatClick(e: React.MouseEvent<HTMLDivElement>) {
+        const seatStr: any = e.currentTarget.dataset.seat;
+        const seat = seatStr ? JSON.parse(seatStr) : null;
+
+        if (!seat) return;
+
+        const seatId = seat.id;
+        const seatType = seat.type;
+
+        const isSelected = selectedSeats.includes(seatId);
+
+        if (isSelected) {
+            setSelectedSeats(prev =>
+                prev.filter(id => id !== seatId)
+            );
+
+            setSelectedSeatsTypes(prev => {
+                const idx = prev.indexOf(seatType);
+                if (idx === -1) return prev;
+
+                const copy = [...prev];
+                copy.splice(idx, 1);
+                return copy;
+            });
+        }
+        else {
+            setSelectedSeats(prev => [...prev, seatId]);
+
+            setSelectedSeatsTypes(prev => [...prev, seatType]);
+        }
+    }
+
+    function handleShowTicketSelectTab() {
+        setActiveTab('Tickets');
+    }
+
 
     return (
-        <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-50'>
+        <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15'>
 
             {/* navigation */}
             <Navigation setSignInVisible={setSignInVisible} />
@@ -129,7 +217,7 @@ function UserSheetSelect() {
                             <p className='text-[15px] mb-2'>{formatShowDate(showtimeDeatils.date)} {formatToTime12h(showtimeDeatils.time)}</p>
                             <div className='flex items-center gap-1 flex-wrap w-[80%]'>
                                 {Object.keys(showtimeDeatils.ticketPrices ?? {}).map((key: string, index: number) => (
-                                    <p className='text-[12px] text-black/80 px-1 py-0.5 bg-gray-200 rounded-xs inline'>{key}: <span>{showtimeDeatils.ticketPrices[key]}</span></p>
+                                    <p key={index} className='text-[12px] text-black/80 px-1 py-0.5 bg-gray-200 rounded-xs inline'>{key}: <span>{showtimeDeatils.ticketPrices[key]}</span></p>
                                 ))}
                             </div>
                         </div>
@@ -137,156 +225,134 @@ function UserSheetSelect() {
                 </div>
             </div>
 
-            <div className='w-full h-[45px] bg-[#E0E0E0] flex items-center -translate-y-1'>
-                <div className='bg-[#1e1e1e] w-[25%] flex items-center justify-end'>
-                    <p className='w-[80%] text-center text-[14px] font-medium'>Seats</p>
-                    <img src={arrow} width={'45px'} className='translate-x-9'></img>
-                </div>
+            {activeTab === 'Seats' ?
+                <div>
+                    <div className='w-full h-[45px] bg-[#E0E0E0] flex items-center -translate-y-1'>
+                        <div className='bg-[#1e1e1e] w-[25%] flex items-center justify-end'>
+                            <p className='w-[80%] text-center text-[14px] font-medium'>Seats</p>
+                            <img src={arrow} width={'45px'} className='translate-x-9'></img>
+                        </div>
 
-                <div className='bg-[#E0E0E0] w-[25%] flex items-center justify-end'>
-                    <p className='w-[80%] text-center text-[14px] font-medium text-black'>Tickets</p>
-                    <img src={arrow} width={'45px'} className='translate-x-9 hidden'></img>
-                </div>
+                        <div className='bg-[#E0E0E0] w-[25%] flex items-center justify-end'>
+                            <p className='w-[80%] text-center text-[14px] font-medium text-black'>Tickets</p>
+                            <img src={arrow} width={'45px'} className='translate-x-9 hidden'></img>
+                        </div>
 
-                <div className='bg-[#E0E0E0] w-[25%] flex items-center justify-end'>
-                    <p className='w-[80%] text-center text-[14px] font-medium text-black'>Payment</p>
-                    <img src={arrow} width={'45px'} className='translate-x-9 hidden'></img>
-                </div>
+                        <div className='bg-[#E0E0E0] w-[25%] flex items-center justify-end'>
+                            <p className='w-[80%] text-center text-[14px] font-medium text-black'>Payment</p>
+                            <img src={arrow} width={'45px'} className='translate-x-9 hidden'></img>
+                        </div>
 
-                <div className='bg-[#E0E0E0] w-[25%] flex items-center justify-end'>
-                    <p className='w-[80%] text-center text-[14px] font-medium text-black'>Confirmation</p>
-                    <img src={arrow} width={'45px'} className='translate-x-9 hidden'></img>
-                </div>
-            </div>
-
-            <div className='px-15 mt-15 flex flex-col items-center'>
-                {/* screen */}
-                <div className="w-[50%] mx-auto">
-                    <svg width="100%" height="35" viewBox="0 0 600 35" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
-                        <defs>
-                            {/* Screen gradient matching #121212 environment */}
-                            <linearGradient id="screenDark212" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#2a2a2a" />
-                                <stop offset="100%" stopColor="#9E9E9E" />
-                            </linearGradient>
-
-                            {/* Glow tuned for #121212 background - more visible */}
-                            <radialGradient id="glow212" cx="50%" cy="0%" r="60%">
-                                <stop offset="0%" stopColor="#9E9E9E" stopOpacity="0.7" />
-                                <stop offset="50%" stopColor="#9E9E9E" stopOpacity="0.3" />
-                                <stop offset="100%" stopColor="transparent" />
-                            </radialGradient>
-                        </defs>
-
-                        {/* Ultra-thin curved cinema screen - much wider */}
-                        <path
-                            d="M10 8 Q300 4 590 8 L590 18 Q300 15 10 18 Z"
-                            fill="url(#screenDark212)"
-                            rx="12"
-                        />
-
-                        {/* Soft glow below screen - more visible */}
-                        <ellipse
-                            cx="300"
-                            cy="26"
-                            rx="280"
-                            ry="10"
-                            fill="url(#glow212)"
-                            opacity="0.9"
-                        />
-                    </svg>
-                </div>
-
-                {/* sheets */}
-                <div className='mt-15 grid grid-cols-1 gap-1.5'>
-                    {/* one row */}
-                    <div className='flex items-center gap-10'>
-                        {/* english char */}
-                        <div>A</div>
-                        {/* sheets box*/}
-                        <div className='flex items-center gap-1.5'>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
+                        <div className='bg-[#E0E0E0] w-[25%] flex items-center justify-end'>
+                            <p className='w-[80%] text-center text-[14px] font-medium text-black'>Confirmation</p>
+                            <img src={arrow} width={'45px'} className='translate-x-9 hidden'></img>
                         </div>
                     </div>
 
-                    {/* one row */}
-                    <div className='flex items-center gap-10'>
-                        {/* english char */}
-                        <div>A</div>
-                        {/* sheets box*/}
-                        <div className='flex items-center gap-1.5'>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
+                    <div className='px-15 mt-15 flex flex-col items-center'>
+                        {/* screen */}
+                        <div className="w-[50%] mx-auto">
+                            <svg width="100%" height="35" viewBox="0 0 600 35" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
+                                <defs>
+                                    {/* Screen gradient matching #121212 environment */}
+                                    <linearGradient id="screenDark212" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#2a2a2a" />
+                                        <stop offset="100%" stopColor="#9E9E9E" />
+                                    </linearGradient>
+
+                                    {/* Glow tuned for #121212 background - more visible */}
+                                    <radialGradient id="glow212" cx="50%" cy="0%" r="60%">
+                                        <stop offset="0%" stopColor="#9E9E9E" stopOpacity="0.7" />
+                                        <stop offset="50%" stopColor="#9E9E9E" stopOpacity="0.3" />
+                                        <stop offset="100%" stopColor="transparent" />
+                                    </radialGradient>
+                                </defs>
+
+                                {/* Ultra-thin curved cinema screen - much wider */}
+                                <path
+                                    d="M10 8 Q300 4 590 8 L590 18 Q300 15 10 18 Z"
+                                    fill="url(#screenDark212)"
+                                    rx="12"
+                                />
+
+                                {/* Soft glow below screen - more visible */}
+                                <ellipse
+                                    cx="300"
+                                    cy="26"
+                                    rx="280"
+                                    ry="10"
+                                    fill="url(#glow212)"
+                                    opacity="0.9"
+                                />
+                            </svg>
                         </div>
-                    </div>
 
-                    {/* one row */}
-                    <div className='flex items-center gap-10'>
-                        {/* english char */}
-                        <div>A</div>
-                        {/* sheets box*/}
-                        <div className='flex items-center gap-1.5'>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
+                        {/* sheets */}
+                        <div className='mt-15 grid grid-cols-1 gap-1.5'>
+                            {/* one row */}
+                            {showtimeDeatils.seats?.map((row: any, index: number) => (
+                                <div key={index} className='flex items-center gap-10'>
+                                    {/* english char */}
+                                    <div className='w-[17px]'>{alphabetUpper[index]}</div>
+                                    {/* sheets box*/}
+                                    <div className='flex items-center gap-1.5'>
+                                        {row.map((seat: any, index: number) => (
+                                            <div onClick={handleSeatClick} key={index} data-seat={JSON.stringify(seat)} className={`w-[22px] h-[22px] rounded-xs justify-center flex items-center transition-all duration-200 ${seat ? getSeatColor(seat.type) : 'border border-[#121212] bg-[#121212] opacity-0 invisible'} ${seat ? checkAvailabilityOfASeat(seat.id) : ''} ${seat ? checkIsSeatSelect(seat.id) : ''}`}>
+                                                <X className={`w-4.5 h-4.5 ${seat && checkAvailabilityOfASeat(seat.id) === 'border border-[#d8d8d8] bg-[#d8d8d8] pointer-events-none' ? '' : 'hidden'} `} />
+                                                <Check className={`w-4.5 h-4.5 ${seat && checkIsSeatSelect(seat.id) === 'border border-red-500 bg-red-500'  ? '' : 'hidden'}`} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    </div>
 
-                    {/* one row */}
-                    <div className='flex items-center gap-10'>
-                        {/* english char */}
-                        <div>A</div>
-                        {/* sheets box*/}
-                        <div className='flex items-center gap-1.5'>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                            <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
+                        {/* category */}
+                        <div className='mt-25 flex items-center gap-10 py-2 px-5 rounded-sm'>
+                            {seatTypes.map((type: any, index: number) => (
+                                <div key={type} className='flex items-center gap-3'>
+                                    <div className={`w-[22px] h-[22px] ${getSeatColor(type)} rounded-xs`}></div>
+                                    <p className='text-[13px]'>{type}</p>
+                                </div>
+                            ))}
+
+                            <div className='flex items-center gap-3'>
+                                <div className='w-[22px] h-[22px] border border-[#d8d8d8] bg-[#d8d8d8] rounded-xs flex justify-center items-center'>
+                                    <X className='w-4.5 h-4.5'></X>
+                                </div>
+                                <p className='text-[13px]'>Reserved</p>
+                            </div>
+
+                            <div className='flex items-center gap-3'>
+                                <div className='w-[22px] h-[22px] border border-red-500 bg-red-500 rounded-xs flex justify-center items-center'>
+                                    <Check className='w-4.5 h-4.5'></Check>
+                                </div>
+                                <p className='text-[13px]'>Selected</p>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
+                        <div className='mt-25'>
+                            <button onClick={handleShowTicketSelectTab} className='bg-red-500 p-2 rounded-sm'>Continue To Next {' -->'}</button>
+                        </div>
 
-                {/* category */}
-                <div className='mt-25 flex items-center gap-10 py-2 px-5 border border-gray-300 rounded-sm'>
-                    <div className='flex items-center gap-3'>
-                        <div className='w-[22px] h-[22px] border border-[#E0E0E0] bg-[#E0E0E0] rounded-xs'></div>
-                        <p className='text-[13px]'>Available</p>
-                    </div>
-
-                    <div className='flex items-center gap-3'>
-                        <div className='w-[22px] h-[22px] border border-red-500 bg-red-500 rounded-xs'></div>
-                        <p className='text-[13px]'>Reserved</p>
-                    </div>
-
-                    <div className='flex items-center gap-3'>
-                        <div className='w-[22px] h-[22px] border border-blue-300 bg-blue-300 rounded-xs'></div>
-                        <p className='text-[13px]'>Selected</p>
                     </div>
                 </div>
+                :
+                ''
+            }
 
-                <div className='mt-25'>
-                    <button className='bg-red-500 p-2 rounded-sm'>Continue To Next {' -->'}</button>
-                </div>
+            {activeTab === 'Tickets' ? <UserTicketSelect setActiveTab={setActiveTab} showtimeDeatils={showtimeDeatils} selectedSeats={selectedSeats} selectedSeatsTypes={selectedSeatsTypes} setChoosedTicketTypesCount={setChoosedTicketTypesCount} setTotalPayable={setTotalPayable} /> : ''}
 
-            </div>
+            {activeTab === 'Payment' ? <Elements stripe={stripePromise}><Payment setActiveTab={setActiveTab} showtimeDeatils={showtimeDeatils} selectedSeats={selectedSeats} choosedTicketTypesCount={choosedTicketTypesCount} totalPayable={totalPayable} /></Elements> : ''}
 
             {/* sign in model */}
-            {signInVisible ? <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+            {signInVisible ? <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} setOtpVisible={setOtpVisible} setUserEmail={setUserEmail} /> : ''}
 
             {/* sign up model */}
-            {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+            {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} setOtpVisible={setOtpVisible} setUserEmail={setUserEmail} /> : ''}
+
+            {/* otp model */}
+            {otpVisible ? <OTPModel setOtpVisible={setOtpVisible} userEmail={userEmail} setUserEmail={setUserEmail} setSignInVisible={setSignInVisible} /> : ''}
 
         </div>
     )
