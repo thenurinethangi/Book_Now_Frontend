@@ -44,6 +44,7 @@ import Temp from './pages/temp';
 import AdminHeroPosters from './pages/adminHero';
 import Payment from './components/user/booking/Payment';
 import PaymentTwo from './components/user/booking/py';
+import BookingFailure from './components/user/booking/BookingFailure';
 
 function App() {
 
@@ -89,6 +90,7 @@ function App() {
           <Route path='/otp' element={<OTPModel />}></Route>
           <Route path='/admin/hero' element={<AdminHeroPosters />}></Route>
           <Route path='/payment' element={<PaymentTwo />}></Route>
+          <Route path='/error/:id' element={<BookingFailure />}></Route>
         </Routes>
       </BrowserRouter>
     </>

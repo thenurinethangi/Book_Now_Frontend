@@ -3,8 +3,6 @@ import { CreditCard, Smartphone, Lock, CheckCircle2, AlertCircle } from 'lucide-
 import arrow from '../../../assets/images/play (5).png'
 import stripeIcon from '../../../assets/images/Stripe_Logo,_revised_2016.svg.png'
 import payhereIcon from '../../../assets/images/PayHere-Logo.png'
-import StripePayment from './StripePayment'
-import { loadStripe } from '@stripe/stripe-js'
 import { checkoutWithStripe } from '../../../services/user/paymentService'
 
 interface PaymentProps {
@@ -62,29 +60,25 @@ function UserPayment(props: PaymentProps) {
     async function handleStripePayment() {
         setSelectedPaymentMethod('stripe')
 
-        const stripe = await loadStripe('pk_test_51SeAORFveOGQqjkQSjGwFQDhgc91xwGBUEa3ndnbnqSoS5xA0O2Oo44Z3avK2tlD7CJS0bEWPo9h7aHp1GbmVOeK002FW8Tsvm');
-
         const data = {
-            choosedTicketTypesCount : props.choosedTicketTypesCount,
+            choosedTicketTypesCount: props.choosedTicketTypesCount,
             showtimeDeatils: props.showtimeDeatils,
             selectedSeats: props.selectedSeats,
             totalPayable: props.totalPayable
         }
-
         console.log(data);
 
-        try{
+        try {
             const res = await checkoutWithStripe(data);
             console.log(res.data.data);
 
-            if(res.data.data.success){
+            if (res.data.data.success) {
                 window.location.href = res.data.data.url
             }
         }
-        catch(e){
+        catch (e) {
             console.log(e);
         }
-
     }
 
     return (
@@ -232,8 +226,6 @@ function UserPayment(props: PaymentProps) {
                     </div>
                 </div>
             </div>
-
-            {selectedPaymentMethod === "stripe" ? <StripePayment /> : ''}
         </div>
     )
 }
