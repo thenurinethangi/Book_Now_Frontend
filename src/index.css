@@ -26,3 +26,23 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+@keyframes floatSlow {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes floatSlowDelay {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(14px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-floatSlow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-floatSlowDelay {
+  animation: floatSlowDelay 10s ease-in-out infinite;
+}

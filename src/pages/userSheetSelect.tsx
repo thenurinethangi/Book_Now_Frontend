@@ -63,16 +63,17 @@ function UserSheetSelect() {
             setSeatTypes(arr);
 
             const res2 = await getUnavailableSeats(id);
+            console.log('res2',res2.data.data);
 
             let arr2 = [];
-            for (let i = 0; i < res2.data.datalength; i++) {
+            for (let i = 0; i < res2.data.data.length; i++) {
                 const e = res2.data.data[i];
-                for (let j = 0; j < e.seatsDetails.seats.length; j++) {
-                    const seatId = e.seatsDetails.seats[j];
+                for (let j = 0; j < e.seatsDetails.length; j++) {
+                    const seatId = e.seatsDetails[j];
                     arr2.push(seatId);
                 }
             }
-            console.log(arr2);
+            console.log('-------',arr2);
             setUnavailableSeats(arr2);
         }
         catch (e) {

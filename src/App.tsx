@@ -45,6 +45,7 @@ import AdminHeroPosters from './pages/adminHero';
 import Payment from './components/user/booking/Payment';
 import PaymentTwo from './components/user/booking/py';
 import BookingFailure from './components/user/booking/BookingFailure';
+import BookingSuccess from './components/user/booking/BookingSuccess';
 
 function App() {
 
@@ -91,6 +92,7 @@ function App() {
           <Route path='/admin/hero' element={<AdminHeroPosters />}></Route>
           <Route path='/payment' element={<PaymentTwo />}></Route>
           <Route path='/error/:id' element={<BookingFailure />}></Route>
+          <Route path='/success/:id' element={<BookingSuccess />}></Route>
         </Routes>
       </BrowserRouter>
     </>
