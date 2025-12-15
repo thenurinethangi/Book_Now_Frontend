@@ -9,14 +9,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Inter:opsz,wght@14..32,100..900&family=Lato:wght@100;300;400;700;900&family=Luckiest+Guy&family=Merriweather+Sans:wght@300..800&family=Nunito:wght@200..1000&family=Pacifico&family=Playfair+Display:wght@400..900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100..900&family=Red+Hat+Display:wght@300..900&family=Roboto:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700&family=Silkscreen:wght@400;700&family=Source+Sans+3:wght@200..900&family=Urbanist:wght@100..900&display=swap');
 @import "tailwindcss";
 
-html{
-    /* overflow: hidden; */
+html {
+  /* overflow: hidden; */
 }
 
-body{
-    overflow-x: hidden;
-    overflow-y: auto;
-    /* overflow: hidden; */
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* overflow: hidden; */
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
@@ -28,15 +28,31 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @keyframes floatSlow {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes floatSlowDelay {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(14px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(14px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .animate-floatSlow {
@@ -45,4 +61,53 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .animate-floatSlowDelay {
   animation: floatSlowDelay 10s ease-in-out infinite;
+}
+
+@keyframes arrowDown {
+  0% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+}
+
+.animate-arrow-stem,
+.animate-arrow-head {
+  animation: arrowDown 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes errorRing {
+  from {
+    stroke-dashoffset: 283;
+    opacity: 0.4;
+  }
+
+  to {
+    stroke-dashoffset: 60;
+    opacity: 1;
+  }
+}
+
+.animate-error-ring {
+  animation: errorRing 1.2s ease-out forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+.animate-fall {
+    animation: fall linear infinite;
 }

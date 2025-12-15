@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { X, Check } from "lucide-react";
-import tk from "../../../assets/images/ticket-bg-removebg-preview.png";
+import tk from "../../../assets/images/blank-golden-coupon-or-ticket-golden-sticker-discount-illustration-vector-removebg-preview.png";
 import { useParams } from "react-router-dom";
 import Navigation from "../Navigation";
 import { getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
@@ -109,9 +109,9 @@ function BookingSuccess() {
                             }}
                         >
                             <div
-                                className="w-2.5 h-2.5 rounded-sm"
+                                className="w-2 h-2 rounded-full opacity-70"
                                 style={{
-                                    backgroundColor: ['#22c55e', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6'][Math.floor(Math.random() * 5)],
+                                    backgroundColor: ['#22c55e', '#ffffff', '#FFF9C4', '#FF8A65', '#8b5cf6'][Math.floor(Math.random() * 5)],
                                     transform: `rotate(${Math.random() * 360}deg)`
                                 }}
                             ></div>
@@ -202,48 +202,123 @@ function BookingSuccess() {
                     </div>
                 </div>
 
-                {/* Success Message with Animation */}
-                <div className="text-center pt-14 pb-6 px-4">
-                    <div className="inline-flex items-center justify-center mb-3">
-                        <div className="relative">
-                            <div className="w-18 h-18 relative animate-scale-in">
-                                <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-2xl">
-                                    <circle cx="50" cy="50" r="45" fill="rgba(34, 197, 94, 0.15)" className="animate-ping-slow" />
-                                    <circle cx="50" cy="50" r="40" fill="rgba(34, 197, 94, 0.2)" />
-                                    <circle cx="50" cy="50" r="38" stroke="#22c55e" strokeWidth="3" fill="none" className="animate-draw-circle" />
-                                    <path
-                                        d="M30 50 L42 62 L70 34"
-                                        fill="none"
-                                        stroke="#22c55e"
-                                        strokeWidth="6"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="animate-draw-check"
-                                    />
-                                </svg>
-                            </div>
-                            {/* <div className="absolute -top-1 -right-1 w-5 h-5 text-yellow-400 animate-sparkle">✨</div>
-                            <div className="absolute -bottom-1 -left-1 w-5 h-5 text-yellow-400 animate-sparkle" style={{ animationDelay: '0.5s' }}>✨</div> */}
-                        </div>
-                    </div>
+                <div className="px-15 mt-20 mb-5 flex justify-center items-center">
+                    <div className="w-[420px] px-5 rounded-sm flex flex-col items-center bg-gradient-to-b from-[#1f1f1f] to-[#151515] shadow-[0_30px_80px_rgba(0,0,0,0.7)] px-6 pb-1 border-white/10">
 
-                    <h1 className="text-[28px] font-sans italic font-medium tracking-wide mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent animate-slide-up">
-                        Booking Confirmed!
-                    </h1>
-                    <p className="text-[15px] font-medium italic text-gray-400 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                        Your tickets are ready
-                    </p>
+                        {/* Animated Success Icon */}
+                        <div className="mx-auto mb-8 w-[96px] h-[96px] relative mt-5">
+                            <svg viewBox="0 0 100 100" className="w-full h-full">
+                                {/* Background ring */}
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="45"
+                                    stroke="rgba(34,197,94,0.25)"
+                                    strokeWidth="6"
+                                    fill="none"
+                                />
+
+                                {/* Animated ring */}
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="45"
+                                    stroke="#22c55e"
+                                    strokeWidth="6"
+                                    fill="none"
+                                    strokeDasharray="283"
+                                    strokeDashoffset="60"
+                                    className="animate-[dash_1.2s_ease-out_forwards]"
+                                />
+
+                                {/* Check mark */}
+                                <path
+                                    d="M34 52 L46 64 L68 38"
+                                    fill="none"
+                                    stroke="#22c55e"
+                                    strokeWidth="6"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </div>
+
+                        <div className="-translate-y-9 flex flex-col items-center mt-6">
+                            {/* <h2 className="text-[30px] font-light mb-2 tracking-wide font-[SourceSans]">
+                                2300 LKR
+                            </h2> */}
+                            <h2 className="text-[22px] font-medium mb-2 tracking-wide font-sans italic">
+                                Booking Successfull
+                            </h2>
+                            <p className="text-[13px] text-white/90 mb-8 text-center w-[85%] font-medium italic">
+                                Hey, seems like there was some trouble. We are there with you. just hold back
+                            </p>
+                            <p className="text-[12px] text-gray-400 mb-8 text-center">
+                                Payment ID: 123456789,24 Oct 2025-11:55PM
+                            </p>
+                            <p className="text-[13px] text-gray-400 mb-8 italic">
+                                Back to home page {'>'}
+                            </p>
+                        </div>
+
+                        {/* Animation */}
+                        <style jsx>{`
+    @keyframes dash {
+      from {
+        stroke-dashoffset: 283;
+      }
+      to {
+        stroke-dashoffset: 60;
+      }
+    }
+  `}</style>
+
+                    </div>
+                </div>
+
+                {/* <div className="mx-auto mt-10 translate-y-2.5">
+                    <p className="text-white/90 italic font-mono text-center text-[15px]">here is your ticket</p>
+                </div> */}
+
+                <div className="w-[40px] h-[80px] mx-auto">
+                    <svg
+                        viewBox="0 0 100 100"
+                        className="w-full h-full"
+                        fill="none"
+                    >
+                        {/* Arrow stem */}
+                        <line
+                            x1="50"
+                            y1="20"
+                            x2="50"
+                            y2="60"
+                            stroke="currentColor"
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            className="animate-arrow-stem"
+                        />
+
+                        {/* Arrow head */}
+                        <polyline
+                            points="35,50 50,65 65,50"
+                            stroke="currentColor"
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="animate-arrow-head"
+                        />
+                    </svg>
                 </div>
 
                 {/* Ticket Section */}
-                <div className="px-15 mt-6 mb-5 flex justify-center items-center">
+                <div className="px-15 mt-5 mb-7 flex justify-center items-center">
                     <div className="px-5 rounded-sm flex flex-col items-center relative">
 
                         {/* Your exact ticket design */}
                         <div className="mx-auto mb-6 relative w-[730px] h-[293px] z-10 animate-fade-in bg-transparent" style={{ animationDelay: '0.3s' }}>
                             <img src={tk} className="w-full h-full object-cover opacity-80" alt="ticket" />
 
-                            <div className="absolute top-0 left-0 right-0 bottom-0 flex font-mono" style={{ padding: '55px 70px 55px 90px' }}>
+                            <div className="absolute top-0 left-0 right-0 bottom-0 flex font-mono" style={{ padding: '40px 20px 40px 70px' }}>
                                 <div className="flex-1 flex flex-col justify-between pr-6">
                                     <div className="space-y-1">
                                         <h1 className="text-[30px] font-extrabold leading-none tracking-tight text-white font-mono">
@@ -326,11 +401,11 @@ function BookingSuccess() {
                         </div>
 
                         {/* Back to Home */}
-                        <div className="flex flex-col items-center gap-3 z-10">
+                        {/* <div className="flex flex-col items-center gap-3 z-10">
                             <button className="text-[14px] text-gray-400 hover:text-white cursor-pointer transition-colors duration-200 italic font-light">
                                 ← Back to home page
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

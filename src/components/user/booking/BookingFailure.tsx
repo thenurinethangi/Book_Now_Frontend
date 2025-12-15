@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { X, Check } from "lucide-react";
 import arrow from "../../../assets/images/play (5).png";
 import Navigation from "../../../components/user/Navigation";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SignIn from "../../../components/user/SignIn";
 import SignUp from "../../../components/user/SignUp";
 import OTPModel from "../../../components/user/OTPModel";
@@ -11,8 +11,12 @@ import { getShowtimeDetailsByPaymentId } from "../../../services/user/paymentSer
 
 function BookingFailure() {
 
+    const navigate = useNavigate();
+
     const { id } = useParams();
     console.log('-------', id);
+
+    const [showSparkles, setShowSparkles] = useState(true);
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
@@ -36,6 +40,10 @@ function BookingFailure() {
             console.log(res.data.data);
             setShowtimeDeatils(res.data.data.showtime);
             setData(res.data.data);
+
+            setTimeout(() => {
+
+            }, 3000);
         }
         catch (e) {
             console.log(e);
@@ -79,8 +87,43 @@ function BookingFailure() {
             .replace(",", "");
     }
 
+    function backToHomePage(){
+        navigate('/');
+    }
+
     return (
         <div className="bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15 min-h-screen">
+            {/* Falling Error Sparkles */}
+            {showSparkles && (
+                <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
+                    {[...Array(30)].map((_, i) => (
+                        <div
+                            key={i}
+                            className="absolute animate-fall"
+                            style={{
+                                left: `${Math.random() * 100}%`,
+                                top: `-${Math.random() * 20}%`,
+                                animationDelay: `${Math.random() * 3}s`,
+                                animationDuration: `${4 + Math.random() * 5}s`
+                            }}
+                        >
+                            <div
+                                className="w-2 h-2 rounded-full opacity-70"
+                                style={{
+                                    backgroundColor: [
+                                        '#ef4444', // red
+                                        '#f97316', // orange
+                                        '#f43f5e', // rose
+                                        '#71717a'  // gray (sad tone)
+                                    ][Math.floor(Math.random() * 4)],
+                                    transform: `rotate(${Math.random() * 360}deg)`
+                                }}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+
             {/* navigation */}
             <Navigation setSignInVisible={setSignInVisible} />
 
@@ -232,10 +275,10 @@ function BookingFailure() {
                             <p className="text-[13px] text-white/90 mb-8 text-center w-[85%] font-medium italic">
                                 Hey, seems like there was some trouble. We are there with you. just hold back
                             </p>
-                            <p className="text-[12px] text-gray-400 mb-8 text-center">
-                                Payment ID: 123456789,24 Oct 2025-11:55PM
+                            <p className="text-[12px] text-gray-400 mb-8 text-center w-[75%]">
+                                Payment ID: {id}, {formatShowDate(data.transaction?.date)}-{formatToTime12h(data.transaction?.date)}
                             </p>
-                            <p className="text-[13px] text-gray-400 mb-8 italic">
+                            <p onClick={backToHomePage} className="text-[13px] text-gray-400 mb-8 italic cursor-pointer">
                                 Back to home page {'>'}
                             </p>
                         </div>
