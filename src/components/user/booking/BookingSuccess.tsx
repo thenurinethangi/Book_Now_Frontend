@@ -3,7 +3,7 @@ import { X, Check } from "lucide-react";
 import tk from "../../../assets/images/blank-golden-coupon-or-ticket-golden-sticker-discount-illustration-vector-removebg-preview.png";
 import { useParams } from "react-router-dom";
 import Navigation from "../Navigation";
-import { getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
+import { confirmTransactionAndBookingIfBookingComplete, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
 
 function BookingSuccess() {
 
@@ -20,22 +20,7 @@ function BookingSuccess() {
 
     const [showConfetti, setShowConfetti] = useState(true);
 
-    // Mock data - replace with your actual data
-    const showtimeDetails = {
-        movieId: {
-            title: "ZOOTOPIA 2",
-            posterImageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&h=450&fit=crop",
-            bannerImageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&h=400&fit=crop"
-        },
-        cinemaId: { cinemaName: "Scope Cinema" },
-        screenId: { screenName: "Screen 02" },
-        date: "2025-12-01",
-        time: "2025-12-01T19:30:00",
-        ticketPrices: { "ODC": 1500, "BOX": 1300 }
-    };
-
     const arrow = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M8 5l7 7-7 7'/%3E%3C/svg%3E";
-    const ticket = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='730' height='293'%3E%3Crect width='730' height='293' fill='%231a1a1a' rx='8'/%3E%3C/svg%3E";
 
     useEffect(() => {
         loadShowtimeDetails();
@@ -51,13 +36,18 @@ function BookingSuccess() {
             console.log(res.data.data);
             setShowtimeDeatils(res.data.data.showtime);
             setData(res.data.data);
+
+            setTimeout(async () => {
+                const res = await confirmTransactionAndBookingIfBookingComplete(id);
+                console.log('confirm booking', res.data);
+            }, 3000);
         }
         catch (e) {
             console.log(e);
         }
     }
 
-    function formatToTime12h(dateString) {
+    function formatToTime12h(dateString: string) {
         const date = new Date(dateString);
         return date.toLocaleString("en-US", {
             hour: "2-digit",
@@ -66,7 +56,7 @@ function BookingSuccess() {
         });
     }
 
-    function formatShowDate(dateStr) {
+    function formatShowDate(dateStr: string) {
         const slDate = new Date(
             new Date(dateStr).toLocaleString("en-US", { timeZone: "Asia/Colombo" })
         );
@@ -77,10 +67,6 @@ function BookingSuccess() {
             slDate.getFullYear() === todaySL.getFullYear() &&
             slDate.getMonth() === todaySL.getMonth() &&
             slDate.getDate() === todaySL.getDate();
-
-        if (isToday) {
-            return "Today";
-        }
 
         return slDate
             .toLocaleDateString("en-GB", {
@@ -280,34 +266,15 @@ function BookingSuccess() {
                     <p className="text-white/90 italic font-mono text-center text-[15px]">here is your ticket</p>
                 </div> */}
 
-                <div className="w-[40px] h-[80px] mx-auto">
-                    <svg
-                        viewBox="0 0 100 100"
-                        className="w-full h-full"
-                        fill="none"
-                    >
-                        {/* Arrow stem */}
-                        <line
-                            x1="50"
-                            y1="20"
-                            x2="50"
-                            y2="60"
-                            stroke="currentColor"
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            className="animate-arrow-stem"
-                        />
-
-                        {/* Arrow head */}
-                        <polyline
-                            points="35,50 50,65 65,50"
-                            stroke="currentColor"
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="animate-arrow-head"
-                        />
-                    </svg>
+                {/* Divider with Arrow */}
+                <div className="flex flex-col items-center my-8">
+                    <div className="w-px h-8 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 animate-bounce-slow">
+                        <svg className="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div className="w-px h-8 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
                 </div>
 
                 {/* Ticket Section */}
@@ -322,7 +289,7 @@ function BookingSuccess() {
                                 <div className="flex-1 flex flex-col justify-between pr-6">
                                     <div className="space-y-1">
                                         <h1 className="text-[30px] font-extrabold leading-none tracking-tight text-white font-mono">
-                                            ZOOTOPIA 2
+                                            {data.showtime?.movieId.title}
                                         </h1>
                                         <div className="flex items-center gap-3">
                                             <div className="h-[2px] w-16 bg-gradient-to-r from-white to-transparent"></div>
@@ -333,32 +300,37 @@ function BookingSuccess() {
                                     <div className="space-y-4">
                                         <div className="space-y-0.5">
                                             <p className="text-[11px] font-bold tracking-wide text-white/50 uppercase">Venue</p>
-                                            <p className="text-[17.5px] font-bold text-white leading-tight font-mono">Scope Cinema</p>
-                                            <p className="text-[12px] text-white/80 leading-tight">One Galle Face Mall, Colombo</p>
-                                            <p className="text-[11px] text-white/70">Screen 02</p>
+                                            <p className="text-[17.5px] font-bold text-white leading-tight font-mono">{data.showtime?.cinemaId.cinemaName}</p>
+                                            <p className="text-[12px] text-white/80 leading-tight">{data.showtime?.cinemaId.address}</p>
+                                            <p className="text-[11px] text-white/70">{data.showtime?.screenId.screenName}</p>
                                         </div>
                                     </div>
 
                                     <div className="grid grid-cols-3 gap-6">
                                         <div className="space-y-0.5">
                                             <p className="text-[9px] font-bold tracking-wide text-white/50 uppercase">Date & Time</p>
-                                            <p className="text-[14px] font-bold text-white">Sat, 01 Dec</p>
-                                            <p className="text-[13px] text-white/90 font-medium">7:30 PM</p>
+                                            <p className="text-[14px] font-bold text-white">{formatShowDate(data.showtime?.date)}</p>
+                                            <p className="text-[13px] text-white/90 font-medium">{formatToTime12h(data.showtime?.time)}</p>
                                         </div>
 
                                         <div className="space-y-0.5">
                                             <p className="text-[9px] font-bold tracking-wide text-white/50 uppercase">Seats</p>
                                             <div className="flex gap-1.5 flex-wrap">
-                                                <span className="inline-block bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded text-[13px] font-bold text-white">A5</span>
-                                                <span className="inline-block bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded text-[13px] font-bold text-white">A6</span>
-                                                <span className="inline-block bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded text-[13px] font-bold text-white">B1</span>
+                                                {data.booking?.seatsDetails.map((s: string) => (
+                                                    <span key={s} className="inline-block bg-white/15 backdrop-blur-sm px-2.5 py-0.5 rounded text-[13px] font-bold text-white">{s}</span>
+                                                ))}
                                             </div>
                                         </div>
 
                                         <div className="space-y-0.5">
                                             <p className="text-[9px] font-bold tracking-wide text-white/50 uppercase">Tickets</p>
-                                            <p className="text-[12px] text-white/90">ODC × 2</p>
-                                            <p className="text-[12px] text-white/90">BOX × 1</p>
+                                            <div>
+                                                {Object.keys(data.booking?.ticketsDetails || {}).map((key) => (
+                                                    <p key={key} className="text-[12px] text-white/90">
+                                                        {key} × {data.booking!.ticketsDetails[key]}
+                                                    </p>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -387,14 +359,14 @@ function BookingSuccess() {
                                     </div>
 
                                     <div className="text-center">
-                                        <p className="text-[26px] font-black text-white leading-none">4,300</p>
+                                        <p className="text-[26px] font-black text-white leading-none">{data.transaction?.amount}</p>
                                         <p className="text-[10px] font-bold text-white/60 tracking-wider">LKR</p>
                                     </div>
 
                                     <div className="text-center pb-2">
                                         <p className="text-[8px] font-bold tracking-wider text-white/40 uppercase mb-1">Booked On</p>
-                                        <p className="text-[11px] font-bold text-white/90">01 Dec 2025</p>
-                                        <p className="text-[10px] text-white/70">6:55 PM</p>
+                                        <p className="text-[11px] font-bold text-white/90">{formatShowDate(data.booking?.date)}</p>
+                                        <p className="text-[10px] text-white/70">{formatToTime12h(data.booking?.date)}</p>
                                     </div>
                                 </div>
                             </div>

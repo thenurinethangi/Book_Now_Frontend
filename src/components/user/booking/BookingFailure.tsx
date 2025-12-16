@@ -7,7 +7,7 @@ import SignIn from "../../../components/user/SignIn";
 import SignUp from "../../../components/user/SignUp";
 import OTPModel from "../../../components/user/OTPModel";
 import { getShowtimeDetailsById } from "../../../services/user/showtimeService";
-import { getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
+import { deleteTransactionAndBookingIfErrorInBooking, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
 
 function BookingFailure() {
 
@@ -41,8 +41,9 @@ function BookingFailure() {
             setShowtimeDeatils(res.data.data.showtime);
             setData(res.data.data);
 
-            setTimeout(() => {
-
+            setTimeout(async () => {
+                const res = await deleteTransactionAndBookingIfErrorInBooking(id);
+                console.log('undo booking', res.data);
             }, 3000);
         }
         catch (e) {
@@ -87,7 +88,7 @@ function BookingFailure() {
             .replace(",", "");
     }
 
-    function backToHomePage(){
+    function backToHomePage() {
         navigate('/');
     }
 

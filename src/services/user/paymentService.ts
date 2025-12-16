@@ -14,6 +14,12 @@ export const getShowtimeDetailsByPaymentId = async (id: string) => {
 
 export const deleteTransactionAndBookingIfErrorInBooking = async (id: string) => {
 
-    const res = await api.get('/transaction/details/'+id, { withCredentials: true });
+    const res = await api.put('/transaction/failed/'+id, { withCredentials: true });
+    return res;
+}
+
+export const confirmTransactionAndBookingIfBookingComplete = async (id: string) => {
+
+    const res = await api.put('/transaction/success/'+id, { withCredentials: true });
     return res;
 }
