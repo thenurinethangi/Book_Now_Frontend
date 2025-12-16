@@ -11,6 +11,7 @@ import OTPModel from '../components/user/OTPModel';
 import Payment from '../components/user/booking/Payment';
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '../config/stripe';
+import { checkIsSeatLock, checkLockedSeats, lockSeats } from '../services/user/seatsService';
 
 function UserSheetSelect() {
 
@@ -34,6 +35,10 @@ function UserSheetSelect() {
 
     const [choosedTicketTypesCount, setChoosedTicketTypesCount] = useState<any>(null);
     const [totalPayable, setTotalPayable] = useState<any>('');
+
+    const [seatsLockingCheckResult, setSeatsLockingCheckResult] = useState<any>([]);
+    // let count = 0;
+    let seatCounter = 0;
 
     useEffect(() => {
         loadShowtimeDetails();
@@ -63,7 +68,7 @@ function UserSheetSelect() {
             setSeatTypes(arr);
 
             const res2 = await getUnavailableSeats(id);
-            console.log('res2',res2.data.data);
+            console.log('res2', res2.data.data);
 
             let arr2 = [];
             for (let i = 0; i < res2.data.data.length; i++) {
@@ -73,8 +78,13 @@ function UserSheetSelect() {
                     arr2.push(seatId);
                 }
             }
-            console.log('-------',arr2);
+            console.log('-------', arr2);
             setUnavailableSeats(arr2);
+
+            const res4 = await checkLockedSeats(res.data.data._id);
+            console.log(res4.data.data);
+            setSeatsLockingCheckResult(res4.data.data);
+
         }
         catch (e) {
             console.log(e);
@@ -150,6 +160,16 @@ function UserSheetSelect() {
         return '';
     }
 
+    function checkIsSeatLocked(seatIndex: number) {
+        if (seatIndex >= seatsLockingCheckResult.length) return '';
+
+        const seat = seatsLockingCheckResult[seatIndex];
+
+        if (!seat.locked) return '';
+        if (seat.locked && seat.lockedByMe) return '';
+        return 'border border-gray-400 bg-gray-400 pointer-events-none';
+    }
+
     function checkIsSeatSelect(seatId: string) {
 
         if (selectedSeats.includes(seatId)) {
@@ -190,8 +210,22 @@ function UserSheetSelect() {
         }
     }
 
-    function handleShowTicketSelectTab() {
-        setActiveTab('Tickets');
+    async function handleShowTicketSelectTab() {
+
+        const data = {
+            showId: showtimeDeatils._id,
+            seats: selectedSeats,
+        };
+        console.log(data);
+
+        try {
+            const res = await lockSeats(data);
+            console.log('lock', res.data);
+            setActiveTab('Tickets');
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
 
@@ -289,24 +323,27 @@ function UserSheetSelect() {
                         </div>
 
                         {/* sheets */}
-                        <div className='mt-15 grid grid-cols-1 gap-1.5'>
-                            {/* one row */}
-                            {showtimeDeatils.seats?.map((row: any, index: number) => (
-                                <div key={index} className='flex items-center gap-10'>
-                                    {/* english char */}
-                                    <div className='w-[17px]'>{alphabetUpper[index]}</div>
-                                    {/* sheets box*/}
-                                    <div className='flex items-center gap-1.5'>
-                                        {row.map((seat: any, index: number) => (
-                                            <div onClick={handleSeatClick} key={index} data-seat={JSON.stringify(seat)} className={`w-[22px] h-[22px] rounded-xs justify-center flex items-center transition-all duration-200 ${seat ? getSeatColor(seat.type) : 'border border-[#121212] bg-[#121212] opacity-0 invisible'} ${seat ? checkAvailabilityOfASeat(seat.id) : ''} ${seat ? checkIsSeatSelect(seat.id) : ''}`}>
-                                                <X className={`w-4.5 h-4.5 ${seat && checkAvailabilityOfASeat(seat.id) === 'border border-[#d8d8d8] bg-[#d8d8d8] pointer-events-none' ? '' : 'hidden'} `} />
-                                                <Check className={`w-4.5 h-4.5 ${seat && checkIsSeatSelect(seat.id) === 'border border-red-500 bg-red-500'  ? '' : 'hidden'}`} />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        {showtimeDeatils.seats?.map((row, rowIndex) => (
+  <div key={rowIndex} className='flex items-center gap-10'>
+    <div className='w-[17px]'>{alphabetUpper[rowIndex]}</div>
+    <div className='flex items-center gap-1.5'>
+      {row.map((seat, seatIndex) => {
+        const lockedClass = seat ? checkIsSeatLocked(seatCounter) : '';
+        if (seat) seatCounter++;
+        return (
+          <div key={seatIndex} className={`w-[22px] h-[22px] rounded-xs flex items-center justify-center transition-all duration-200
+            ${seat ? getSeatColor(seat.type) : 'border border-[#121212] bg-[#121212] opacity-0 invisible'}
+            ${seat ? checkAvailabilityOfASeat(seat.id) : ''} 
+            ${seat ? checkIsSeatSelect(seat.id) : ''} 
+            ${lockedClass}`}>
+            <X className={`w-4.5 h-4.5 ${lockedClass.includes('bg-gray-400') ? '' : 'hidden'}`} />
+            <Check className={`w-4.5 h-4.5 ${checkIsSeatSelect(seat?.id) === 'border border-red-500 bg-red-500' ? '' : 'hidden'}`} />
+          </div>
+        );
+      })}
+    </div>
+  </div>
+))}
 
                         {/* category */}
                         <div className='mt-25 flex items-center gap-10 py-2 px-5 rounded-sm'>
@@ -333,7 +370,7 @@ function UserSheetSelect() {
                         </div>
 
                         <div className='mt-25'>
-                            <button onClick={handleShowTicketSelectTab} className='bg-red-500 p-2 rounded-sm'>Continue To Next {' -->'}</button>
+                            <button onClick={handleShowTicketSelectTab} className='px-7 py-3 rounded-br-3xl text-[14.8px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300'>Continue To Next {' -->'}</button>
                         </div>
 
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X, Check } from "lucide-react";
 import arrow from "../../../assets/images/play (5).png";
 import Navigation from "../../../components/user/Navigation";
@@ -16,6 +16,8 @@ function BookingFailure() {
     const { id } = useParams();
     console.log('-------', id);
 
+    const tabsRef = useRef<HTMLDivElement | null>(null);
+
     const [showSparkles, setShowSparkles] = useState(true);
 
     const [signInVisible, setSignInVisible] = useState(false);
@@ -28,6 +30,13 @@ function BookingFailure() {
 
     useEffect(() => {
         loadShowtimeDetails();
+    }, []);
+
+    useEffect(() => {
+        tabsRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
     }, []);
 
     async function loadShowtimeDetails() {
@@ -218,7 +227,7 @@ function BookingFailure() {
                     </div>
                 </div>
 
-                <div className="px-15 mt-20 mb-5 flex justify-center items-center">
+                <div ref={tabsRef} className="px-15 mt-20 mb-5 flex justify-center items-center">
                     <div className="w-[420px] px-5 rounded-sm flex flex-col items-center bg-gradient-to-b from-[#1f1f1f] to-[#151515] shadow-[0_30px_80px_rgba(0,0,0,0.7)] px-6 pb-1 border-white/10">
                         {/* Animated Error Icon */}
                         <div className="mx-auto mb-6 w-[96px] h-[96px] relative mt-5">

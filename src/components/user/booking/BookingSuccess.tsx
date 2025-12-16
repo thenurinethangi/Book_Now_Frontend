@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X, Check } from "lucide-react";
 import tk from "../../../assets/images/blank-golden-coupon-or-ticket-golden-sticker-discount-illustration-vector-removebg-preview.png";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navigation from "../Navigation";
 import { confirmTransactionAndBookingIfBookingComplete, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
 
@@ -9,6 +9,10 @@ function BookingSuccess() {
 
     const { id } = useParams();
     console.log('-------', id);
+
+    const navigate = useNavigate();
+
+    const tabsRef = useRef<HTMLDivElement | null>(null);
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
@@ -24,6 +28,13 @@ function BookingSuccess() {
 
     useEffect(() => {
         loadShowtimeDetails();
+    }, []);
+
+    useEffect(() => {
+        tabsRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center", 
+        });
     }, []);
 
     async function loadShowtimeDetails() {
@@ -75,6 +86,10 @@ function BookingSuccess() {
                 month: "short",
             })
             .replace(",", "");
+    }
+
+    function backToHomePage() {
+        navigate('/');
     }
 
     return (
@@ -188,7 +203,7 @@ function BookingSuccess() {
                     </div>
                 </div>
 
-                <div className="px-15 mt-20 mb-5 flex justify-center items-center">
+                <div ref={tabsRef} className="px-15 mt-20 mb-5 flex justify-center items-center">
                     <div className="w-[420px] px-5 rounded-sm flex flex-col items-center bg-gradient-to-b from-[#1f1f1f] to-[#151515] shadow-[0_30px_80px_rgba(0,0,0,0.7)] px-6 pb-1 border-white/10">
 
                         {/* Animated Success Icon */}
@@ -242,7 +257,7 @@ function BookingSuccess() {
                             <p className="text-[12px] text-gray-400 mb-8 text-center">
                                 Payment ID: 123456789,24 Oct 2025-11:55PM
                             </p>
-                            <p className="text-[13px] text-gray-400 mb-8 italic">
+                            <p onClick={backToHomePage} className="text-[13px] text-gray-400 mb-8 italic cursor-pointer">
                                 Back to home page {'>'}
                             </p>
                         </div>
@@ -480,6 +495,9 @@ function BookingSuccess() {
                 }
                 .animate-sparkle {
                     animation: sparkle 2s ease-in-out infinite;
+                }
+                .animate-bounce-slow {
+                    animation: bounce-slow 2s ease-in-out infinite;
                 }
             `}</style>
         </div>
