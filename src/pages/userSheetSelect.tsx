@@ -13,6 +13,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '../config/stripe';
 import { checkIsSeatLock, checkLockedSeats, lockSeats } from '../services/user/seatsService';
 import CountdownTimer from '../components/user/booking/CountdownTimer';
+import TimeOutModel from '../components/user/booking/TimeOutModel';
 
 function UserSheetSelect() {
 
@@ -45,12 +46,22 @@ function UserSheetSelect() {
     const FIVE_MINUTES = 5 * 60;
     const [timeLeft, setTimeLeft] = useState<number>(FIVE_MINUTES);
 
+    const [timeOutModelDisplay, setTimeOutModelDisplay] = useState<boolean>(false);
+
     useEffect(() => {
         if (!timerShow) return;
-        if (timeLeft <= 0) return;
 
         const interval = setInterval(() => {
-            setTimeLeft(prev => prev - 1);
+            setTimeLeft(prev => {
+                console.log('Current time:', prev);
+
+                if (prev - 1 <= 0) {
+                    console.log('Time is up!');
+                    setTimeOutModelDisplay(true);
+                    return 0;
+                }
+                return prev - 1;
+            });
         }, 1000);
 
         return () => clearInterval(interval);
@@ -246,6 +257,10 @@ function UserSheetSelect() {
         }
     }
 
+    function restartBooking() {
+        window.location.reload();
+    }
+
 
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15'>
@@ -409,6 +424,8 @@ function UserSheetSelect() {
             {activeTab === 'Tickets' ? <UserTicketSelect setActiveTab={setActiveTab} showtimeDeatils={showtimeDeatils} selectedSeats={selectedSeats} selectedSeatsTypes={selectedSeatsTypes} setChoosedTicketTypesCount={setChoosedTicketTypesCount} setTotalPayable={setTotalPayable} /> : ''}
 
             {activeTab === 'Payment' ? <Elements stripe={stripePromise}><Payment setActiveTab={setActiveTab} showtimeDeatils={showtimeDeatils} selectedSeats={selectedSeats} choosedTicketTypesCount={choosedTicketTypesCount} totalPayable={totalPayable} /></Elements> : ''}
+
+            {timeOutModelDisplay ? <TimeOutModel restartBooking={restartBooking} /> : ''}
 
             {/* sign in model */}
             {signInVisible ? <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} setOtpVisible={setOtpVisible} setUserEmail={setUserEmail} /> : ''}

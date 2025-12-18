@@ -47,8 +47,8 @@ export default function CountdownTimer(props: any) {
                 isUrgent 
                     ? 'bg-red-500/20 animate-pulse-urgent' 
                     : isWarning 
-                    ? 'bg-amber-500/20' 
-                    : 'bg-gray-200/90'
+                    ? 'bg-gray-200/30' 
+                    : 'bg-gray-200/30'
             }`}>
                 <p className={`text-[10px] font-medium ${
                     isUrgent || isWarning ? 'text-white' : 'text-black/60'
@@ -59,7 +59,7 @@ export default function CountdownTimer(props: any) {
                     isUrgent 
                         ? 'text-red-500' 
                         : isWarning 
-                        ? 'text-amber-500' 
+                        ? 'text-black/80' 
                         : 'text-black/80'
                 }`}>
                     {minutes}:{seconds.toString().padStart(2, "0")}
