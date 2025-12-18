@@ -12,6 +12,7 @@ import Payment from '../components/user/booking/Payment';
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '../config/stripe';
 import { checkIsSeatLock, checkLockedSeats, lockSeats } from '../services/user/seatsService';
+import CountdownTimer from '../components/user/booking/CountdownTimer';
 
 function UserSheetSelect() {
 
@@ -37,8 +38,23 @@ function UserSheetSelect() {
     const [totalPayable, setTotalPayable] = useState<any>('');
 
     const [seatsLockingCheckResult, setSeatsLockingCheckResult] = useState<any>([]);
-    // let count = 0;
     let seatCounter = 0;
+
+    const [timerShow, setTimerShow] = useState<boolean>(false);
+
+    const FIVE_MINUTES = 5 * 60;
+    const [timeLeft, setTimeLeft] = useState<number>(FIVE_MINUTES);
+
+    useEffect(() => {
+        if (!timerShow) return;
+        if (timeLeft <= 0) return;
+
+        const interval = setInterval(() => {
+            setTimeLeft(prev => prev - 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [timerShow]);
 
     useEffect(() => {
         loadShowtimeDetails();
@@ -167,7 +183,7 @@ function UserSheetSelect() {
 
         if (!seat.locked) return '';
         if (seat.locked && seat.lockedByMe) return '';
-        return 'border border-gray-400 bg-gray-400 pointer-events-none';
+        return 'border border-[#d8d8d8] bg-[#d8d8d8] pointer-events-none';
     }
 
     function checkIsSeatSelect(seatId: string) {
@@ -222,6 +238,8 @@ function UserSheetSelect() {
             const res = await lockSeats(data);
             console.log('lock', res.data);
             setActiveTab('Tickets');
+            setTimeLeft(FIVE_MINUTES)
+            setTimerShow(true);
         }
         catch (e) {
             console.log(e);
@@ -238,7 +256,7 @@ function UserSheetSelect() {
             {/* hero */}
             <div className='relative w-full h-[320px] overflow-x-hidden overflow-y-auto'>
                 <div className='w-full h-full'>
-                    <img src={showtimeDeatils.movieId?.bannerImageUrl} className='w-full h-full object-cover blur-xs'></img>
+                    <img src={'https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/d07a1e1b-fbcc-486d-aab9-5974bf6c47a7/zootopia+2+first+look+still.jpg'} className='w-full h-full object-cover blur-xs'></img>
                 </div>
                 <div className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent flex justify-center items-end'>
                     <div className='flex items-start gap-5 pb-7'>
@@ -258,6 +276,14 @@ function UserSheetSelect() {
                         </div>
                     </div>
                 </div>
+                {timerShow ?
+                    <div className='absolute right-4 bottom-4.5'>
+                        {/* timer */}
+                        <CountdownTimer timeLeft={timeLeft} />
+                    </div>
+                    :
+                    ''
+                }
             </div>
 
             {activeTab === 'Seats' ?
@@ -324,26 +350,27 @@ function UserSheetSelect() {
 
                         {/* sheets */}
                         {showtimeDeatils.seats?.map((row, rowIndex) => (
-  <div key={rowIndex} className='flex items-center gap-10'>
-    <div className='w-[17px]'>{alphabetUpper[rowIndex]}</div>
-    <div className='flex items-center gap-1.5'>
-      {row.map((seat, seatIndex) => {
-        const lockedClass = seat ? checkIsSeatLocked(seatCounter) : '';
-        if (seat) seatCounter++;
-        return (
-          <div key={seatIndex} className={`w-[22px] h-[22px] rounded-xs flex items-center justify-center transition-all duration-200
-            ${seat ? getSeatColor(seat.type) : 'border border-[#121212] bg-[#121212] opacity-0 invisible'}
-            ${seat ? checkAvailabilityOfASeat(seat.id) : ''} 
-            ${seat ? checkIsSeatSelect(seat.id) : ''} 
-            ${lockedClass}`}>
-            <X className={`w-4.5 h-4.5 ${lockedClass.includes('bg-gray-400') ? '' : 'hidden'}`} />
-            <Check className={`w-4.5 h-4.5 ${checkIsSeatSelect(seat?.id) === 'border border-red-500 bg-red-500' ? '' : 'hidden'}`} />
-          </div>
-        );
-      })}
-    </div>
-  </div>
-))}
+                            <div key={rowIndex} className='flex items-center gap-10'>
+                                <div className='w-[17px]'>{alphabetUpper[rowIndex]}</div>
+                                <div className='flex items-center gap-1.5'>
+                                    {row.map((seat, seatIndex) => {
+                                        const lockedClass = seat ? checkIsSeatLocked(seatCounter) : '';
+                                        if (seat) seatCounter++;
+                                        return (
+                                            <div onClick={handleSeatClick} data-seat={JSON.stringify(seat)} key={seatIndex} className={`w-[22px] h-[22px] rounded-xs flex items-center justify-center transition-all duration-200
+                                            ${seat ? getSeatColor(seat.type) : 'border border-[#121212] bg-[#121212] opacity-0 invisible'}
+                                            ${lockedClass}
+                                            ${seat ? checkIsSeatSelect(seat.id) : ''} 
+                                            ${seat ? checkAvailabilityOfASeat(seat.id) : ''} 
+                                            `}>
+                                                <X className={`w-4.5 h-4.5 ${lockedClass.includes('bg-[#d8d8d8]') || (seat && checkAvailabilityOfASeat(seat.id) === 'border border-[#d8d8d8] bg-[#d8d8d8] pointer-events-none') ? '' : 'hidden'}`} />
+                                                <Check className={`w-4.5 h-4.5 ${checkIsSeatSelect(seat?.id) === 'border border-red-500 bg-red-500' ? '' : 'hidden'}`} />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ))}
 
                         {/* category */}
                         <div className='mt-25 flex items-center gap-10 py-2 px-5 rounded-sm'>

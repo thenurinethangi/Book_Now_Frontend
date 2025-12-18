@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import arrow from '../assets/images/play (5).png'
+import CountdownTimer from '../components/user/booking/CountdownTimer';
 
 interface TicketCounts {
     [key: string]: number;
