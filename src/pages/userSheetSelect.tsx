@@ -261,6 +261,16 @@ function UserSheetSelect() {
         window.location.reload();
     }
 
+    function checkRowHasSeats(row: any) {
+
+        for (let i = 0; i < row.length; i++) {
+            const seat = row[i];
+            if (seat) {
+                return true;
+            }
+        }
+        return false
+    }
 
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15'>
@@ -271,7 +281,7 @@ function UserSheetSelect() {
             {/* hero */}
             <div className='relative w-full h-[320px] overflow-x-hidden overflow-y-auto'>
                 <div className='w-full h-full'>
-                    <img src={'https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/d07a1e1b-fbcc-486d-aab9-5974bf6c47a7/zootopia+2+first+look+still.jpg'} className='w-full h-full object-cover blur-xs'></img>
+                    <img src={showtimeDeatils.movieId?.bannerImageUrl} className='w-full h-full object-cover blur-xs'></img>
                 </div>
                 <div className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent flex justify-center items-end'>
                     <div className='flex items-start gap-5 pb-7'>
@@ -327,7 +337,7 @@ function UserSheetSelect() {
 
                     <div className='px-15 mt-15 flex flex-col items-center'>
                         {/* screen */}
-                        <div className="w-[50%] mx-auto">
+                        <div className="w-[50%] mx-auto mb-6">
                             <svg width="100%" height="35" viewBox="0 0 600 35" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
                                 <defs>
                                     {/* Screen gradient matching #121212 environment */}
@@ -365,8 +375,8 @@ function UserSheetSelect() {
 
                         {/* sheets */}
                         {showtimeDeatils.seats?.map((row, rowIndex) => (
-                            <div key={rowIndex} className='flex items-center gap-10'>
-                                <div className='w-[17px]'>{alphabetUpper[rowIndex]}</div>
+                            <div key={rowIndex} className='flex items-center gap-10 mb-1.5'>
+                                <div className={`w-[17px] ${checkRowHasSeats(row) ? 'opacity-100' : 'opacity-0'}`}>{alphabetUpper[rowIndex]}</div>
                                 <div className='flex items-center gap-1.5'>
                                     {row.map((seat, seatIndex) => {
                                         const lockedClass = seat ? checkIsSeatLocked(seatCounter) : '';
