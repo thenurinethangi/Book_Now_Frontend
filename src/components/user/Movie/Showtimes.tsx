@@ -103,6 +103,12 @@ function Showtimes(props: any) {
         }
     }
 
+    function isTimeNotPast(dateTimeString: string): boolean {
+        const givenTime = new Date(dateTimeString).getTime();
+        const now = Date.now();
+
+        return givenTime > now;
+    }
 
     return (
         <div className='mb-47'>
@@ -110,7 +116,7 @@ function Showtimes(props: any) {
                 <div>
                     <ChevronLeft />
                 </div>
-                <div className='flex items-center justify-between w-[85%] overflow-x-auto'>
+                <div className='flex items-center justify-between w-[100%] overflow-x-auto no-scrollbar overscroll-x-contain'>
                     {dates.map((d, index: number) => (
                         <div onClick={(e) => {
                             if (showtimesList[index]?.length > 0) {
@@ -118,7 +124,7 @@ function Showtimes(props: any) {
                                 setSelectedDateShowtimes(showtimesList[index]);
                             }
                         }}
-                            key={index} className={`cursor-pointer ${showtimesList[index]?.length > 0 && selectedDate !== d ? 'text-white' : 'text-[#BDBDBD]'} ${selectedDate === d ? 'border-b-4 border-b-red-500 pb-3.5 px-3 text-red-600' : ''}`}>{d}</div>
+                            key={index} className={`mx-8.5 cursor-pointer ${showtimesList[index]?.length > 0 && selectedDate.toLowerCase() !== d.toLowerCase() ? 'text-white' : 'text-[#BDBDBD] font-light opacity-70'} ${selectedDate.toLowerCase() === d.toLowerCase() ? 'border-b-4 border-b-red-500 pb-3.5 px-3 text-red-600 font-medium' : ''}`}>{d}</div>
                     ))}
                 </div>
                 <div>
@@ -127,11 +133,11 @@ function Showtimes(props: any) {
             </div>
 
             <div className='px-14.5 flex flex-col gap-[3px] mt-8'>
-                <hr className='border-red-400/20'></hr>
-                <hr className='border-red-400/20'></hr>
+                <hr className='border-red-400/17'></hr>
+                <hr className='border-red-400/17'></hr>
             </div>
 
-            <div className='mt-6 flex justify-end items-start px-14'>
+            <div className='mt-8 flex justify-end items-start px-14'>
                 <ListFilterPlus className='w-5.5 h-5.5 text-white/95' />
             </div>
 
@@ -143,14 +149,24 @@ function Showtimes(props: any) {
                             <p className='text-[16.8px] font-normal'>{s[0].screenId.screenName}</p>
                             <p className='text-[12px] text-gray-500 font-normal'>{s[0].cinemaId.cinemaName}</p>
                         </div>
-                        <div className='flex items-center gap-5'>
+                        <div className='flex items-center gap-5 relative'>
                             {s.map((t: any, index: number) => (
-                                <div key={index} className='flex flex-col justify-between items-center border border-red-300 rounded-br-xl pt-2'>
+                                <div key={index} className={`group flex flex-col justify-between items-center border rounded-br-xl pt-2 ${isTimeNotPast(t.time) ? 'border-red-300' : 'border-gray-500 pointer-events-none'}`}>
                                     <div className='flex'>
-                                        <p className='pl-1.5 pr-1 text-[23px] font-medium'>{formatToTime12h(t.time).split(' ')[0]}</p>
-                                        <p className='pr-1.5 pb-1 text-[11px] font-medium self-end'>{formatToTime12h(t.time).split(' ')[1]}</p>
+                                        <p className={`pl-1.5 pr-1 text-[23px] font-medium ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[0]}</p>
+                                        <p className={`pr-1.5 pb-1 text-[11px] font-medium self-end ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[1]}</p>
                                     </div>
-                                    <button onClick={handleNavigateToBookingPage} data-id={t._id} className='w-full text-[13.7px] font-medium bg-red-400 text-black py-1 px-2 rounded-br-xl'>Book Now</button>
+                                    <button onClick={handleNavigateToBookingPage} data-id={t._id} className={`w-full text-[13.7px] font-medium text-black py-1 px-2 rounded-br-xl ${isTimeNotPast(t.time) ? 'bg-red-400 cursor-pointer' : 'bg-gray-500'}`}>Book Now</button>
+                                    {/* Hover Tooltip */}
+                                    <div className='absolute -top-16 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out group-hover:pointer-events-none z-100'>
+                                        <div className='bg-gray-400/85 text-white px-4 py-3 rounded-sm shadow-2xl'>
+                                            <p className='text-[14.5px] font-normal whitespace-nowrap'>
+                                                {Number(t.screenId.numberOfSeats) - t.bookings > 0 ? <span className='font-medium'>{Number(t.screenId.numberOfSeats) - t.bookings}</span> : 'No'} Seats Available
+                                            </p>
+                                        </div>
+                                        {/* Arrow */}
+                                        <div className='absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-gray-400/85 rotate-45'></div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
