@@ -150,7 +150,7 @@ function BookingSuccess() {
                             </p>
                             <p className="text-[15px]">
                                 {showtimeDeatils.cinemaId?.cinemaName}:{" "}
-                                <span>{showtimeDeatils.screenId?.screenName}</span>
+                                <span>{showtimeDeatils.screenId?.screenName} ({showtimeDeatils.formatShowing})</span>
                             </p>
                             <p className="text-[15px] mb-2">
                                 {formatShowDate(showtimeDeatils.date)}{" "}
