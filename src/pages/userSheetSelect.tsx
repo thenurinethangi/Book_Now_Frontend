@@ -291,7 +291,7 @@ function UserSheetSelect() {
                         <div>
                             <p className='bg-blue-300 text-black mb-1.5 rounded-xs text-[10px] font-semibold p-1 inline'>PROCESSING</p>
                             <p className='text-[29px] font-medium'>{showtimeDeatils.movieId?.title}</p>
-                            <p className='text-[15px]'>{showtimeDeatils.cinemaId?.cinemaName}: <span>{showtimeDeatils.screenId?.screenName}</span></p>
+                            <p className='text-[15px]'>{showtimeDeatils.cinemaId?.cinemaName}: <span>{showtimeDeatils.screenId?.screenName} ({showtimeDeatils.formatShowing})</span></p>
                             <p className='text-[15px] mb-2'>{formatShowDate(showtimeDeatils.date)} {formatToTime12h(showtimeDeatils.time)}</p>
                             <div className='flex items-center gap-1 flex-wrap w-[80%]'>
                                 {Object.keys(showtimeDeatils.ticketPrices ?? {}).map((key: string, index: number) => (
