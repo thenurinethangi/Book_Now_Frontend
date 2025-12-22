@@ -149,23 +149,26 @@ function Showtimes(props: any) {
                             <p className='text-[16.8px] font-normal'>{s[0].screenId.screenName}</p>
                             <p className='text-[12px] text-gray-500 font-normal'>{s[0].cinemaId.cinemaName}</p>
                         </div>
-                        <div className='flex items-center gap-5 relative'>
+                        <div className='flex items-center relative gap-13'>
                             {s.map((t: any, index: number) => (
-                                <div key={index} className={`group flex flex-col justify-between items-center border rounded-br-xl pt-2 ${isTimeNotPast(t.time) ? 'border-red-300' : 'border-gray-500 pointer-events-none'}`}>
-                                    <div className='flex'>
-                                        <p className={`pl-1.5 pr-1 text-[23px] font-medium ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[0]}</p>
-                                        <p className={`pr-1.5 pb-1 text-[11px] font-medium self-end ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[1]}</p>
-                                    </div>
-                                    <button onClick={handleNavigateToBookingPage} data-id={t._id} className={`w-full text-[13.7px] font-medium text-black py-1 px-2 rounded-br-xl ${isTimeNotPast(t.time) ? 'bg-red-400 cursor-pointer' : 'bg-gray-500'}`}>Book Now</button>
-                                    {/* Hover Tooltip */}
-                                    <div className='absolute -top-16 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out group-hover:pointer-events-none z-100'>
-                                        <div className='bg-gray-400/85 text-white px-4 py-3 rounded-sm shadow-2xl'>
-                                            <p className='text-[14.5px] font-normal whitespace-nowrap'>
-                                                {Number(t.screenId.numberOfSeats) - t.bookings > 0 ? <span className='font-medium'>{Number(t.screenId.numberOfSeats) - t.bookings}</span> : 'No'} Seats Available
-                                            </p>
+                                <div key={index} className='flex items-center -translate-x-2.5 relative'>
+                                    <div className='absolute left-0 rotate-270 bg-red-400 w-[72.3px] py-[1px] text-center text-black font-medium border border-red-300 text-[14px] origin-top-left -translate-x-[23px] translate-y-[48px]'>3D</div>
+                                    <div className={`group flex flex-col justify-between items-center border rounded-br-xl pt-2 ${isTimeNotPast(t.time) ? 'border-red-300' : 'border-gray-500 pointer-events-none'}`}>
+                                        <div className='flex'>
+                                            <p className={`pl-1.5 pr-1 text-[23px] font-medium ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[0]}</p>
+                                            <p className={`pr-1.5 pb-1 text-[11px] font-medium self-end ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[1]}</p>
                                         </div>
-                                        {/* Arrow */}
-                                        <div className='absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-gray-400/85 rotate-45'></div>
+                                        <button onClick={handleNavigateToBookingPage} data-id={t._id} className={`w-full text-[13.7px] font-medium text-black py-1 px-2 rounded-br-xl ${isTimeNotPast(t.time) ? 'bg-red-400 cursor-pointer' : 'bg-gray-500'}`}>Book Now</button>
+                                        {/* Hover Tooltip */}
+                                        <div className='absolute -top-16 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out group-hover:pointer-events-none z-100'>
+                                            <div className='bg-gray-400/85 text-white px-4 py-3 rounded-sm shadow-2xl'>
+                                                <p className='text-[14.5px] font-normal whitespace-nowrap'>
+                                                    {Number(t.screenId.numberOfSeats) - t.bookings > 0 ? <span className='font-medium'>{Number(t.screenId.numberOfSeats) - t.bookings}</span> : 'No'} Seats Available
+                                                </p>
+                                            </div>
+                                            {/* Arrow */}
+                                            <div className='absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-gray-400/85 rotate-45'></div>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
