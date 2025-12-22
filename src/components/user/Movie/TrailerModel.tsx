@@ -44,7 +44,7 @@ function TrailerModal({ trailerUrl, isVisible, onClose }: TrailerModalProps) {
 
     return (
         <div 
-            className={`fixed inset-0 z-50 flex items-center justify-center font-[Poppins] transition-all duration-300 ${
+            className={`fixed inset-0 z-250 flex items-center justify-center font-[Poppins] transition-all duration-300 ${
                 isAnimating ? 'bg-black/90' : 'bg-black/0'
             }`}
             onClick={handleClose}
@@ -87,14 +87,6 @@ function TrailerModal({ trailerUrl, isVisible, onClose }: TrailerModalProps) {
                     ></iframe>
                 </div>
 
-                {/* Decorative Border Effect */}
-                {/* <div 
-                    className={`absolute inset-0 pointer-events-none rounded-sm transition-all duration-500 delay-200 ${
-                        isAnimating 
-                            ? 'opacity-100 ring-2 ring-red-500/30' 
-                            : 'opacity-0'
-                    }`}
-                ></div> */}
             </div>
         </div>
     );

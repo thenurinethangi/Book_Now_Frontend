@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import play1 from '../assets/images/play.png'
-import play2 from '../assets/images/play-button.png'
+import pencil from '../assets/images/pencil (1).png'
 import Navigation from '../components/user/Navigation';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import { getMovieDetails } from '../services/user/movieService';
 import Footer from '../components/user/Footer';
 import Showtimes from '../components/user/movie/Showtimes';
+import { Plus, TextAlignCenter } from 'lucide-react';
+import SummeryModal from '../components/user/movie/SummeryModel';
 
 function SingleMovie() {
 
@@ -17,6 +19,7 @@ function SingleMovie() {
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
     const [trailerVisible, setTrailerVisible] = useState(false);
+    const [summeryVisible, setSummeryVisible] = useState(false);
 
     const [movie, setMovie] = useState<any>({});
 
@@ -53,9 +56,21 @@ function SingleMovie() {
         return arr.join(", ");
     }
 
+    function openMovieSummeryModel() {
+        setSummeryVisible(true);
+    }
+
 
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative'>
+
+            <div className='w-[31px] h-[31px] group fixed bottom-3 right-3 bg-red-400 p-2 flex items-center justify-center rounded-full z-200 cursor-pointer hover:w-[130px] hover:bg-[#FF4646] hover:shadow-xl transition-all duration-100 ease-out'>
+                <img src={pencil} width={15} className='w-[15px] transition-all duration-200 ease-out group-hover:opacity-0 group-hover:w-0'></img>
+                <div onClick={openMovieSummeryModel} className='flex items-center gap-x-1 transition-all duration-200 ease-out opacity-0 w-0 overflow-hidden group-hover:opacity-100 group-hover:w-auto group-hover:ml-1'>
+                    <TextAlignCenter className='w-3 h-3' />
+                    <p className='text-[11px] font-san whitespace-nowrap'>Movie Summary</p>
+                </div>
+            </div>
 
             {/* navigation */}
             <Navigation setSignInVisible={setSignInVisible} />
@@ -132,6 +147,13 @@ function SingleMovie() {
                 trailerUrl={movie.trailerUrl || ''}
                 isVisible={trailerVisible}
                 onClose={() => setTrailerVisible(false)}
+            />
+
+            {/* Trailer Modal */}
+            <SummeryModal
+                movie={movie || null}
+                isVisible={summeryVisible}
+                onClose={() => setSummeryVisible(false)}
             />
 
             {/* sign in model */}
