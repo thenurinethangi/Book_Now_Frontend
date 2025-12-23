@@ -11,7 +11,7 @@ function Tabs(props: any) {
                 <div onClick={(e) => props.setTab('Coming Soon')} className={`px-2.5 pb-2 opacity-70 text-[22px] font-medium cursor-pointer ${props.tab === 'Coming Soon' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Coming Soon</div>
             </div>
             <div className='flex items-center gap-5'>
-                <div className='relative'>
+                <div onClick={(e) => props.handleClickKeyFilters()} className='relative'>
                     <BiSortAlt2 className='w-5 h-5 text-[#ff2e38] cursor-pointer absolute left-0.5 top-2' />
                     <button className='px-[11px] pl-6 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light'>Key & Filters</button>
                 </div>

@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 import { Search, User, Tags, Bookmark } from "lucide-react";
 import { getAllNowShowingMovies } from '../../../services/user/movieService';
+import ShowingMovieFilterModel from '../movie/ShowingMovieFilterModel';
 
-function NowShowingMovies() {
+function NowShowingMovies(props: any) {
 
     const navigate = useNavigate();
 
     const [nowShowingMovies, setNowShowingMovies] = useState([]);
+
+    const [genre, setGenre] = useState([]);
+    const [popularity, setPopularity] = useState('');
 
     useEffect(() => {
         loadAllNowShowingMovies();
@@ -64,6 +68,8 @@ function NowShowingMovies() {
                     </div>
                 </div>
             ))}
+
+            {props.showNowShowingFiltersModel ? <ShowingMovieFilterModel setShowNowShowingFiltersModel={props.setShowNowShowingFiltersModel} genre={genre} popularity={popularity} /> : ''}
         </div>
     )
 }

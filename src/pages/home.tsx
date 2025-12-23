@@ -18,6 +18,18 @@ function Home() {
 
     const [tab, setTab] = useState('Now Showing');
 
+    const [showNowShowingFiltersModel, setShowNowShowingFiltersModel] = useState(false);
+    const [showComingSoonFiltersModel, setShowComingSoonFiltersModel] = useState(false);
+
+    function handleClickKeyFilters(){
+        if(tab === 'Now Showing'){
+            setShowNowShowingFiltersModel(true);
+        }
+        else{
+            setShowComingSoonFiltersModel(true);
+        }
+    }
+
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative'>
 
@@ -28,10 +40,10 @@ function Home() {
             <Hero />
 
             {/* tabs */}
-            <Tabs tab={tab} setTab={setTab} />
+            <Tabs tab={tab} setTab={setTab} handleClickKeyFilters={handleClickKeyFilters} />
 
             {/* movie container */}
-            {tab === 'Now Showing' ? <NowShowingMovies /> : ''}
+            {tab === 'Now Showing' ? <NowShowingMovies showNowShowingFiltersModel={showNowShowingFiltersModel} setShowNowShowingFiltersModel={setShowNowShowingFiltersModel} /> : ''}
 
             {/* movie container */}
             {tab === 'Coming Soon' ? <ComingSoonMovies /> : ''}
