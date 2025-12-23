@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Search, User, Tags, Bookmark, ChevronLeft, ChevronRight, ListFilterPlus } from "lucide-react";
 import { getAllShowtimesOfAMovie } from '../../../services/user/showtimeService';
+import FilterModel from '../showtime/FilterModel';
 
 
 function Showtimes(props: any) {
@@ -13,10 +14,16 @@ function Showtimes(props: any) {
     const [showtimesList, setShowtimesList] = useState([]);
     const [selectedDateShowtimes, setSelectedDateShowtimes] = useState([]);
 
+    const [showFiltersModel, setShowFiltersModel] = useState(false);
+
     useEffect(() => {
         setDates(getNext7Days());
         loadAllShowtimeOfAMovie();
     }, []);
+
+    useEffect(() => {
+        console.log('*',selectedDateShowtimes);
+    });
 
     async function loadAllShowtimeOfAMovie() {
         try {
@@ -137,7 +144,7 @@ function Showtimes(props: any) {
                 <hr className='border-red-400/17'></hr>
             </div>
 
-            <div className='mt-8 flex justify-end items-start px-14'>
+            <div onClick={(e) => setShowFiltersModel(true)} className='mt-8 flex justify-end items-start px-14 cursor-pointer'>
                 <ListFilterPlus className='w-5.5 h-5.5 text-white/95' />
             </div>
 
@@ -152,7 +159,7 @@ function Showtimes(props: any) {
                         <div className='flex items-center relative gap-13'>
                             {s.map((t: any, index: number) => (
                                 <div key={index} className='flex items-center -translate-x-2.5 relative'>
-                                    <div className='absolute left-0 rotate-270 bg-red-400 w-[72.3px] py-[1px] text-center text-black font-medium border border-red-300 text-[14px] origin-top-left -translate-x-[23px] translate-y-[48px]'>3D</div>
+                                    <div className={`absolute left-0 rotate-270 w-[72.3px] py-[1px] text-center text-black font-medium border text-[14px] origin-top-left -translate-x-[23px] translate-y-[48px] ${isTimeNotPast(t.time) ? 'bg-red-400 border-red-300' : 'bg-gray-500 border-gray-400'}`}>{t.formatShowing}</div>
                                     <div className={`group flex flex-col justify-between items-center border rounded-br-xl pt-2 ${isTimeNotPast(t.time) ? 'border-red-300' : 'border-gray-500 pointer-events-none'}`}>
                                         <div className='flex'>
                                             <p className={`pl-1.5 pr-1 text-[23px] font-medium ${isTimeNotPast(t.time) ? '' : 'text-gray-500'}`}>{formatToTime12h(t.time).split(' ')[0]}</p>
@@ -177,6 +184,7 @@ function Showtimes(props: any) {
                 ))}
             </div>
 
+            { showFiltersModel ? <FilterModel setShowFiltersModel={setShowFiltersModel} /> : '' }
         </div>
     )
 }
