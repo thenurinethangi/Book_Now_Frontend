@@ -43,13 +43,13 @@ function NowShowingMovies() {
 
 
     return (
-        <div className='grid grid-cols-5 gap-8 px-15 mt-11 mb-27'>
+        <div className='grid grid-cols-5 gap-8 px-15 mt-11 mb-10'>
             {/* single movie */}
             {nowShowingMovies.map((movie: any) => (
                 <div className='mb-6'>
-                    <div className='relative'>
+                    <div className='relative h-[294.198px]'>
                         <Bookmark className="text-white/90 w-[22px] h-[25px] absolute right-1 top-1" />
-                        <img src={movie.posterImageUrl} className='rounded-sm'></img>
+                        <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full'></img>
                         <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
                     </div>
                     <div className='flex flex-col items-start'>

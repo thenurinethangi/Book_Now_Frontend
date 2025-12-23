@@ -8,6 +8,7 @@ import Footer from '../components/user/Footer';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
 import ComingSoonMovies from '../components/user/home/ComingSoonMovies';
+import Trailers from '../components/user/home/Trailers';
 
 
 function Home() {
@@ -34,6 +35,9 @@ function Home() {
 
             {/* movie container */}
             {tab === 'Coming Soon' ? <ComingSoonMovies /> : ''}
+
+            {/* movie container */}
+            <Trailers />
 
             {/* Footer */}
             <Footer />

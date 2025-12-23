@@ -47,6 +47,7 @@ import PaymentTwo from './components/user/booking/py';
 import BookingFailure from './components/user/booking/BookingFailure';
 import BookingSuccess from './components/user/booking/BookingSuccess';
 import TimeOutModel from './components/user/booking/TimeOutModel';
+import Trailers from './components/user/home/Trailers';
 
 function App() {
 
@@ -95,6 +96,7 @@ function App() {
           <Route path='/error/:id' element={<BookingFailure />}></Route>
           <Route path='/success/:id' element={<BookingSuccess />}></Route>
           <Route path='/timeOut' element={<TimeOutModel />}></Route>
+          <Route path='/trailers' element={<Trailers />}></Route>
         </Routes>
       </BrowserRouter>
     </>
