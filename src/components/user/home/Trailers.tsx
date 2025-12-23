@@ -43,9 +43,9 @@ function Trailers() {
 
     return (
         <div className='font-[Poppins] px-15 py-8 mb-12 h-screen flex flex-col mb-27'>
-            <div className='text-center mb-6'>
-                <h2 className='text-[24px] font-medium text-[#dedede] mb-1'>Popular Trailers</h2>
-                <p className='text-[13px] text-[#999] font-medium'>Watch the most exciting movie trailers</p>
+            <div className='text-center mb-2 flex flex-col items-center'>
+                <h2 className='text-[24px] font-medium text-[#dedede] mb-1 pb-2 border-b-2 border-b-red-500'>Popular Trailers</h2>
+                {/* <p className='text-[13px] text-[#999] font-medium'>Watch the most exciting movie trailers</p> */}
             </div>
 
             <div className='max-w-[900px] mx-auto flex-1 flex items-center'>
@@ -283,6 +283,147 @@ function Trailers() {
                                 />
                             </svg>
                             <h3 className='text-white text-[12px] font-semibold mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>{trailers[2].title}</h3>
+                        </div>
+                    </div>
+
+                    {/* Medium - Interstellar */}
+                    <div className='col-span-6 row-span-1 relative group cursor-pointer overflow-hidden rounded-[1px]'>
+                        <img
+                            src={trailers[5].imageUrl}
+                            className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
+                            alt={trailers[5].title}
+                        />
+                        <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 group-hover:via-black/30 transition-all duration-700'></div>
+                        <div className='absolute inset-0 flex flex-col items-center justify-center'>
+                            <svg
+                                width="35"
+                                height="35"
+                                viewBox="0 0 100 100"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="42"
+                                    fill="#FF2D2D"
+                                />
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="45"
+                                    fill="none"
+                                    stroke="#FF2D2D"
+                                    strokeWidth="9"
+                                />
+                                <path
+                                    d="
+        M 44 30
+        C 40 28 38 30 38 34
+        L 38 66
+        C 38 70 40 72 44 70
+        L 72 54
+        C 76 52 76 48 72 46
+        Z
+      "
+                                    fill="#FFFFFF"
+                                    transform="translate(50 50) scale(0.9) translate(-50 -50)"
+                                />
+                            </svg>
+                            <h3 className='text-white text-[12px] font-semibold mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>{trailers[5].title}</h3>
+                        </div>
+                    </div>
+
+                    {/* Medium - Interstellar */}
+                    <div className='col-span-3 row-span-1 relative group cursor-pointer overflow-hidden rounded-[1px]'>
+                        <img
+                            src={trailers[5].imageUrl}
+                            className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
+                            alt={trailers[5].title}
+                        />
+                        <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 group-hover:via-black/30 transition-all duration-700'></div>
+                        <div className='absolute inset-0 flex flex-col items-center justify-center'>
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 100 100"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="42"
+                                    fill="#FF2D2D"
+                                />
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="45"
+                                    fill="none"
+                                    stroke="#FF2D2D"
+                                    strokeWidth="9"
+                                />
+                                <path
+                                    d="
+        M 44 30
+        C 40 28 38 30 38 34
+        L 38 66
+        C 38 70 40 72 44 70
+        L 72 54
+        C 76 52 76 48 72 46
+        Z
+      "
+                                    fill="#FFFFFF"
+                                    transform="translate(50 50) scale(0.9) translate(-50 -50)"
+                                />
+                            </svg>
+                            <h3 className='text-white text-[12px] font-semibold mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>{trailers[5].title}</h3>
+                        </div>
+                    </div>
+
+                    {/* Medium - Interstellar */}
+                    <div className='col-span-3 row-span-1 relative group cursor-pointer overflow-hidden rounded-[1px]'>
+                        <img
+                            src={trailers[5].imageUrl}
+                            className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
+                            alt={trailers[5].title}
+                        />
+                        <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 group-hover:via-black/30 transition-all duration-700'></div>
+                        <div className='absolute inset-0 flex flex-col items-center justify-center'>
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 100 100"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="42"
+                                    fill="#FF2D2D"
+                                />
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="45"
+                                    fill="none"
+                                    stroke="#FF2D2D"
+                                    strokeWidth="9"
+                                />
+                                <path
+                                    d="
+        M 44 30
+        C 40 28 38 30 38 34
+        L 38 66
+        C 38 70 40 72 44 70
+        L 72 54
+        C 76 52 76 48 72 46
+        Z
+      "
+                                    fill="#FFFFFF"
+                                    transform="translate(50 50) scale(0.9) translate(-50 -50)"
+                                />
+                            </svg>
+                            <h3 className='text-white text-[12px] font-semibold mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>{trailers[5].title}</h3>
                         </div>
                     </div>
 
