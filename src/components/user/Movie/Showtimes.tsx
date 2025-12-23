@@ -243,7 +243,7 @@ function Showtimes(props: any) {
 
             <div className='px-14 mt-2'>
                 {/* single screen show time */}
-                {selectedDateShowtimes.map((s: any, index: number) => (
+                { selectedDateShowtimes.length > 0 ? selectedDateShowtimes.map((s: any, index: number) => (
                     <div key={index} className='flex items-center gap-5 mb-7'>
                         <div className='w-[25%]'>
                             <p className='text-[16.8px] font-normal'>{s[0].screenId.screenName}</p>
@@ -274,7 +274,8 @@ function Showtimes(props: any) {
                             ))}
                         </div>
                     </div>
-                ))}
+                )) : 
+                <p className='text-[15px] text-[#BDBDBD] font-light'>No showtimes</p>}
             </div>
 
             {showFiltersModel ? <FilterModel setShowFiltersModel={setShowFiltersModel} filterShowtimes={filterShowtimes} loadAllShowtimeOfAMovie={loadAllShowtimeOfAMovie} experience={experience} time={time} /> : ''}
