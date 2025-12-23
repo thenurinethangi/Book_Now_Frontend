@@ -4,6 +4,7 @@ import { Search, User, Tags, Bookmark, ChevronLeft, ChevronRight, ListFilterPlus
 import { getAllShowtimesOfAMovie } from '../../../services/user/showtimeService';
 import FilterModel from '../showtime/FilterModel';
 
+type TimeFrame = "Morning" | "Afternoon" | "Evening" | "Night";
 
 function Showtimes(props: any) {
 
@@ -12,18 +13,18 @@ function Showtimes(props: any) {
     const [dates, setDates] = useState<string[]>([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [showtimesList, setShowtimesList] = useState([]);
-    const [selectedDateShowtimes, setSelectedDateShowtimes] = useState([]);
+    const [selectedDateShowtimes, setSelectedDateShowtimes] = useState<any>([]);
+    const [immutableSelectedDateShowtimes, setImmutableSelectedDateShowtimes] = useState<any>([]);
 
     const [showFiltersModel, setShowFiltersModel] = useState(false);
+
+    const [experience, setExperience] = useState('');
+    const [time, setTime] = useState('');
 
     useEffect(() => {
         setDates(getNext7Days());
         loadAllShowtimeOfAMovie();
     }, []);
-
-    useEffect(() => {
-        console.log('*',selectedDateShowtimes);
-    });
 
     async function loadAllShowtimeOfAMovie() {
         try {
@@ -36,6 +37,7 @@ function Showtimes(props: any) {
                 if (e.length > 0) {
                     setSelectedDate(formatShowDate(e[0][0].date));
                     setSelectedDateShowtimes(e);
+                    setImmutableSelectedDateShowtimes(e);
                     break;
                 }
             }
@@ -117,6 +119,94 @@ function Showtimes(props: any) {
         return givenTime > now;
     }
 
+    function isTimeInFrame(dateTime: string, timeFrame: TimeFrame): boolean {
+        const date = new Date(dateTime);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        const totalMinutes = hours * 60 + minutes;
+
+        switch (timeFrame) {
+            case "Morning":
+                return totalMinutes >= 6 * 60 && totalMinutes <= 11 * 60 + 59;
+
+            case "Afternoon":
+                return totalMinutes >= 12 * 60 && totalMinutes <= 16 * 60 + 59;
+
+            case "Evening":
+                return totalMinutes >= 17 * 60 && totalMinutes <= 20 * 60 + 59;
+
+            case "Night":
+                return (
+                    totalMinutes >= 21 * 60 ||
+                    totalMinutes <= 5 * 60 + 59
+                );
+
+            default:
+                return false;
+        }
+    }
+
+    function filterShowtimes(rules: any) {
+
+        setExperience(rules.experience);
+        setTime(rules.time);
+
+        const arr = [];
+
+        if (rules.experience && rules.time) {
+            for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+                const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+                const ar = [];
+                for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+                    const showtime = singleScreenShowtimesList[j];
+                    if (showtime.formatShowing === rules.experience && isTimeInFrame(showtime.time, rules.time)) {
+                        ar.push(showtime);
+                    }
+                }
+                if (ar.length > 0) {
+                    arr.push(ar);
+                }
+            }
+            setSelectedDateShowtimes(arr);
+        }
+        else if (rules.experience) {
+            for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+                const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+                const ar = [];
+                for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+                    const showtime = singleScreenShowtimesList[j];
+                    if (showtime.formatShowing === rules.experience) {
+                        ar.push(showtime);
+                    }
+                }
+                if (ar.length > 0) {
+                    arr.push(ar);
+                }
+            }
+            setSelectedDateShowtimes(arr);
+        }
+        else if (rules.time) {
+            for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+                const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+                const ar = [];
+                for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+                    const showtime = singleScreenShowtimesList[j];
+                    if (isTimeInFrame(showtime.time, rules.time)) {
+                        ar.push(showtime);
+                    }
+                }
+                if (ar.length > 0) {
+                    arr.push(ar);
+                }
+            }
+            setSelectedDateShowtimes(arr);
+        }
+        else{
+            setSelectedDateShowtimes(immutableSelectedDateShowtimes);
+        }
+    }
+
     return (
         <div className='mb-47'>
             <div className='px-13 flex items-center justify-between'>
@@ -129,6 +219,9 @@ function Showtimes(props: any) {
                             if (showtimesList[index]?.length > 0) {
                                 setSelectedDate(d);
                                 setSelectedDateShowtimes(showtimesList[index]);
+                                setImmutableSelectedDateShowtimes(showtimesList[index]);
+                                setExperience('');
+                                setTime('');
                             }
                         }}
                             key={index} className={`mx-8.5 cursor-pointer ${showtimesList[index]?.length > 0 && selectedDate.toLowerCase() !== d.toLowerCase() ? 'text-white' : 'text-[#BDBDBD] font-light opacity-70'} ${selectedDate.toLowerCase() === d.toLowerCase() ? 'border-b-4 border-b-red-500 pb-3.5 px-3 text-red-600 font-medium' : ''}`}>{d}</div>
@@ -184,7 +277,7 @@ function Showtimes(props: any) {
                 ))}
             </div>
 
-            { showFiltersModel ? <FilterModel setShowFiltersModel={setShowFiltersModel} /> : '' }
+            {showFiltersModel ? <FilterModel setShowFiltersModel={setShowFiltersModel} filterShowtimes={filterShowtimes} loadAllShowtimeOfAMovie={loadAllShowtimeOfAMovie} experience={experience} time={time} /> : ''}
         </div>
     )
 }

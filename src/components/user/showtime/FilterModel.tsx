@@ -7,8 +7,8 @@ const FilterModel = (props: any) => {
 
     const [tab, setTab] = useState('experience');
 
-    const [experience, setExperience] = useState('');
-    const [time, setTime] = useState('');
+    const [experience, setExperience] = useState(props.experience);
+    const [time, setTime] = useState(props.time);
 
     useEffect(() => {
         setTimeout(() => setIsVisible(true), 10);
@@ -35,13 +35,16 @@ const FilterModel = (props: any) => {
         }
     }
 
-    function handleClear(){
+    function handleClear() {
+        props.filterShowtimes({ experience: '', time: '' });
         setExperience('');
         setTime('');
     }
 
-    function handleApplyFilters(){
-        
+    async function handleApplyFilters() {
+        props.filterShowtimes({ experience, time });
+        setIsVisible(false);
+        setTimeout(() => props.setShowFiltersModel(false), 150);
     }
 
 
