@@ -49,12 +49,13 @@ import BookingSuccess from './components/user/booking/BookingSuccess';
 import TimeOutModel from './components/user/booking/TimeOutModel';
 import Trailers from './components/user/home/Trailers';
 import AboutUsPage from './pages/aboutUsPage';
+import MoviePage from './pages/MoviePage';
 
 function App() {
 
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={true} newestOnTop={false} closeOnClick pauseOnHover draggable pauseOnFocusLoss theme="dark" toastStyle={{ background: "#121212", color: "#ffffff", borderRadius: "8px", border: "1px solid #2a2a2a", padding: "14px 16px", fontSize: "14.5px", fontFamily: "Poppins, sans-serif", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.45)"}} progressStyle={{background: "#e50914"}} closeButton={false}/>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={true} newestOnTop={false} closeOnClick pauseOnHover draggable pauseOnFocusLoss theme="dark" toastStyle={{ background: "#121212", color: "#ffffff", borderRadius: "8px", border: "1px solid #2a2a2a", padding: "14px 16px", fontSize: "14.5px", fontFamily: "Poppins, sans-serif", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.45)" }} progressStyle={{ background: "#e50914" }} closeButton={false} />
       <BrowserRouter>
         <Routes>
           <Route path='/admin/landing' element={<AdminLanding />}></Route>
@@ -99,6 +100,7 @@ function App() {
           <Route path='/timeOut' element={<TimeOutModel />}></Route>
           <Route path='/trailers' element={<Trailers />}></Route>
           <Route path='/aboutus' element={<AboutUsPage />}></Route>
+          <Route path='/movie' element={<MoviePage />}></Route>
         </Routes>
       </BrowserRouter>
     </>

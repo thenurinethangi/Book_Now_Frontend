@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllHeroPosters } from '../../../services/user/heroService';
+
 import banner1 from '../../../assets/images/about-us-banner.jpg';
 import banner2 from '../../../assets/images/Birmingham3-scaled-1.webp';
 import banner3 from '../../../assets/images/image.jpg';
