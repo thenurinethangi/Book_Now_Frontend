@@ -12,16 +12,16 @@ function AboutUsContent() {
                         Cinema experiences deserve seamless booking
                     </h2>
                     <p className="text-gray-400 text-lg leading-relaxed font-light">
-                        We're not just a booking platform. We're cinema enthusiasts who understand that the movie experience begins 
-                        the moment you decide what to watch. Synema bridges technology and passion, delivering instant access to 
+                        We're not just a booking platform. We're cinema enthusiasts who understand that the movie experience begins
+                        the moment you decide what to watch. Synema bridges technology and passion, delivering instant access to
                         theaters across the country with enterprise-grade security and consumer-friendly simplicity.
                     </p>
                 </div>
             </section>
 
             {/* Stats Bar - Clean & Sophisticated */}
-            <section className="border-y border-white/10 bg-white/[0.02]">
-                <div className="max-w-7xl mx-auto px-8 py-16">
+            <section className="">
+                <div className="max-w-[1200px] mx-auto px-8 py-16">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
                         {[
                             { number: "500+", label: "Cinema Partners" },
@@ -30,7 +30,7 @@ function AboutUsContent() {
                             { number: "99.9%", label: "Platform Uptime" }
                         ].map((stat, index) => (
                             <div key={index} className="text-center">
-                                <div className="text-5xl font-light text-white mb-2">{stat.number}</div>
+                                <div className="text-5xl font-light text-white/30 mb-2">{stat.number}</div>
                                 <div className="text-gray-500 text-sm tracking-wider uppercase">{stat.label}</div>
                             </div>
                         ))}
