@@ -130,7 +130,8 @@ function NowShowingMovies(props: any) {
     return (
         <div className='grid grid-cols-5 gap-8 px-15 mt-11 mb-10'>
             {/* single movie */}
-            {nowShowingMovies.map((movie: any) => (
+            {nowShowingMovies.length > 0 
+            ? nowShowingMovies.map((movie: any) => (
                 <div className='mb-6'>
                     <div className='relative aspect-[2/3]'>
                         <Bookmark className="text-white/90 w-[22px] h-[25px] absolute right-1 top-1" />
@@ -148,7 +149,9 @@ function NowShowingMovies(props: any) {
                         </div>
                     </div>
                 </div>
-            ))}
+            ))
+            :  <p className='text-[15px] text-[#BDBDBD] font-light pl-2.5 mb-20'>No movies</p>
+            }
 
             {props.showNowShowingFiltersModel ? <ShowingMovieFilterModel setShowNowShowingFiltersModel={props.setShowNowShowingFiltersModel} genre={genre} popularity={popularity} filterNowShowingMovie={filterNowShowingMovie} /> : ''}
         </div>

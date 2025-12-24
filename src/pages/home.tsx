@@ -21,11 +21,11 @@ function Home() {
     const [showNowShowingFiltersModel, setShowNowShowingFiltersModel] = useState(false);
     const [showComingSoonFiltersModel, setShowComingSoonFiltersModel] = useState(false);
 
-    function handleClickKeyFilters(){
-        if(tab === 'Now Showing'){
+    function handleClickKeyFilters() {
+        if (tab === 'Now Showing') {
             setShowNowShowingFiltersModel(true);
         }
-        else{
+        else {
             setShowComingSoonFiltersModel(true);
         }
     }
@@ -46,7 +46,7 @@ function Home() {
             {tab === 'Now Showing' ? <NowShowingMovies showNowShowingFiltersModel={showNowShowingFiltersModel} setShowNowShowingFiltersModel={setShowNowShowingFiltersModel} /> : ''}
 
             {/* movie container */}
-            {tab === 'Coming Soon' ? <ComingSoonMovies /> : ''}
+            {tab === 'Coming Soon' ? <ComingSoonMovies showComingSoonFiltersModel={showComingSoonFiltersModel} setShowComingSoonFiltersModel={setShowComingSoonFiltersModel} /> : ''}
 
             {/* movie container */}
             <Trailers />

@@ -60,7 +60,7 @@ const ShowingMovieFilterModel = (props: any) => {
     }
 
     function handleClear() {
-        props.filterNowShowingMovie({ genre: '', popularity: '' });
+        props.filterNowShowingMovie({ genre: [], popularity: '' });
         setGenre([]);
         setPopularity('');
     }
