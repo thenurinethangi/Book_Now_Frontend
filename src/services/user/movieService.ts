@@ -17,3 +17,9 @@ export const getMovieDetails = async (id: string) => {
     const res = await api.get('movie/' + id);
     return res;
 }
+
+export const getMoviesBookingsCount = async (movieList: []) => {
+
+    const res = await api.post('/movie/bookings/count', { movieList }, { headers: { 'Content-Type': 'application/json' } });
+    return res;
+}

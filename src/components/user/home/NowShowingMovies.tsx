@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import { Search, User, Tags, Bookmark } from "lucide-react";
-import { getAllNowShowingMovies } from '../../../services/user/movieService';
+import { getAllNowShowingMovies, getMoviesBookingsCount } from '../../../services/user/movieService';
 import ShowingMovieFilterModel from '../movie/ShowingMovieFilterModel';
 
 function NowShowingMovies(props: any) {
@@ -10,6 +10,8 @@ function NowShowingMovies(props: any) {
     const navigate = useNavigate();
 
     const [nowShowingMovies, setNowShowingMovies] = useState([]);
+    const [immutableNowShowingMovies, setImmutableNowShowingMovies] = useState([]);
+    const [nowShowingMoviesBookingsCount, setNowShowingMoviesBookingsCount] = useState([]);
 
     const [genre, setGenre] = useState([]);
     const [popularity, setPopularity] = useState('');
@@ -23,6 +25,11 @@ function NowShowingMovies(props: any) {
             const res = await getAllNowShowingMovies();
             console.log(res.data.data);
             setNowShowingMovies(res.data.data);
+            setImmutableNowShowingMovies(res.data.data);
+
+            const res2 = await getMoviesBookingsCount(res.data.data);
+            console.log('fuck', res2.data.data);
+            setNowShowingMoviesBookingsCount(res2.data.data);
         }
         catch (e) {
             console.log(e);
@@ -43,6 +50,67 @@ function NowShowingMovies(props: any) {
         if (movieId) {
             navigate('/single/movie/' + movieId);
         }
+    }
+
+    function filterNowShowingMovie(rules: any) {
+
+        console.log(rules);
+
+        setGenre(rules.genre);
+        setPopularity(rules.popularity);
+
+        const arr = [];
+
+        if (rules.genre.length > 0 && rules.popularity) {
+            for (let i = 0; i < immutableNowShowingMovies.length; i++) {
+                const movie: any = immutableNowShowingMovies[i];
+                for (let j = 0; j < movie.genres.length; j++) {
+                    const g = movie.genres[j];
+                    if (rules.genre.includes(g)) {
+                        arr.push(movie);
+                        break;
+                    }
+                }
+            }
+
+
+            console.log(arr);
+
+        }
+        else if (rules.genre.length > 0) {
+            for (let i = 0; i < immutableNowShowingMovies.length; i++) {
+                const movie: any = immutableNowShowingMovies[i];
+                for (let j = 0; j < movie.genres.length; j++) {
+                    const g = movie.genres[j];
+                    if (rules.genre.includes(g)) {
+                        arr.push(movie);
+                        break;
+                    }
+                }
+            }
+
+            console.log(arr);
+            setNowShowingMovies(arr);
+        }
+        // else if (rules.time) {
+        //     for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+        //         const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+        //         const ar = [];
+        //         for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+        //             const showtime = singleScreenShowtimesList[j];
+        //             if (isTimeInFrame(showtime.time, rules.time)) {
+        //                 ar.push(showtime);
+        //             }
+        //         }
+        //         if (ar.length > 0) {
+        //             arr.push(ar);
+        //         }
+        //     }
+        //     setSelectedDateShowtimes(arr);
+        // }
+        // else {
+        //     setSelectedDateShowtimes(immutableSelectedDateShowtimes);
+        // }
     }
 
 
@@ -69,7 +137,7 @@ function NowShowingMovies(props: any) {
                 </div>
             ))}
 
-            {props.showNowShowingFiltersModel ? <ShowingMovieFilterModel setShowNowShowingFiltersModel={props.setShowNowShowingFiltersModel} genre={genre} popularity={popularity} /> : ''}
+            {props.showNowShowingFiltersModel ? <ShowingMovieFilterModel setShowNowShowingFiltersModel={props.setShowNowShowingFiltersModel} genre={genre} popularity={popularity} filterNowShowingMovie={filterNowShowingMovie} /> : ''}
         </div>
     )
 }

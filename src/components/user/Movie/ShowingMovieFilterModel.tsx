@@ -59,17 +59,17 @@ const ShowingMovieFilterModel = (props: any) => {
         }
     }
 
-    // function handleClear() {
-    //     props.filterShowtimes({ experience: '', time: '' });
-    //     setExperience('');
-    //     setTime('');
-    // }
+    function handleClear() {
+        props.filterNowShowingMovie({ genre: '', popularity: '' });
+        setGenre([]);
+        setPopularity('');
+    }
 
-    // async function handleApplyFilters() {
-    //     props.filterShowtimes({ experience, time });
-    //     setIsVisible(false);
-    //     setTimeout(() => props.setShowNowShowingFiltersModel(false), 150);
-    // }
+    async function handleApplyFilters() {
+        props.filterNowShowingMovie({ genre, popularity });
+        setIsVisible(false);
+        setTimeout(() => props.setShowNowShowingFiltersModel(false), 150);
+    }
 
 
     return (
@@ -97,7 +97,7 @@ const ShowingMovieFilterModel = (props: any) => {
                         <div className='w-full'>
                             <ul className='flex flex-col gap-2'>
                                 {genres.map((g) => (
-                                    <li data-value={g} onClick={handleSetGenre} className="w-full h-[46px] bg-[#1e1e1e] border border-[#383838] rounded-sm cursor-pointer text-white flex items-center">
+                                    <li key={g} data-value={g} onClick={handleSetGenre} className="w-full h-[46px] bg-[#1e1e1e] border border-[#383838] rounded-sm cursor-pointer text-white flex items-center">
                                         <div className="relative w-full">
                                             <div className='flex items-center justify-between relative w-full pr-4'>
                                                 <div className='flex items-center'>
@@ -155,8 +155,8 @@ const ShowingMovieFilterModel = (props: any) => {
                 </div>
 
                 <div className='bg-[#212121]/80 py-3.5 px-6'>
-                    <button className='w-full bg-[#cd242c] text-[14px] py-[14px] rounded-sm font-semibold cursor-pointer'>APPLY FILTERS</button>
-                    <button className='text-[14px] text-[#ff2e38] mt-3 w-full font-medium cursor-pointer'>Clear selection</button>
+                    <button onClick={handleApplyFilters} className='w-full bg-[#cd242c] text-[14px] py-[14px] rounded-sm font-semibold cursor-pointer'>APPLY FILTERS</button>
+                    <button onClick={handleClear} className='text-[14px] text-[#ff2e38] mt-3 w-full font-medium cursor-pointer'>Clear selection</button>
                 </div>
 
             </div>

@@ -42,7 +42,7 @@ function Trailers() {
     ];
 
     return (
-        <div className='font-[Poppins] px-15 py-8 mb-12 h-screen flex flex-col mb-27'>
+        <div className='font-[Poppins] px-15 py-8 mb-12 h-screen flex flex-col mb-25'>
             <div className='text-center mb-2 flex flex-col items-center'>
                 <h2 className='text-[24px] font-medium text-[#dedede] mb-1 pb-2 border-b-2 border-b-red-500'>Popular Trailers</h2>
                 {/* <p className='text-[13px] text-[#999] font-medium'>Watch the most exciting movie trailers</p> */}
