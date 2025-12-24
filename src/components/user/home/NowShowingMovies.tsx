@@ -9,7 +9,7 @@ function NowShowingMovies(props: any) {
 
     const navigate = useNavigate();
 
-    const [nowShowingMovies, setNowShowingMovies] = useState([]);
+    const [nowShowingMovies, setNowShowingMovies] = useState<any>([]);
     const [immutableNowShowingMovies, setImmutableNowShowingMovies] = useState([]);
     const [nowShowingMoviesBookingsCount, setNowShowingMoviesBookingsCount] = useState([]);
 
@@ -28,7 +28,7 @@ function NowShowingMovies(props: any) {
             setImmutableNowShowingMovies(res.data.data);
 
             const res2 = await getMoviesBookingsCount(res.data.data);
-            console.log('fuck', res2.data.data);
+            console.log(res2.data.data);
             setNowShowingMoviesBookingsCount(res2.data.data);
         }
         catch (e) {
@@ -60,6 +60,7 @@ function NowShowingMovies(props: any) {
         setPopularity(rules.popularity);
 
         const arr = [];
+        const arr2: any = [];
 
         if (rules.genre.length > 0 && rules.popularity) {
             for (let i = 0; i < immutableNowShowingMovies.length; i++) {
@@ -68,13 +69,26 @@ function NowShowingMovies(props: any) {
                     const g = movie.genres[j];
                     if (rules.genre.includes(g)) {
                         arr.push(movie);
+                        arr2.push(nowShowingMoviesBookingsCount[i]);
                         break;
                     }
                 }
             }
 
+            const combined = arr.map((movie, index) => ({
+                movie,
+                count: arr2[index],
+            }));
 
-            console.log(arr);
+
+            if (rules.popularity === "High to Low") {
+                combined.sort((a, b) => b.count - a.count);
+            } else {
+                combined.sort((a, b) => a.count - b.count);
+            }
+
+            const sortedMovies = combined.map(item => item.movie);
+            setNowShowingMovies(sortedMovies);
 
         }
         else if (rules.genre.length > 0) {
@@ -89,28 +103,27 @@ function NowShowingMovies(props: any) {
                 }
             }
 
-            console.log(arr);
             setNowShowingMovies(arr);
         }
-        // else if (rules.time) {
-        //     for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
-        //         const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
-        //         const ar = [];
-        //         for (let j = 0; j < singleScreenShowtimesList.length; j++) {
-        //             const showtime = singleScreenShowtimesList[j];
-        //             if (isTimeInFrame(showtime.time, rules.time)) {
-        //                 ar.push(showtime);
-        //             }
-        //         }
-        //         if (ar.length > 0) {
-        //             arr.push(ar);
-        //         }
-        //     }
-        //     setSelectedDateShowtimes(arr);
-        // }
-        // else {
-        //     setSelectedDateShowtimes(immutableSelectedDateShowtimes);
-        // }
+        else if (rules.popularity) {
+            const combined = immutableNowShowingMovies.map((movie, index) => ({
+                movie,
+                count: nowShowingMoviesBookingsCount[index],
+            }));
+
+
+            if (rules.popularity === "High to Low") {
+                combined.sort((a, b) => b.count - a.count);
+            } else {
+                combined.sort((a, b) => a.count - b.count);
+            }
+
+            const sortedMovies = combined.map(item => item.movie);
+            setNowShowingMovies(sortedMovies);
+        }
+        else {
+            setNowShowingMovies(immutableNowShowingMovies);
+        }
     }
 
 
