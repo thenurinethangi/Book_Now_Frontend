@@ -13,7 +13,7 @@ function Tabs(props: any) {
             <div className='flex items-center gap-5'>
                 <div onClick={(e) => props.handleClickKeyFilters()} className='relative'>
                     <BiSortAlt2 className='w-5 h-5 text-[#ff2e38] cursor-pointer absolute left-0.5 top-2' />
-                    <button className='px-[11px] pl-6 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light'>Key & Filters</button>
+                    <button className='px-[11px] pl-6 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light cursor-pointer'>Key & Filters</button>
                 </div>
                 <div className='flex items-center gap-2'>
                     <MdGridView className='w-6 h-6 cursor-pointer text-[#ff2e38]' />

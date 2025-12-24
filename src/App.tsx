@@ -48,6 +48,7 @@ import BookingFailure from './components/user/booking/BookingFailure';
 import BookingSuccess from './components/user/booking/BookingSuccess';
 import TimeOutModel from './components/user/booking/TimeOutModel';
 import Trailers from './components/user/home/Trailers';
+import AboutUsPage from './pages/aboutUsPage';
 
 function App() {
 
@@ -97,6 +98,7 @@ function App() {
           <Route path='/success/:id' element={<BookingSuccess />}></Route>
           <Route path='/timeOut' element={<TimeOutModel />}></Route>
           <Route path='/trailers' element={<Trailers />}></Route>
+          <Route path='/aboutus' element={<AboutUsPage />}></Route>
         </Routes>
       </BrowserRouter>
     </>
