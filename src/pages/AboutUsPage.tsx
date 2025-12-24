@@ -4,6 +4,7 @@ import Hero from '../components/user/aboutUs/Hero';
 import Footer from '../components/user/Footer';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
+import AboutUsContent from '../components/user/aboutUs/AboutUsContent';
 
 function AboutUsPage() {
 
@@ -18,6 +19,9 @@ function AboutUsPage() {
 
             {/* hero */}
             <Hero />
+
+            {/* about us content */}
+            <AboutUsContent />
 
             {/* Footer */}
             <Footer />
