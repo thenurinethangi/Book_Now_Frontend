@@ -21,7 +21,7 @@ function AboutUsContent() {
 
             {/* Stats Bar - Clean & Sophisticated */}
             <section className="">
-                <div className="max-w-[1200px] mx-auto px-8 py-16">
+                <div className="max-w-[1180px] mx-auto px-8 py-16">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
                         {[
                             { number: "500+", label: "Cinema Partners" },
