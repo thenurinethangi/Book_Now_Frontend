@@ -47,6 +47,8 @@ function MoviePage() {
             {/* movie container */}
             {tab === 'Coming Soon' ? <ComingSoonMovies showComingSoonFiltersModel={showComingSoonFiltersModel} setShowComingSoonFiltersModel={setShowComingSoonFiltersModel} /> : ''}
 
+            <div className='h-20 w-full'></div>
+
             {/* Footer */}
             <Footer />
 

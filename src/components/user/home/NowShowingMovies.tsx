@@ -130,27 +130,27 @@ function NowShowingMovies(props: any) {
     return (
         <div className='grid grid-cols-5 gap-9 px-15 mt-11 mb-10'>
             {/* single movie */}
-            {nowShowingMovies.length > 0 
-            ? nowShowingMovies.map((movie: any) => (
-                <div className='mb-4'>
-                    <div className='relative w-[203.198px] h-[300.885px]'>
-                        <Bookmark className="text-white/90 w-[22px] h-[25px] absolute right-1 top-1" />
-                        <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
-                        <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
-                    </div>
-                    <div className='flex flex-col items-start'>
-                        <h1 className='text-[16px] font-medium text-[#dedede] mt-3.5'>{movie.title}</h1>
-                        <div className='flex items-center gap-1.5 mt-1'>
-                            <p className='text-[12px] text-[#999] font-medium'>{movie.duration} | </p>
-                            <p className='text-[12px] text-[#999] font-medium'>{formatDate(movie.releaseDate)}</p>
+            {nowShowingMovies.length > 0
+                ? nowShowingMovies.map((movie: any) => (
+                    <div className='mb-4'>
+                        <div className='relative w-[203.198px] h-[300.885px]'>
+                            <Bookmark className="text-white/90 w-[22px] h-[25px] absolute right-1 top-1" />
+                            <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
+                            <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
                         </div>
-                        <div className='flex items-center gap-1 mt-1.5'>
-                            <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px]" />
+                        <div className='flex flex-col items-start'>
+                            <h1 className='text-[16px] font-medium text-[#dedede] mt-3.5'>{movie.title}</h1>
+                            <div className='flex items-center gap-1.5 mt-1'>
+                                <p className='text-[12px] text-[#999] font-medium'>{movie.duration} | </p>
+                                <p className='text-[12px] text-[#999] font-medium'>{formatDate(movie.releaseDate)}</p>
+                            </div>
+                            <div className='flex items-center gap-1 mt-1.5'>
+                                <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px]" />
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))
-            :  <p className='text-[15px] text-[#BDBDBD] font-light pl-2.5 mb-20'>No movies</p>
+                ))
+                : <p className='text-[15px] text-[#BDBDBD] font-light pl-2.5 mb-20'>No movies</p>
             }
 
             {props.showNowShowingFiltersModel ? <ShowingMovieFilterModel setShowNowShowingFiltersModel={props.setShowNowShowingFiltersModel} genre={genre} popularity={popularity} filterNowShowingMovie={filterNowShowingMovie} /> : ''}
