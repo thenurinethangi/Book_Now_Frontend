@@ -50,6 +50,7 @@ import TimeOutModel from './components/user/booking/TimeOutModel';
 import Trailers from './components/user/home/Trailers';
 import AboutUsPage from './pages/aboutUsPage';
 import MoviePage from './pages/MoviePage';
+import CinemaPage from './pages/CinemaPage';
 
 function App() {
 
@@ -101,6 +102,7 @@ function App() {
           <Route path='/trailers' element={<Trailers />}></Route>
           <Route path='/aboutus' element={<AboutUsPage />}></Route>
           <Route path='/movie' element={<MoviePage />}></Route>
+          <Route path='/cinema' element={<CinemaPage />}></Route>
         </Routes>
       </BrowserRouter>
     </>

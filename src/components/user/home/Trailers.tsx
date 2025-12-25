@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Play, Clock, Eye } from 'lucide-react';
 
 function Trailers() {
+
     const [hoveredId, setHoveredId] = useState(null);
 
     const trailers = [
@@ -48,18 +49,18 @@ function Trailers() {
     ];
 
     return (
-        <div className='font-[Poppins] px-15 py-12 mb-20'>
+        <div className='font-[Poppins] px-15 py-12 mb-25'>
             {/* Section Header with modern design */}
             <div className='flex items-center justify-between mb-8'>
                 <div className='relative'>
                     <h2 className='text-[24px] font-medium text-[#dedede] mb-1 pb-2 border-b-2 border-b-red-500'>Popular Trailers</h2>
                 </div>
-                <button className='text-red-500 text-[13px] font-[Poppins] font-medium hover:text-[#ff4e58] transition-colors flex items-center gap-1'>
+                {/* <button className='text-red-500 text-[13px] font-[Poppins] font-medium hover:text-[#ff4e58] transition-colors flex items-center gap-1'>
                     View All
                     <svg className='w-[15px] h-[15px]' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
                     </svg>
-                </button>
+                </button> */}
             </div>
 
             {/* Compact Dynamic Grid Layout */}

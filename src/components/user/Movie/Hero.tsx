@@ -18,15 +18,10 @@ import moviebanner13 from '../../../assets/images/Avatar.jpeg';
 import moviebanner14 from '../../../assets/images/avatar-fire-and-ash.jpg';
 import moviebanner15 from '../../../assets/images/avatar-fire-and-ash-3840x2160-24703.jpg';
 import moviebanner16 from '../../../assets/images/avatar-fire-and-ash-3840x2160-23494.jpg';
-
-interface Slide {
-    movieId: string
-    image: string;
-    trailer: string;
-    title: string;
-    description: string;
-    status: string
-}
+import moviebanner17 from '../../../assets/images/movies-banner-15.jpg';
+import moviebanner18 from '../../../assets/images/movies-banner-16.jpeg';
+import moviebanner19 from '../../../assets/images/movies-banner-17.png';
+import moviebanner20 from '../../../assets/images/movies-banner-18.jpg';
 
 function Hero() {
 
@@ -42,8 +37,8 @@ function Hero() {
                         <div className='px-20 py-20'>
                             <h1 className='text-[27px] font-medium tracking-[1px]'>MOVIES</h1>
                             <div className='flex flex-col items-center justify-center gap-[3.5px] mt-2'>
-                                <hr className='w-22 border-t border-[#F44336]' />
-                                <hr className='w-22 border-t border-[#F44336]' />
+                                {/* <hr className='w-22 border-t border-[#F44336]' />
+                                <hr className='w-22 border-t border-[#F44336]' /> */}
                             </div>
                         </div>
                     </div>

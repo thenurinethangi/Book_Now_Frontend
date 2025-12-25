@@ -49,7 +49,7 @@ function Home() {
             {tab === 'Coming Soon' ? <ComingSoonMovies showComingSoonFiltersModel={showComingSoonFiltersModel} setShowComingSoonFiltersModel={setShowComingSoonFiltersModel} /> : ''}
 
             {/* movie container */}
-            <Trailers />
+            {/* <Trailers /> */}
 
             {/* Footer */}
             <Footer />
