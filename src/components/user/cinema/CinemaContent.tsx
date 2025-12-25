@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { getAllCinemas } from '../../../services/user/cinemaService';
-import { Bookmark, Tags } from 'lucide-react';
+import { MapPin, Search } from 'lucide-react';
+import { BiSortAlt2 } from "react-icons/bi";
 
 function CinemaContent() {
 
-    const [allCinemas,setAllCinemas] = useState([]);
+    const [allCinemas, setAllCinemas] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         loadAllCinemas();
     }, []);
 
     async function loadAllCinemas() {
-
         try {
             const res = await getAllCinemas();
             console.log(res.data.data);
@@ -20,35 +21,63 @@ function CinemaContent() {
         catch (e) {
             console.log(e);
         }
-
     }
 
     return (
-        <div className='grid grid-cols-4 gap-9 px-15 mt-11 mb-10'>
-            {/* single cinema */}
-            {allCinemas.length > 0
-                ? allCinemas.map((cinema: any) => (
-                    <div key={cinema._id} className='mb-4'>
-                        <div className='relative w-[257.5px] h-[205px]'>
-                            <img src={cinema.cinemaImageUrl} className='object-cover w-full h-full object-top'></img>
-                            <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
-                        </div>
-                        <div className='flex flex-col items-start'>
-                            <h1 className='text-[25px] font-bold text-white -translate-y-[16px] -translate-x-[10px]'>{cinema.cinemaName.toUpperCase()}</h1>
-                            <div className='flex items-center gap-1.5 mt-1'>
-                                <p className='w-[80%] text-[18px] text-white tracking-[0.5px] font-normal -translate-y-[7px] -translate-x-[10px]'>{cinema.address}</p>
-                                {/* <p className='text-[12px] text-[#999] font-medium'>{formatDate(cinema.releaseDate)}</p> */}
-                            </div>
-                            {/* <div className='flex items-center gap-1 mt-1.5'>
-                                { cinema.formats.map((f: string, index: number) => (
-                                    <p key={index} className='text-[9px] bg-[#353535] text-[#999] font-semibold rounded-xs py-0.5 px-1'>{f}</p>
-                                )) }
-                            </div> */}
-                        </div>
+        <div className='pb-10'>
+            <div className="bg-white/10 mx-12 mt-10 h-[80px] flex justify-between items-center pl-6 pr-6 backdrop-blur-sm">
+                <div className="flex items-center gap-6">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                        <input
+                            className="font-light bg-transparent border-b-2 border-b-white/30 hover:border-b-white/50 focus:border-b-red-500 pl-10 pr-3 py-2 text-[17px] tracking-[0.5px] w-[300px] outline-none transition-colors"
+                            type="text"
+                            placeholder="Search by name or location"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
                     </div>
-                ))
-                : <p className='text-[15px] text-[#BDBDBD] font-light pl-2.5 mb-20'>No cinemas</p>
-            }
+                    {/* <a href="" className="text-blue-400 hover:text-blue-300 transition-colors text-[15px]">All Lanka Cinemas</a> */}
+                </div>
+                <div className="flex items-center gap-5">
+                    <button className="flex items-center gap-3 hover:text-red-400 transition-colors">
+                        <div className="text-[16.5px]">Locate me</div>
+                        <MapPin className='w-4 h-5' />
+                    </button>
+                    <button className="flex items-center gap-2 hover:text-red-400 transition-colors">
+                        <div className="text-[16.5px]">Filter By</div>
+                        <BiSortAlt2 className='w-5 h-5 text-white' />
+                    </button>
+                </div>
+            </div>
+
+            <div className='grid grid-cols-4 gap-9 px-15 mt-11 mb-10'>
+                {allCinemas.length > 0
+                    ? allCinemas.map((cinema: any) => (
+                        <div key={cinema._id} className='group cursor-pointer mb-3'>
+                            <div className='relative w-[257.5px] h-[205px] rounded-sm'>
+                                <img src={cinema.cinemaImageUrl} className='object-cover w-full h-full object-top transition-transform duration-500 group-hover:scale-105'></img>
+                                <div className="w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/15 to-transparent group-hover:from-black/60 group-hover:via-black/25 group-hover:scale-105 transition-all duration-500"></div>
+
+                                <div className='absolute bottom-0 -left-2 right-0'>
+                                    <h1 className='text-[25px] font-bold text-white drop-shadow-lg'>{cinema.cinemaName.toUpperCase()}</h1>
+                                </div>
+                            </div>
+
+                            <div className='flex flex-col items-start mt-3.5 -translate-x-2'>
+                                <p className='text-[20.5px] text-white/90 tracking-[0.5px] font-normal font-[Nunito_Sans] leading-relaxed line-clamp-2'>{cinema.address}</p>
+
+                                <div className='flex items-center gap-1.5 mt-2.5'>
+                                    {cinema.formats.map((f: string, index: number) => (
+                                        <p key={index} className='text-[13px] bg-[#353535] text-[#999] font-semibold rounded-xs py-1 px-2'>{f}</p>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                    : <p className='text-[15px] text-[#BDBDBD] font-light pl-2.5 mb-20'>No cinemas</p>
+                }
+            </div>
         </div>
     )
 }
