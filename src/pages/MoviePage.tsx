@@ -36,6 +36,8 @@ function MoviePage() {
             {/* hero */}
             <Hero />
 
+            <div className='h-9.5 w-full'></div>
+
             {/* tabs */}
             <Tabs tab={tab} setTab={setTab} handleClickKeyFilters={handleClickKeyFilters} />
 

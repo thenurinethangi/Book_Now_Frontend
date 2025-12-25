@@ -128,12 +128,12 @@ function NowShowingMovies(props: any) {
 
 
     return (
-        <div className='grid grid-cols-5 gap-8 px-15 mt-11 mb-10'>
+        <div className='grid grid-cols-5 gap-9 px-15 mt-11 mb-10'>
             {/* single movie */}
             {nowShowingMovies.length > 0 
             ? nowShowingMovies.map((movie: any) => (
-                <div className='mb-6'>
-                    <div className='relative aspect-[2/3]'>
+                <div className='mb-4'>
+                    <div className='relative w-[203.198px] h-[300.885px]'>
                         <Bookmark className="text-white/90 w-[22px] h-[25px] absolute right-1 top-1" />
                         <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
                         <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>

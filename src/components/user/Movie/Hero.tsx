@@ -16,6 +16,8 @@ import moviebanner11 from '../../../assets/images/movies-banner-11.jpg';
 import moviebanner12 from '../../../assets/images/movies-banner-12.jpg';
 import moviebanner13 from '../../../assets/images/Avatar.jpeg';
 import moviebanner14 from '../../../assets/images/avatar-fire-and-ash.jpg';
+import moviebanner15 from '../../../assets/images/avatar-fire-and-ash-3840x2160-24703.jpg';
+import moviebanner16 from '../../../assets/images/avatar-fire-and-ash-3840x2160-23494.jpg';
 
 interface Slide {
     movieId: string
@@ -33,15 +35,15 @@ function Hero() {
             <div className='relative w-full h-[600px] overflow-x-hidden overflow-y-auto'>
                 <div className={`absolute w-full h-full`}>
                     {/* Poster Image */}
-                    <img src={moviebanner14} className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`} style={{ objectPosition: 'center' }} alt={''} />
+                    <img src={moviebanner2} className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`} style={{ objectPosition: 'center' }} alt={''} />
 
                     {/* Overlay Content */}
                     <div className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end'>
                         <div className='px-20 py-20'>
                             <h1 className='text-[27px] font-medium tracking-[1px]'>MOVIES</h1>
                             <div className='flex flex-col items-center justify-center gap-[3.5px] mt-2'>
-                                <hr className='w-23 border-t border-[#F44336]' />
-                                <hr className='w-23 border-t border-[#F44336]' />
+                                <hr className='w-22 border-t border-[#F44336]' />
+                                <hr className='w-22 border-t border-[#F44336]' />
                             </div>
                         </div>
                     </div>
