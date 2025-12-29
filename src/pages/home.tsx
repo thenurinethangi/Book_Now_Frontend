@@ -48,6 +48,8 @@ function Home() {
             {/* movie container */}
             {tab === 'Coming Soon' ? <ComingSoonMovies showComingSoonFiltersModel={showComingSoonFiltersModel} setShowComingSoonFiltersModel={setShowComingSoonFiltersModel} /> : ''}
 
+            <div className='mb-25'></div>
+
             {/* movie container */}
             {/* <Trailers /> */}
 

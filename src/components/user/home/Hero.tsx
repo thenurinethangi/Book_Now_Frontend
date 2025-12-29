@@ -131,7 +131,7 @@ function Hero() {
                                 <p className={`text-black mb-1.5 rounded-xs text-[10px] font-semibold p-1 inline ${slide.status === 'Now Showing' ? 'bg-[#02a8b3]' : 'bg-[#f5cc50]'}`}>{slide.status.toUpperCase()}</p>
                                 <h1 className='text-[32px] font-medium'>{slide.title}</h1>
                                 <p className='text-[#999] font-normal mt-2.5 text-[16px] leading-normal w-[80%]'>{slide.description}</p>
-                                <button onClick={handleNavigateToMovieDetailsPage} data-id={slide.movieId} className='text-[#ff2e38] font-medium text-[14px] mt-[15px] hover:text-[#ff4e58] transition-colors'>Book Now</button>
+                                <button onClick={handleNavigateToMovieDetailsPage} data-id={slide.movieId} className='text-[#ff2e38] font-medium text-[14px] mt-[15px] hover:text-[#ff4e58] transition-colors cursor-pointer'>Book Now</button>
                             </div>
                         </div>
                     </div>

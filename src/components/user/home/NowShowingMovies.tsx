@@ -139,13 +139,13 @@ function NowShowingMovies(props: any) {
                             <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
                         </div>
                         <div className='flex flex-col items-start'>
-                            <h1 className='text-[16px] font-medium text-[#dedede] mt-3.5'>{movie.title}</h1>
+                            <h1 onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className='text-[16px] font-medium text-[#dedede] mt-3.5 cursor-pointer'>{movie.title}</h1>
                             <div className='flex items-center gap-1.5 mt-1'>
                                 <p className='text-[12px] text-[#999] font-medium'>{movie.duration} | </p>
                                 <p className='text-[12px] text-[#999] font-medium'>{formatDate(movie.releaseDate)}</p>
                             </div>
                             <div className='flex items-center gap-1 mt-1.5'>
-                                <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px]" />
+                                <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px] cursor-pointer" />
                             </div>
                         </div>
                     </div>
