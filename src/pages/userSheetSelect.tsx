@@ -14,6 +14,7 @@ import { stripePromise } from '../config/stripe';
 import { checkIsSeatLock, checkLockedSeats, lockSeats } from '../services/user/seatsService';
 import CountdownTimer from '../components/user/booking/CountdownTimer';
 import TimeOutModel from '../components/user/booking/TimeOutModel';
+import LoadingSpinner from '../components/user/LoadingSpinner';
 
 function UserSheetSelect() {
 
@@ -47,6 +48,8 @@ function UserSheetSelect() {
     const [timeLeft, setTimeLeft] = useState<number>(FIVE_MINUTES);
 
     const [timeOutModelDisplay, setTimeOutModelDisplay] = useState<boolean>(false);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (!timerShow) return;
@@ -239,6 +242,8 @@ function UserSheetSelect() {
 
     async function handleShowTicketSelectTab() {
 
+        setIsLoading(true);
+
         const data = {
             showId: showtimeDeatils._id,
             seats: selectedSeats,
@@ -255,6 +260,8 @@ function UserSheetSelect() {
         catch (e) {
             console.log(e);
         }
+
+        setIsLoading(false);
     }
 
     function restartBooking() {
@@ -422,7 +429,9 @@ function UserSheetSelect() {
                         </div>
 
                         <div className='mt-25'>
-                            <button onClick={handleShowTicketSelectTab} className='px-7 py-3 rounded-br-3xl text-[14.8px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300'>Continue To Next {' -->'}</button>
+                            <button onClick={handleShowTicketSelectTab} className='flex items-center gap-2.5 px-7 py-3 rounded-br-3xl text-[14.8px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300'>Continue To Next
+                                { isLoading ? <LoadingSpinner /> : ''}
+                            </button>
                         </div>
 
                     </div>
