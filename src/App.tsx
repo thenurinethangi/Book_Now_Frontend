@@ -51,6 +51,7 @@ import Trailers from './components/user/home/Trailers';
 import AboutUsPage from './pages/aboutUsPage';
 import MoviePage from './pages/MoviePage';
 import CinemaPage from './pages/CinemaPage';
+import SingleCinemaPage from './pages/SingleCinemaPage';
 
 function App() {
 
@@ -103,6 +104,7 @@ function App() {
           <Route path='/aboutus' element={<AboutUsPage />}></Route>
           <Route path='/movie' element={<MoviePage />}></Route>
           <Route path='/cinema' element={<CinemaPage />}></Route>
+          <Route path='/cinema/:id' element={<SingleCinemaPage />}></Route>
         </Routes>
       </BrowserRouter>
     </>
