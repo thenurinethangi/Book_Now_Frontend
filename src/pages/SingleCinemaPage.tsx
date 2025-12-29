@@ -7,6 +7,7 @@ import SingleCinemaHero from '../components/user/cinema/SingleCinemaHero';
 import { useParams } from 'react-router-dom';
 import { getCinemaDetailsById } from '../services/user/cinemaService';
 import Showtimes from '../components/user/cinema/Showtimes';
+import OTPModel from '../components/user/OTPModel';
 
 function SingleCinemaPage() {
 
@@ -14,27 +15,29 @@ function SingleCinemaPage() {
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 
-    const [tab,setTab] = useState('Sessions');
+    const [tab, setTab] = useState('Sessions');
 
     const [cinema, setCinema] = useState(null);
 
     useEffect(() => {
         loadCinemaDetailsById();
-    },[]);
+    }, []);
 
-    async function loadCinemaDetailsById(){
+    async function loadCinemaDetailsById() {
 
-        if(!id){
+        if (!id) {
             return;
         }
 
-        try{
+        try {
             const res = await getCinemaDetailsById(id);
-            console.log('cinema details',res.data.data);
+            console.log('cinema details', res.data.data);
             setCinema(res.data.data);
         }
-        catch(e){
+        catch (e) {
             console.log(e);
         }
 
@@ -68,6 +71,9 @@ function SingleCinemaPage() {
 
             {/* sign in model */}
             {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* otp model */}
+            {otpVisible ? <OTPModel setOtpVisible={setOtpVisible} userEmail={userEmail} setUserEmail={setUserEmail} setSignInVisible={setSignInVisible} /> : ''}
 
         </div>
     )

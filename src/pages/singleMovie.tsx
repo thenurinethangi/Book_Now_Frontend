@@ -11,6 +11,7 @@ import Footer from '../components/user/Footer';
 import Showtimes from '../components/user/movie/Showtimes';
 import { Plus, TextAlignCenter } from 'lucide-react';
 import SummeryModal from '../components/user/movie/SummeryModel';
+import OTPModel from '../components/user/OTPModel';
 
 function SingleMovie() {
 
@@ -18,6 +19,9 @@ function SingleMovie() {
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
+
     const [trailerVisible, setTrailerVisible] = useState(false);
     const [summeryVisible, setSummeryVisible] = useState(false);
 
@@ -161,6 +165,9 @@ function SingleMovie() {
 
             {/* sign up model */}
             {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* otp model */}
+            {otpVisible ? <OTPModel setOtpVisible={setOtpVisible} userEmail={userEmail} setUserEmail={setUserEmail} setSignInVisible={setSignInVisible} /> : ''}
 
         </div>
     )

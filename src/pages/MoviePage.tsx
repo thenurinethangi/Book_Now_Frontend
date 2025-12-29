@@ -7,11 +7,14 @@ import SignUp from '../components/user/SignUp';
 import Tabs from '../components/user/home/Tabs';
 import NowShowingMovies from '../components/user/home/NowShowingMovies';
 import ComingSoonMovies from '../components/user/home/ComingSoonMovies';
+import OTPModel from '../components/user/OTPModel';
 
 function MoviePage() {
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 
     const [tab, setTab] = useState('Now Showing');
 
@@ -57,6 +60,9 @@ function MoviePage() {
 
             {/* sign in model */}
             {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* otp model */}
+            {otpVisible ? <OTPModel setOtpVisible={setOtpVisible} userEmail={userEmail} setUserEmail={setUserEmail} setSignInVisible={setSignInVisible} /> : ''}
 
         </div>
     )

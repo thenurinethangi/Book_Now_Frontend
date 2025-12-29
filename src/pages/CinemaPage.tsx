@@ -5,11 +5,14 @@ import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
 import Hero from '../components/user/cinema/Hero';
 import CinemaContent from '../components/user/cinema/CinemaContent';
+import OTPModel from '../components/user/OTPModel';
 
 function CinemaPage() {
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 
     return (
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative'>
@@ -31,6 +34,9 @@ function CinemaPage() {
 
             {/* sign in model */}
             {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* otp model */}
+            {otpVisible ? <OTPModel setOtpVisible={setOtpVisible} userEmail={userEmail} setUserEmail={setUserEmail} setSignInVisible={setSignInVisible} /> : ''}
 
         </div>
     )

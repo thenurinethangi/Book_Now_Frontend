@@ -9,12 +9,15 @@ import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
 import ComingSoonMovies from '../components/user/home/ComingSoonMovies';
 import Trailers from '../components/user/home/Trailers';
+import OTPModel from '../components/user/OTPModel';
 
 
 function Home() {
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 
     const [tab, setTab] = useState('Now Showing');
 
@@ -61,6 +64,9 @@ function Home() {
 
             {/* sign in model */}
             {signUpVisible ? <SignUp setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
+
+            {/* otp model */}
+            {otpVisible ? <OTPModel setOtpVisible={setOtpVisible} userEmail={userEmail} setUserEmail={setUserEmail} setSignInVisible={setSignInVisible} /> : ''}
 
         </div>
     )
