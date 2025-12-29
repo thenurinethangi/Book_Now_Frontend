@@ -22,10 +22,12 @@ function Showtimes(props: any) {
     const [trailerVisible, setTrailerVisible] = useState(false);
     const [trailerUrl, setTrailerUrl] = useState('');
 
-    // const [showFiltersModel, setShowFiltersModel] = useState(false);
+    const [isSorted, setIsSorted] = useState(false);
 
-    // const [experience, setExperience] = useState('');
-    // const [time, setTime] = useState('');
+    const [showFiltersModel, setShowFiltersModel] = useState(false);
+
+    const [experience, setExperience] = useState('');
+    const [time, setTime] = useState('');
 
     useEffect(() => {
         setDates(getNext7Days());
@@ -192,65 +194,76 @@ function Showtimes(props: any) {
         }
     }
 
-    // function filterShowtimes(rules: any) {
+    function filterShowtimes(rules: any) {
 
-    //     setExperience(rules.experience);
-    //     setTime(rules.time);
+        setExperience(rules.experience);
+        setTime(rules.time);
 
-    //     const arr = [];
+        const arr = [];
 
-    //     if (rules.experience && rules.time) {
-    //         for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
-    //             const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
-    //             const ar = [];
-    //             for (let j = 0; j < singleScreenShowtimesList.length; j++) {
-    //                 const showtime = singleScreenShowtimesList[j];
-    //                 if (showtime.formatShowing === rules.experience && isTimeInFrame(showtime.time, rules.time)) {
-    //                     ar.push(showtime);
-    //                 }
-    //             }
-    //             if (ar.length > 0) {
-    //                 arr.push(ar);
-    //             }
-    //         }
-    //         setSelectedDateShowtimes(arr);
-    //     }
-    //     else if (rules.experience) {
-    //         for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
-    //             const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
-    //             const ar = [];
-    //             for (let j = 0; j < singleScreenShowtimesList.length; j++) {
-    //                 const showtime = singleScreenShowtimesList[j];
-    //                 if (showtime.formatShowing === rules.experience) {
-    //                     ar.push(showtime);
-    //                 }
-    //             }
-    //             if (ar.length > 0) {
-    //                 arr.push(ar);
-    //             }
-    //         }
-    //         setSelectedDateShowtimes(arr);
-    //     }
-    //     else if (rules.time) {
-    //         for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
-    //             const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
-    //             const ar = [];
-    //             for (let j = 0; j < singleScreenShowtimesList.length; j++) {
-    //                 const showtime = singleScreenShowtimesList[j];
-    //                 if (isTimeInFrame(showtime.time, rules.time)) {
-    //                     ar.push(showtime);
-    //                 }
-    //             }
-    //             if (ar.length > 0) {
-    //                 arr.push(ar);
-    //             }
-    //         }
-    //         setSelectedDateShowtimes(arr);
-    //     }
-    //     else {
-    //         setSelectedDateShowtimes(immutableSelectedDateShowtimes);
-    //     }
-    // }
+        if (rules.experience && rules.time) {
+            for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+                const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+                const ar = [];
+                for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+                    const showtime = singleScreenShowtimesList[j];
+                    if (showtime.formatShowing === rules.experience && isTimeInFrame(showtime.time, rules.time)) {
+                        ar.push(showtime);
+                    }
+                }
+                if (ar.length > 0) {
+                    arr.push(ar);
+                }
+            }
+            setSelectedDateShowtimes(arr);
+        }
+        else if (rules.experience) {
+            for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+                const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+                const ar = [];
+                for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+                    const showtime = singleScreenShowtimesList[j];
+                    if (showtime.formatShowing === rules.experience) {
+                        ar.push(showtime);
+                    }
+                }
+                if (ar.length > 0) {
+                    arr.push(ar);
+                }
+            }
+            setSelectedDateShowtimes(arr);
+        }
+        else if (rules.time) {
+            for (let i = 0; i < immutableSelectedDateShowtimes.length; i++) {
+                const singleScreenShowtimesList: any = immutableSelectedDateShowtimes[i];
+                const ar = [];
+                for (let j = 0; j < singleScreenShowtimesList.length; j++) {
+                    const showtime = singleScreenShowtimesList[j];
+                    if (isTimeInFrame(showtime.time, rules.time)) {
+                        ar.push(showtime);
+                    }
+                }
+                if (ar.length > 0) {
+                    arr.push(ar);
+                }
+            }
+            setSelectedDateShowtimes(arr);
+        }
+        else {
+            setSelectedDateShowtimes(immutableSelectedDateShowtimes);
+        }
+    }
+
+    function handleSorted() {
+        setIsSorted(!isSorted);
+
+        if (!isSorted) {
+            sort_by_popularity();
+        }
+        else {
+            setSelectedDateShowtimes(immutableSelectedDateShowtimes);
+        }
+    }
 
     function sort_by_popularity() {
         const sorted = [...selectedDateShowtimes].sort((a, b) => {
@@ -260,7 +273,7 @@ function Showtimes(props: any) {
             return bookingsB - bookingsA;
         });
 
-        console.log(sorted);
+        setSelectedDateShowtimes(sorted);
     }
 
 
@@ -275,8 +288,8 @@ function Showtimes(props: any) {
                                     setSelectedDate(d);
                                     setSelectedDateShowtimes(showtimesList[index]);
                                     setImmutableSelectedDateShowtimes(showtimesList[index]);
-                                    // setExperience('');
-                                    // setTime('');
+                                    setExperience('');
+                                    setTime('');
                                 }
                             }}
                             key={index} className={`flex items-center justify-center w-[105px] h-[33px] cursor-pointer text-[12px] font-semibold rounded-sm px-[12px] ${showtimesList[index]?.length <= 0 ? 'text-[#BDBDBD] pointer-events-none opacity-50' : 'text-white'} ${selectedDate.toLowerCase() === d.toLowerCase() ? 'bg-[#ff2e38] border border-[#ff2e38]' : 'bg-[#2e2e2e] border border-[#383838]'}`}>{d.toUpperCase()}</div>
@@ -284,19 +297,19 @@ function Showtimes(props: any) {
                 </div>
 
                 <div className='flex items-center gap-5'>
-                    <div onClick={(e) => props.handleClickKeyFilters()} className='relative'>
+                    <div onClick={(e) => setShowFiltersModel(true)} className='relative'>
                         <ListFilterPlus className='w-4 h-4 text-[#ff2e38] cursor-pointer absolute left-1.5 top-2.5' />
                         <button className='px-[11px] pl-6.5 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light cursor-pointer'>Key & Filters</button>
                     </div>
-                    <div onClick={sort_by_popularity} className='relative'>
+                    <div onClick={handleSorted} className='relative'>
                         <BiSortAlt2 className='w-5 h-5 text-[#ff2e38] cursor-pointer absolute left-0.5 top-2' />
-                        <button className='px-[11px] pl-6 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light cursor-pointer'>Popularity</button>
+                        <button className={`px-[11px] pl-6 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light cursor-pointer ${isSorted ? 'text-[#ff2e38]' : 'text-white'}`}>Popularity</button>
                     </div>
                 </div>
             </div>
 
             <div className='mt-12 px-17'>
-                {selectedDateShowtimes.map((showtimesOfSingleMovie: any, index: number) => (
+                { selectedDateShowtimes.length > 0 ? selectedDateShowtimes.map((showtimesOfSingleMovie: any, index: number) => (
                     <div key={index} className='mb-12 flex flex-col gap-8'>
                         <div className='flex items-end gap-8'>
                             <div className="shrink-0">
@@ -412,7 +425,8 @@ function Showtimes(props: any) {
                         </div>
 
                     </div>
-                ))}
+                ))
+                : <p className='text-[#BDBDBD] text-[15px] font-light'>No movies</p>}
             </div>
 
             {/* Trailer Modal */}
@@ -421,6 +435,8 @@ function Showtimes(props: any) {
                 isVisible={trailerVisible}
                 onClose={() => setTrailerVisible(false)}
             />
+
+            {showFiltersModel ? <FilterModel setShowFiltersModel={setShowFiltersModel} filterShowtimes={filterShowtimes} loadAllShowtimeOfAMovie={loadAllShowtimeOfAMovie} experience={experience} time={time} /> : ''}
 
         </div>
     )
