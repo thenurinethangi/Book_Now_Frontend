@@ -5,6 +5,7 @@ import { getAllShowtimesOfACinema, getAllShowtimesOfAMovie } from '../../../serv
 import FilterModel from '../showtime/FilterModel';
 import { MdGridView, MdViewList } from "react-icons/md";
 import { BiSortAlt2 } from "react-icons/bi";
+import TrailerModal from '../movie/TrailerModel';
 
 type TimeFrame = "Morning" | "Afternoon" | "Evening" | "Night";
 
@@ -17,6 +18,9 @@ function Showtimes(props: any) {
     const [showtimesList, setShowtimesList] = useState([]);
     const [selectedDateShowtimes, setSelectedDateShowtimes] = useState<any>([]);
     const [immutableSelectedDateShowtimes, setImmutableSelectedDateShowtimes] = useState<any>([]);
+
+    const [trailerVisible, setTrailerVisible] = useState(false);
+    const [trailerUrl, setTrailerUrl] = useState('');
 
     // const [showFiltersModel, setShowFiltersModel] = useState(false);
 
@@ -248,6 +252,18 @@ function Showtimes(props: any) {
     //     }
     // }
 
+    function sort_by_popularity() {
+        const sorted = [...selectedDateShowtimes].sort((a, b) => {
+            const bookingsA = a[0]?.bookings ?? 0;
+            const bookingsB = b[0]?.bookings ?? 0;
+
+            return bookingsB - bookingsA;
+        });
+
+        console.log(sorted);
+    }
+
+
     return (
         <div className='mb-47 mt-12'>
             <div className='px-17 flex flex-col gap-4'>
@@ -272,7 +288,7 @@ function Showtimes(props: any) {
                         <ListFilterPlus className='w-4 h-4 text-[#ff2e38] cursor-pointer absolute left-1.5 top-2.5' />
                         <button className='px-[11px] pl-6.5 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light cursor-pointer'>Key & Filters</button>
                     </div>
-                    <div onClick={(e) => props.handleClickKeyFilters()} className='relative'>
+                    <div onClick={sort_by_popularity} className='relative'>
                         <BiSortAlt2 className='w-5 h-5 text-[#ff2e38] cursor-pointer absolute left-0.5 top-2' />
                         <button className='px-[11px] pl-6 py-[7px] border border-gray-300/50 rounded-sm text-[14px] font-light cursor-pointer'>Popularity</button>
                     </div>
@@ -295,7 +311,7 @@ function Showtimes(props: any) {
                                 </div>
                                 <p className='mt-2 text-[#999] font-light w-[90%]'>{showtimesOfSingleMovie[0].movieId.description}</p>
                                 <div className='mt-3.5 flex items-center gap-4'>
-                                    <div className='flex items-center gap-2'>
+                                    <div onClick={(e) => { setTrailerUrl(showtimesOfSingleMovie[0].movieId.trailerUrl); setTrailerVisible(true) }} className='flex items-center gap-2 cursor-pointer'>
                                         <svg
                                             width="23"
                                             height="23"
@@ -398,6 +414,13 @@ function Showtimes(props: any) {
                     </div>
                 ))}
             </div>
+
+            {/* Trailer Modal */}
+            <TrailerModal
+                trailerUrl={trailerUrl || ''}
+                isVisible={trailerVisible}
+                onClose={() => setTrailerVisible(false)}
+            />
 
         </div>
     )
