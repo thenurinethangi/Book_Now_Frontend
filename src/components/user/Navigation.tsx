@@ -2,16 +2,18 @@ import { Search, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 import { useEffect, useState } from "react";
+import ProfileMenu from "./ProfileMenu";
 
 function Navigation(props: any) {
 
     const navigate = useNavigate();
 
     const [activePage, setActivePage] = useState('');
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
 
     useEffect(() => {
         setActivePage(props.page);
-    },[]);
+    }, []);
 
     return (
         <nav className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
@@ -37,7 +39,10 @@ function Navigation(props: any) {
             </div>
             <div className='flex items-center gap-5'>
                 <Search className='w-5 h-5 cursor-pointer' />
-                <User onClick={(e) => props.setSignInVisible(true)} className='w-[18px] h-[18px] cursor-pointer' />
+                <User onClick={(e) => setShowProfileMenu(true)} className='w-[18px] h-[18px] cursor-pointer' />
+                {showProfileMenu && (
+                    <ProfileMenu closeMenu={() => setShowProfileMenu(false)} />
+                )}
             </div>
         </nav>
     )
