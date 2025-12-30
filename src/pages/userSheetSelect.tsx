@@ -283,7 +283,7 @@ function UserSheetSelect() {
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15'>
 
             {/* navigation */}
-            <Navigation setSignInVisible={setSignInVisible} />
+            <Navigation setSignInVisible={setSignInVisible} page={''} />
 
             {/* hero */}
             <div className='relative w-full h-[320px] overflow-x-hidden overflow-y-auto'>

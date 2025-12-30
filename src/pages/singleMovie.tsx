@@ -77,7 +77,7 @@ function SingleMovie() {
             </div>
 
             {/* navigation */}
-            <Navigation setSignInVisible={setSignInVisible} />
+            <Navigation setSignInVisible={setSignInVisible} page={''} />
 
             {/* hero */}
             <div className='relative w-full h-[500px] overflow-x-hidden overflow-y-auto'>
