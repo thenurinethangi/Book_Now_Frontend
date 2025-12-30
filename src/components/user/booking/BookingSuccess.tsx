@@ -42,10 +42,11 @@ function BookingSuccess() {
     }, []);
 
     useEffect(() => {
-        if (!user) {
+        if (!loading && !user) {
             navigate('/');
         }
-    });
+    }, [loading, user, navigate]);
+
 
     async function loadShowtimeDetails() {
         if (!id) {

@@ -15,7 +15,7 @@ function BookingFailure() {
     const navigate = useNavigate();
 
     const { id } = useParams();
-    
+
     const { user, loading } = useAuth();
 
     const tabsRef = useRef<HTMLDivElement | null>(null);
@@ -44,10 +44,10 @@ function BookingFailure() {
     }, []);
 
     useEffect(() => {
-        if(!user){
+        if (!loading && !user) {
             navigate('/');
         }
-    });
+    }, [loading, user, navigate]);
 
     async function loadShowtimeDetails() {
         if (!id) {
