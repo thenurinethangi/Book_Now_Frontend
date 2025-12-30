@@ -8,13 +8,15 @@ import SignUp from "../../../components/user/SignUp";
 import OTPModel from "../../../components/user/OTPModel";
 import { getShowtimeDetailsById } from "../../../services/user/showtimeService";
 import { deleteTransactionAndBookingIfErrorInBooking, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
+import { useAuth } from "../../../context/authContext";
 
 function BookingFailure() {
 
     const navigate = useNavigate();
 
     const { id } = useParams();
-    console.log('-------', id);
+    
+    const { user, loading } = useAuth();
 
     const tabsRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,6 +42,12 @@ function BookingFailure() {
             block: "center",
         });
     }, []);
+
+    useEffect(() => {
+        if(!user){
+            navigate('/');
+        }
+    });
 
     async function loadShowtimeDetails() {
         if (!id) {

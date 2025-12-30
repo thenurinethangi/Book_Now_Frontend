@@ -4,11 +4,13 @@ import tk from "../../../assets/images/blank-golden-coupon-or-ticket-golden-stic
 import { useNavigate, useParams } from "react-router-dom";
 import Navigation from "../Navigation";
 import { confirmTransactionAndBookingIfBookingComplete, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
+import { useAuth } from "../../../context/authContext";
 
 function BookingSuccess() {
 
     const { id } = useParams();
-    console.log('-------', id);
+
+    const { user, loading } = useAuth();
 
     const navigate = useNavigate();
 
@@ -38,6 +40,12 @@ function BookingSuccess() {
             block: "center",
         });
     }, []);
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    });
 
     async function loadShowtimeDetails() {
         if (!id) {
