@@ -316,7 +316,7 @@ function Showtimes(props: any) {
                                 <img src={showtimesOfSingleMovie[0].movieId.posterImageUrl} className='w-[156px] h-[231px] object-cover object-center rounded-sm'></img>
                             </div>
                             <div className="flex-1">
-                                <h3 className='text-[24px] font-medium text-white'>{showtimesOfSingleMovie[0].movieId.title}</h3>
+                                <h3 onClick={(e) => navigate(`/single/movie/${showtimesOfSingleMovie[0].movieId._id}`)} className='text-[24px] font-medium text-white cursor-pointer'>{showtimesOfSingleMovie[0].movieId.title}</h3>
                                 <div className='flex items-center gap-1.5 mt-2'>
                                     <p className='text-[12px] text-[#999] font-medium mr-0.5'>{showtimesOfSingleMovie[0].movieId.duration}</p>
                                     <p className='text-[12px] text-[#999] font-light'>|</p>

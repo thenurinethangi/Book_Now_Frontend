@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { getAllCinemas } from '../../../services/user/cinemaService';
 import { MapPin, Search } from 'lucide-react';
 import { BiSortAlt2 } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
+import FilterModel from './FilterModel';
 
 function CinemaContent() {
 
     const navigate = useNavigate();
 
     const [allCinemas, setAllCinemas] = useState([]);
+    const [filteredCinemas, setFilteredCinemas] = useState<any[]>([]);
+    const [cities, setCities] = useState<any[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    const [showFiltersModel, setShowFiltersModel] = useState(false);
+
+    const [experience, setExperience] = useState([]);
+    const [location, setLocation] = useState([]);
 
     useEffect(() => {
         loadAllCinemas();
@@ -20,17 +28,123 @@ function CinemaContent() {
             const res = await getAllCinemas();
             console.log(res.data.data);
             setAllCinemas(res.data.data);
+            setFilteredCinemas(res.data.data);
+
+            let cityArr: string[] = [];
+            for (let i = 0; i < res.data.data.length; i++) {
+                const cinema = res.data.data[i];
+                if (!cityArr.includes(cinema.city)) {
+                    cityArr.push(cinema.city);
+                }
+            }
+            setCities(cityArr);
         }
         catch (e) {
             console.log(e);
         }
     }
 
-    function handleNavigateToSingleCinemaPage(e: React.MouseEvent<HTMLDivElement>){
+    function handleNavigateToSingleCinemaPage(e: React.MouseEvent<HTMLDivElement>) {
         const cinemaId = e.currentTarget.dataset.id;
 
-        if(cinemaId){
-            navigate('/cinema/'+cinemaId);
+        if (cinemaId) {
+            navigate('/cinema/' + cinemaId);
+        }
+    }
+
+    function searchCinemas(key: string) {
+        const query = key.trim().toLowerCase();
+
+        if (query.length === 0) {
+            setFilteredCinemas(allCinemas);
+            return;
+        }
+
+        if (query.length < 3) return;
+
+        const filtered = allCinemas.filter((cinema: any) =>
+            cinema.cinemaName.toLowerCase().includes(query) ||
+            cinema.distric.toLowerCase().includes(query) ||
+            cinema.city.toLowerCase().includes(query) ||
+            cinema.address.toLowerCase().includes(query)
+        );
+
+        setFilteredCinemas(filtered);
+    }
+
+    function isTimeNotPast(dateTimeString: string): boolean {
+        const givenTime = new Date(dateTimeString).getTime();
+        const now = Date.now();
+
+        return givenTime > now;
+    }
+
+    function isTimeInFrame(dateTime: string, timeFrame: TimeFrame): boolean {
+        const date = new Date(dateTime);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        const totalMinutes = hours * 60 + minutes;
+
+        switch (timeFrame) {
+            case "Morning":
+                return totalMinutes >= 6 * 60 && totalMinutes <= 11 * 60 + 59;
+
+            case "Afternoon":
+                return totalMinutes >= 12 * 60 && totalMinutes <= 16 * 60 + 59;
+
+            case "Evening":
+                return totalMinutes >= 17 * 60 && totalMinutes <= 20 * 60 + 59;
+
+            case "Night":
+                return (
+                    totalMinutes >= 21 * 60 ||
+                    totalMinutes <= 5 * 60 + 59
+                );
+
+            default:
+                return false;
+        }
+    }
+
+    function filterShowtimes(rules: any) {
+
+        setSearchQuery('');
+
+        setExperience(rules.experience);
+        setLocation(rules.location);
+
+        const arr = [];
+
+        if (rules.experience.length > 0 && rules.location.length > 0) {
+            for (let i = 0; i < allCinemas.length; i++) {
+                const cinema: any = allCinemas[i];
+                if (rules.location.includes(cinema.city) && rules.experience.some(a => cinema.formats.some(b => a.toLowerCase() === b.toLowerCase()))) {
+                    arr.push(cinema);
+                }
+            }
+            setFilteredCinemas(arr);
+        }
+        else if (rules.experience.length > 0) {
+            for (let i = 0; i < allCinemas.length; i++) {
+                const cinema: any = allCinemas[i];
+                if (rules.experience.some(a => cinema.formats.some(b => a.toLowerCase() === b.toLowerCase()))) {
+                    arr.push(cinema);
+                }
+            }
+            setFilteredCinemas(arr);
+        }
+        else if (rules.location.landing > 0) {
+            for (let i = 0; i < allCinemas.length; i++) {
+                const cinema: any = allCinemas[i];
+                if (rules.location.includes(cinema.city)) {
+                    arr.push(cinema);
+                }
+            }
+            setFilteredCinemas(arr);
+        }
+        else {
+            setFilteredCinemas(allCinemas);
         }
     }
 
@@ -45,17 +159,17 @@ function CinemaContent() {
                             type="text"
                             placeholder="Search by name or location"
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => { setSearchQuery(e.target.value); searchCinemas(e.target.value) }}
                         />
                     </div>
                     {/* <a href="" className="text-blue-400 hover:text-blue-300 transition-colors text-[15px]">All Lanka Cinemas</a> */}
                 </div>
                 <div className="flex items-center gap-5">
-                    <button className="flex items-center gap-3 hover:text-red-400 transition-colors">
+                    <button className="flex items-center gap-3 hover:text-red-200 transition-colors cursor-pointer">
                         <div className="text-[16.5px]">Locate me</div>
                         <MapPin className='w-4 h-5' />
                     </button>
-                    <button className="flex items-center gap-2 hover:text-red-400 transition-colors">
+                    <button onClick={(e) => setShowFiltersModel(true)} className="flex items-center gap-2 hover:text-red-200 transition-colors cursor-pointer">
                         <div className="text-[16.5px]">Filter By</div>
                         <BiSortAlt2 className='w-5 h-5 text-white' />
                     </button>
@@ -63,8 +177,8 @@ function CinemaContent() {
             </div>
 
             <div className='grid grid-cols-4 gap-9 px-15 mt-11 mb-10'>
-                {allCinemas.length > 0
-                    ? allCinemas.map((cinema: any) => (
+                {filteredCinemas.length > 0
+                    ? filteredCinemas.map((cinema: any) => (
                         <div key={cinema._id} className='group cursor-pointer mb-3'>
                             <div onClick={handleNavigateToSingleCinemaPage} data-id={cinema._id} className='relative w-[257.5px] h-[205px] rounded-sm'>
                                 <img src={cinema.cinemaImageUrl} className='object-cover w-full h-full object-top transition-transform duration-500 group-hover:scale-105'></img>
@@ -89,6 +203,8 @@ function CinemaContent() {
                     : <p className='text-[15px] text-[#BDBDBD] font-light pl-2.5 mb-20'>No cinemas</p>
                 }
             </div>
+
+            {showFiltersModel ? <FilterModel setShowFiltersModel={setShowFiltersModel} filterShowtimes={filterShowtimes} cities={cities} experience={experience} location={location} /> : ''}
         </div>
     )
 }
