@@ -14,6 +14,8 @@ function BookingSuccess() {
 
     const tabsRef = useRef<HTMLDivElement | null>(null);
 
+    const [isLoad, setIsLoad] = useState(false);
+
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
     const [otpVisible, setOtpVisible] = useState(false);
@@ -33,7 +35,7 @@ function BookingSuccess() {
     useEffect(() => {
         tabsRef.current?.scrollIntoView({
             behavior: "smooth",
-            block: "center", 
+            block: "center",
         });
     }, []);
 
@@ -47,6 +49,8 @@ function BookingSuccess() {
             console.log(res.data.data);
             setShowtimeDeatils(res.data.data.showtime);
             setData(res.data.data);
+
+            setIsLoad(true);
 
             setTimeout(async () => {
                 const res = await confirmTransactionAndBookingIfBookingComplete(id);
@@ -93,7 +97,7 @@ function BookingSuccess() {
     }
 
     return (
-        <div className="bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15 min-h-screen">
+        <div className={`bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15 min-h-screen transition-all duration-300 ${isLoad ? 'opacity-100' : 'opacity-0'}`}>
 
             {/* Floating Confetti Animation */}
             {showConfetti && (
@@ -122,7 +126,7 @@ function BookingSuccess() {
             )}
 
             {/* navigation */}
-            <Navigation setSignInVisible={setSignInVisible} />
+            <Navigation setSignInVisible={setSignInVisible} page={''} />
 
             {/* hero */}
             <div className="relative w-full h-[320px] overflow-x-hidden overflow-y-auto">

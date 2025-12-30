@@ -18,6 +18,8 @@ function BookingFailure() {
 
     const tabsRef = useRef<HTMLDivElement | null>(null);
 
+    const [isLoad, setIsLoad] = useState(false);
+
     const [showSparkles, setShowSparkles] = useState(true);
 
     const [signInVisible, setSignInVisible] = useState(false);
@@ -49,6 +51,8 @@ function BookingFailure() {
             console.log(res.data.data);
             setShowtimeDeatils(res.data.data.showtime);
             setData(res.data.data);
+
+            setIsLoad(true);
 
             setTimeout(async () => {
                 const res = await deleteTransactionAndBookingIfErrorInBooking(id);
@@ -102,7 +106,7 @@ function BookingFailure() {
     }
 
     return (
-        <div className="bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15 min-h-screen">
+        <div className={`bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15 min-h-screen ${isLoad ? 'opacity-100' : 'opacity-0'}`}>
             {/* Falling Error Sparkles */}
             {showSparkles && (
                 <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
