@@ -53,6 +53,7 @@ import MoviePage from './pages/MoviePage';
 import CinemaPage from './pages/CinemaPage';
 import SingleCinemaPage from './pages/SingleCinemaPage';
 import ScrollToTop from './components/user/ScrollToTop';
+import { AuthProvider } from './context/authContext';
 
 function App() {
 
@@ -61,53 +62,55 @@ function App() {
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={true} newestOnTop={false} closeOnClick pauseOnHover draggable pauseOnFocusLoss theme="dark" toastStyle={{ background: "#121212", color: "#ffffff", borderRadius: "8px", border: "1px solid #2a2a2a", padding: "14px 16px", fontSize: "14.5px", fontFamily: "Poppins, sans-serif", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.45)" }} progressStyle={{ background: "#e50914" }} closeButton={false} />
       <BrowserRouter>
         <ScrollToTop />
-        <Routes>
-          <Route path='/admin/landing' element={<AdminLanding />}></Route>
-          <Route path='/admin/signin' element={<AdminSignin />}></Route>
-          <Route path='/admin/home' element={<AdminDashboard />}></Route>
-          <Route path='/admin/cinema' element={<AdminCinema />}></Route>
-          <Route path='/admin/cinema/pending' element={<AdminCinemaPending />}></Route>
-          <Route path='/admin/cinema/rejected' element={<AdminCinemaRejected />}></Route>
-          <Route path='/admin/screen' element={<AdminScreen />}></Route>
-          <Route path='/admin/movie' element={<AdminMovie />}></Route>
-          <Route path='/admin/movie/request' element={<AdminMovieRequest />}></Route>
-          <Route path='/admin/user' element={<AdminUser />}></Route>
-          <Route path='/admin/owner' element={<AdminCinemaOwner />}></Route>
-          <Route path='/admin/admin' element={<AdminAdmin />}></Route>
-          <Route path='/admin/booking' element={<AdminBooking />}></Route>
-          <Route path='/admin/genre' element={<AdminGenre />}></Route>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/single/movie/:id' element={<SingleMovie />}></Route>
-          <Route path='/booking/:id' element={<UserSheetSelect />}></Route>
-          <Route path='/ticket' element={<UserTicketSelect />}></Route>
-          <Route path='/user/signin' element={<UserSignin />}></Route>
-          <Route path='/owner/signin' element={<OwnerSignin />}></Route>
-          <Route path='/seats' element={<SeatDesigner />}></Route>
-          <Route path='/user/signup' element={<UserSignup />}></Route>
-          <Route path='/owner/signup' element={<OwnerSignup />}></Route>
-          <Route path='/cinema/landing' element={<CinemaLanding />}></Route>
-          <Route path='/cinema/home' element={<CinemaDashboard />}></Route>
-          <Route path='/cinema/screens' element={<CinemaScreen />}></Route>
-          <Route path='/owner/screen/add' element={<CinemaScreenAdd />}></Route>
-          <Route path='/cinema/transactions' element={<CinemaTransaction />}></Route>
-          <Route path='/cinema/bookings' element={<CinemaBooking />}></Route>
-          <Route path='/cinema/showtimes' element={<CinemaShowTime />}></Route>
-          <Route path='/cinema/add/showtime' element={<CinemaAddShowtime />}></Route>
-          <Route path='/cinema/movies' element={<CinemaMovie />}></Route>
-          <Route path='/cinema/movie/add' element={<CinemaAddMovie />}></Route>
-          <Route path='/cinema/movie/request' element={<CinemaRequestMovie />}></Route>
-          <Route path='/otp' element={<OTPModel />}></Route>
-          <Route path='/admin/hero' element={<AdminHeroPosters />}></Route>
-          <Route path='/payment' element={<PaymentTwo />}></Route>
-          <Route path='/error/:id' element={<BookingFailure />}></Route>
-          <Route path='/success/:id' element={<BookingSuccess />}></Route>
-          <Route path='/timeOut' element={<TimeOutModel />}></Route>
-          <Route path='/trailers' element={<Trailers />}></Route>
-          <Route path='/aboutus' element={<AboutUsPage />}></Route>
-          <Route path='/movie' element={<MoviePage />}></Route>
-          <Route path='/cinema' element={<CinemaPage />}></Route>
-          <Route path='/cinema/:id' element={<SingleCinemaPage />}></Route>
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path='/admin/landing' element={<AdminLanding />}></Route>
+            <Route path='/admin/signin' element={<AdminSignin />}></Route>
+            <Route path='/admin/home' element={<AdminDashboard />}></Route>
+            <Route path='/admin/cinema' element={<AdminCinema />}></Route>
+            <Route path='/admin/cinema/pending' element={<AdminCinemaPending />}></Route>
+            <Route path='/admin/cinema/rejected' element={<AdminCinemaRejected />}></Route>
+            <Route path='/admin/screen' element={<AdminScreen />}></Route>
+            <Route path='/admin/movie' element={<AdminMovie />}></Route>
+            <Route path='/admin/movie/request' element={<AdminMovieRequest />}></Route>
+            <Route path='/admin/user' element={<AdminUser />}></Route>
+            <Route path='/admin/owner' element={<AdminCinemaOwner />}></Route>
+            <Route path='/admin/admin' element={<AdminAdmin />}></Route>
+            <Route path='/admin/booking' element={<AdminBooking />}></Route>
+            <Route path='/admin/genre' element={<AdminGenre />}></Route>
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/single/movie/:id' element={<SingleMovie />}></Route>
+            <Route path='/booking/:id' element={<UserSheetSelect />}></Route>
+            <Route path='/ticket' element={<UserTicketSelect />}></Route>
+            <Route path='/user/signin' element={<UserSignin />}></Route>
+            <Route path='/owner/signin' element={<OwnerSignin />}></Route>
+            <Route path='/seats' element={<SeatDesigner />}></Route>
+            <Route path='/user/signup' element={<UserSignup />}></Route>
+            <Route path='/owner/signup' element={<OwnerSignup />}></Route>
+            <Route path='/cinema/landing' element={<CinemaLanding />}></Route>
+            <Route path='/cinema/home' element={<CinemaDashboard />}></Route>
+            <Route path='/cinema/screens' element={<CinemaScreen />}></Route>
+            <Route path='/owner/screen/add' element={<CinemaScreenAdd />}></Route>
+            <Route path='/cinema/transactions' element={<CinemaTransaction />}></Route>
+            <Route path='/cinema/bookings' element={<CinemaBooking />}></Route>
+            <Route path='/cinema/showtimes' element={<CinemaShowTime />}></Route>
+            <Route path='/cinema/add/showtime' element={<CinemaAddShowtime />}></Route>
+            <Route path='/cinema/movies' element={<CinemaMovie />}></Route>
+            <Route path='/cinema/movie/add' element={<CinemaAddMovie />}></Route>
+            <Route path='/cinema/movie/request' element={<CinemaRequestMovie />}></Route>
+            <Route path='/otp' element={<OTPModel />}></Route>
+            <Route path='/admin/hero' element={<AdminHeroPosters />}></Route>
+            <Route path='/payment' element={<PaymentTwo />}></Route>
+            <Route path='/error/:id' element={<BookingFailure />}></Route>
+            <Route path='/success/:id' element={<BookingSuccess />}></Route>
+            <Route path='/timeOut' element={<TimeOutModel />}></Route>
+            <Route path='/trailers' element={<Trailers />}></Route>
+            <Route path='/aboutus' element={<AboutUsPage />}></Route>
+            <Route path='/movie' element={<MoviePage />}></Route>
+            <Route path='/cinema' element={<CinemaPage />}></Route>
+            <Route path='/cinema/:id' element={<SingleCinemaPage />}></Route>
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </>
 

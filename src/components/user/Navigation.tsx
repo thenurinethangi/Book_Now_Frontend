@@ -39,7 +39,7 @@ function Navigation(props: any) {
             </div>
             <div className='flex items-center gap-5'>
                 <Search className='w-5 h-5 cursor-pointer' />
-                <User onClick={(e) => setShowProfileMenu(true)} className='w-[18px] h-[18px] cursor-pointer' />
+                <User onClick={(e) => props.setSignInVisible(true)} className='w-[18px] h-[18px] cursor-pointer' />
                 {showProfileMenu && (
                     <ProfileMenu closeMenu={() => setShowProfileMenu(false)} />
                 )}

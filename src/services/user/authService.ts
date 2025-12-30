@@ -9,3 +9,8 @@ export async function signIn(formdata: FormData) {
     const res = await api.post('/auth/signin', formdata, { withCredentials: true });
     return res;
 }
+
+export async function getCurrentUserData() {
+    const res = await api.get('/user/current', { withCredentials: true });
+    return res;
+}

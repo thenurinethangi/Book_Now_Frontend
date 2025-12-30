@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 import { Link, useNavigate } from 'react-router-dom';
-import { signIn } from '../../services/user/authService';
+import { getCurrentUserData, signIn } from '../../services/user/authService';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../context/authContext';
 
 const SignIn: React.FC = (props: any) => {
 
     const navigate = useNavigate();
+
+    const { setUser } = useAuth()
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -43,6 +46,10 @@ const SignIn: React.FC = (props: any) => {
         try {
             const res = await signIn(formdata);
             localStorage.setItem('accessToken', res.data.data);
+
+            const res2 = await getCurrentUserData();
+            console.log(res2.data.data);
+            setUser(res2.data.data);
 
             setIsVisible(false);
             setTimeout(() => {

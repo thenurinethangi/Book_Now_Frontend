@@ -15,10 +15,13 @@ import { checkIsSeatLock, checkLockedSeats, lockSeats } from '../services/user/s
 import CountdownTimer from '../components/user/booking/CountdownTimer';
 import TimeOutModel from '../components/user/booking/TimeOutModel';
 import LoadingSpinner from '../components/user/LoadingSpinner';
+import { useAuth } from '../context/authContext';
 
 function UserSheetSelect() {
 
     const { id } = useParams();
+
+    const { user, loading } = useAuth();
 
     const alphabetUpper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     const pastelColors = ["border-[#FFB3BA] bg-[#FFB3BA]", "border-[#FFDFBA] bg-[#FFDFBA]", "border-[#FFFFBA] bg-[#FFFFBA]", "border-[#BAFFC9] bg-[#BAFFC9]", "border-[#BAE1FF] bg-[#BAE1FF]", "border-[#E2BAFF] bg-[#E2BAFF]", "border-[#FFD6E0] bg-[#FFD6E0]", "border-[#D6F5FF] bg-[#D6F5FF]", "border-[#E8FFD6] bg-[#E8FFD6]", "border-[#F3D9FF] bg-[#F3D9FF]", "border-[#FFF0D9] bg-[#FFF0D9]", "border-[#D9FFF8] bg-[#D9FFF8]"];
@@ -241,6 +244,11 @@ function UserSheetSelect() {
     }
 
     async function handleShowTicketSelectTab() {
+
+        if(!user){
+            setSignInVisible(true);
+            return;
+        }
 
         setIsLoading(true);
 
