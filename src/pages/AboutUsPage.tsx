@@ -18,7 +18,7 @@ function AboutUsPage() {
         <div className='bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative'>
 
             {/* navigation */}
-            <Navigation setSignInVisible={setSignInVisible} />
+            <Navigation setSignInVisible={setSignInVisible} page={'aboutus'} />
 
             {/* hero */}
             <Hero />

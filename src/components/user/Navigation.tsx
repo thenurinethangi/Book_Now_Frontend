@@ -1,10 +1,17 @@
 import { Search, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
+import { useEffect, useState } from "react";
 
 function Navigation(props: any) {
 
     const navigate = useNavigate();
+
+    const [activePage, setActivePage] = useState('');
+
+    useEffect(() => {
+        setActivePage(props.page);
+    },[]);
 
     return (
         <nav className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
@@ -14,10 +21,19 @@ function Navigation(props: any) {
                         <img onClick={(e) => navigate('/')} src={logo2} width={'80px'} alt="logo" className="cursor-pointer"></img>
                     </div>
                 </div>
-                <div onClick={(e) => navigate('/movie')} className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Movie</div>
-                <div onClick={(e) => navigate('/cinema')} className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Cinema</div>
-                <div className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>Showtime</div>
-                <div onClick={(e) => navigate('/aboutus')} className='-translate-x-18 text-[14px] text-white/90 font-light cursor-pointer hover:text-white transition-colors'>About Us</div>
+                <div onClick={(e) => { navigate('/movie'); setActivePage('movie') }} className="group relative -translate-x-18 text-[14px] text-white/90 font-light cursor-pointer transition-all duration-300 hover:text-white hover:-translate-y-[1px]">
+                    Movie
+                    <span className={`absolute left-0 -bottom-1 h-[2px] w-full bg-red-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${activePage === 'movie' ? 'opacity-100' : 'opacity-0'}`} />
+                </div>
+                <div onClick={(e) => { navigate('/cinema'); setActivePage('cinema') }} className='group relative -translate-x-18 text-[14px] text-white/90 font-light cursor-pointer transition-all duration-300 hover:text-white hover:-translate-y-[1px]'>Cinema
+                    <span className={`absolute left-0 -bottom-1 h-[2px] w-full bg-red-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${activePage === 'cinema' ? 'opacity-100' : 'opacity-0'}`} />
+                </div>
+                <div className='group relative -translate-x-18 text-[14px] text-white/90 font-light cursor-pointer transition-all duration-300 hover:text-white hover:-translate-y-[1px]'>Showtime
+                    <span className={`absolute left-0 -bottom-1 h-[2px] w-full bg-red-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${activePage === 'showtime' ? 'opacity-100' : 'opacity-0'}`} />
+                </div>
+                <div onClick={(e) => { navigate('/aboutus'); setActivePage('aboutus') }} className='group relative -translate-x-18 text-[14px] text-white/90 font-light cursor-pointer transition-all duration-300 hover:text-white hover:-translate-y-[1px]'>About Us
+                    <span className={`absolute left-0 -bottom-1 h-[2px] w-full bg-red-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${activePage === 'aboutus' ? 'opacity-100' : 'opacity-0'}`} />
+                </div>
             </div>
             <div className='flex items-center gap-5'>
                 <Search className='w-5 h-5 cursor-pointer' />
