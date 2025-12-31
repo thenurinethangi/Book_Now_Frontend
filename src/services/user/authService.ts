@@ -14,3 +14,8 @@ export async function getCurrentUserData() {
     const res = await api.get('/user/current', { withCredentials: true });
     return res;
 }
+
+export async function logout() {
+    const res = await api.get('/user/logout', { withCredentials: true });
+    return res;
+}
