@@ -81,7 +81,7 @@ const SignUp = (props: any) => {
     }
 
     return (
-        <div className={`fixed inset-0 min-h-screen w-screen bg-black/40 backdrop-blur-md text-white overflow-x-hidden flex justify-end items-center z-[100] transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+        <div className={`fixed inset-0 min-h-screen w-screen bg-black/40 backdrop-blur-md text-white overflow-x-hidden flex justify-end items-center z-[200] transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
             <div className={`h-screen py-10 px-7 bg-black shadow-2xl rounded-lg flex flex-col justify-start items-center gap-5 relative transition-transform duration-300 ${isVisible ? "translate-x-0" : "translate-x-20"}`}>
 
                 <X onClick={handleCloseSignUpModel} className='absolute right-4.5 top-4.5 w-5.5 h-5.5' />

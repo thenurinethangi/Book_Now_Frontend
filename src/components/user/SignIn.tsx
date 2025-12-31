@@ -81,7 +81,7 @@ const SignIn: React.FC = (props: any) => {
     }
 
     return (
-        <div className={`fixed inset-0 w-screen h-screen bg-black/40 backdrop-blur-md flex justify-end items-center z-[100] transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+        <div className={`fixed inset-0 w-screen h-screen bg-black/40 backdrop-blur-md flex justify-end items-center z-[200] transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
             <div className={`h-screen py-10 px-7 bg-black shadow-2xl rounded-lg flex flex-col justify-start items-center gap-5 relative transition-transform duration-300 ${isVisible ? "translate-x-0" : "translate-x-20"}`}>
 
                 <X onClick={handleCloseSignInModel} className='absolute right-7 top-4.5 w-5.5 h-5.5 opacity-90 cursor-pointer' />
