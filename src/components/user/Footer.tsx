@@ -1,30 +1,24 @@
-import React from 'react'
-
+import React from 'react';
 import { ArrowRight, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
-import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
+import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png';
 
 function Footer() {
-
     return (
         <footer className="relative z-10 font-[Poppins] border-t border-white/5">
-            <div className="max-w-7xl mx-auto px-8 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-12">
                     {/* Brand Column */}
                     <div>
                         <div className="flex items-center space-x-3 ml-1">
                             <div className="flex items-center justify-center z-10">
-                                <img src={logo2} width={'80px'} alt="logo"></img>
+                                <img src={logo2} width={'80px'} alt="logo" />
                             </div>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed mb-4">
                             Empowering users with a cutting edge digital platform for booking movie tickets.
                         </p>
                         <div className="flex space-x-3">
-                            {/* {[Facebook, Twitter, Instagram, Youtube].map((Icon, index) => (
-                                <a key={index} href="#" className="w-[33px] h-[33px] bg-white/5 hover:bg-red-900/20 border border-white/10 hover:border-red-900/50 rounded-lg flex items-center justify-center transition-all duration-300 group">
-                                    <Icon className="w-4.5 h-4.5 text-gray-400 group-hover:text-red-700 transition-colors" />
-                                </a>
-                            ))} */}
+                            {/* Social icons can be added here */}
                         </div>
                     </div>
 
@@ -79,11 +73,11 @@ function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <p className="text-gray-500 text-sm">
+                <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <p className="text-gray-500 text-sm text-center sm:text-left">
                         © 2025 CYNEMA Cinema Partners. All rights reserved.
                     </p>
-                    <div className="flex space-x-6 text-sm">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-center sm:text-left">
                         <a href="#" className="text-gray-400 hover:text-red-700 transition-colors">Privacy Policy</a>
                         <a href="#" className="text-gray-400 hover:text-red-700 transition-colors">Terms of Service</a>
                         <a href="#" className="text-gray-400 hover:text-red-700 transition-colors">Partner Agreement</a>
@@ -91,7 +85,7 @@ function Footer() {
                 </div>
             </div>
         </footer>
-    )
+    );
 }
 
-export default Footer
+export default Footer;
