@@ -5,10 +5,10 @@ import { BiSortAlt2 } from "react-icons/bi";
 function Tabs(props: any) {
 
     return (
-        <div className='mt-7 px-15 flex justify-between items-center'>
+        <div className='mt-7 px-8 sm:px-15 flex flex-wrap gap-4 justify-between items-center'>
             <div className='flex items-center'>
                 <div onClick={(e) => props.setTab('Now Showing')} className={`px-2.5 pb-2 text-[22px] font-medium cursor-pointer ${props.tab === 'Now Showing' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Now Showing</div>
-                <div onClick={(e) => props.setTab('Coming Soon')} className={`px-2.5 pb-2 opacity-70 text-[22px] font-medium cursor-pointer ${props.tab === 'Coming Soon' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Coming Soon</div>
+                <div onClick={(e) => props.setTab('Coming Soon')} className={`px-2.5 pb-2 opacity-70 21px text-[22px] font-medium cursor-pointer ${props.tab === 'Coming Soon' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Coming Soon</div>
             </div>
             <div className='flex items-center gap-5'>
                 <div onClick={(e) => props.handleClickKeyFilters()} className='relative'>
