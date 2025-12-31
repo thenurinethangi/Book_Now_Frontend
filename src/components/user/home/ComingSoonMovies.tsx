@@ -36,7 +36,7 @@ function ComingSoonMovies(props: any) {
             let arr = [];
             for (let i = 0; i < res3.data.data.length; i++) {
                 const e = res3.data.data[i];
-                arr.push(e.movieId);
+                arr.push(e.movieId._id);
             }
             setWachlistMovies(arr);
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { Bookmark, Tags, X } from 'lucide-react';
 import Navigation from '../components/user/Navigation';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
@@ -8,6 +8,7 @@ import { cancelBooking, getMyBookings } from '../services/user/bookingService';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
+import { getAllWatchlistMovies } from '../services/user/watchlistService';
 
 function MyWatchlist() {
 
@@ -20,12 +21,12 @@ function MyWatchlist() {
     const [otpVisible, setOtpVisible] = useState(false);
     const [userEmail, setUserEmail] = useState('');
 
-    const [bookings, setBookings] = useState([]);
+    const [watchlistMovies, setWatchlistMovies] = useState([]);
     const [cancelModalVisible, setCancelModalVisible] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState(null);
 
     useEffect(() => {
-        loadBookings();
+        loadWatchlistMovies();
     }, []);
 
     useEffect(() => {
@@ -34,56 +35,57 @@ function MyWatchlist() {
         }
     }, [loading, user, navigate]);
 
-    async function loadBookings() {
+    async function loadWatchlistMovies() {
         try {
-            const res = await getMyBookings();
+            const res = await getAllWatchlistMovies();
             console.log(res.data.data);
-            setBookings(res.data.data)
+            setWatchlistMovies(res.data.data)
         }
         catch (e) {
             console.log(e);
         }
     }
 
-    function formatShowDate(dateStr) {
+    function formatDate(dateStr: string) {
         return new Date(dateStr).toLocaleDateString("en-GB", {
-            weekday: "short",
             day: "2-digit",
-            month: "short"
-        }).replace(",", "");
+            month: "short",
+            year: "numeric"
+        })
     }
 
-    function formatShowTime(dateStr) {
-        const date = new Date(dateStr);
-        return date.toLocaleString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true
-        });
-    }
+    function handleNavigateToMovieDetailsPage(e: React.MouseEvent<HTMLButtonElement>) {
+        const movieId = e.currentTarget.dataset.id;
 
-    function isBookingExpired(dateStr) {
-        return new Date(dateStr).getTime() < Date.now();
-    }
-
-    function handleCancelBooking(booking) {
-        setSelectedBooking(booking);
-        setCancelModalVisible(true);
-    }
-
-    async function confirmCancelBooking() {
-
-        setCancelModalVisible(false);
-
-        try {
-            const res = await cancelBooking(selectedBooking._id);
-            console.log(res.data.data);
-            loadBookings();
+        if (movieId) {
+            navigate('/single/movie/' + movieId);
         }
-        catch (e) {
-            toast.error('Cancellation failed!');
-            console.log(e);
-        }
+    }
+
+    async function handleAddOrRemoveFromwatchlist(e: React.MouseEvent<HTMLElement>) {
+
+        const id = e.currentTarget.dataset.id;
+
+        // if (id && wachlistMovies.includes(id)) {
+        //     try {
+        //         const res = await removeMovieFromWatchlist({ movieId: id });
+        //         console.log(res.data);
+        //         loadAllNowShowingMovies();
+        //     }
+        //     catch (e) {
+        //         console.log(e);
+        //     }
+        // }
+        // else if (id && !wachlistMovies.includes(id)) {
+        //     try {
+        //         const res = await addMovieToWatchlist({ movieId: id });
+        //         console.log(res.data);
+        //         loadAllNowShowingMovies();
+        //     }
+        //     catch (e) {
+        //         console.log(e);
+        //     }
+        // }
     }
 
     return (
@@ -99,62 +101,25 @@ function MyWatchlist() {
 
             {/* Bookings List */}
             <div className='px-20 pb-20'>
-                {bookings.length > 0 ? (
+                {watchlistMovies.length > 0 ? (
                     <div className='flex flex-col gap-5'>
-                        {bookings.map((booking: any) => {
-                            const isExpired = isBookingExpired(booking?.showtimeId.date);
+                        {watchlistMovies.map((movie: any) => {
                             return (
-                                <div
-                                    key={booking?._id}
-                                    className='w-[710px] h-[128px] flex items-center gap-6 p-2 bg-[#1a1a1a]/40 rounded-md border border-white/5 hover:border-white/10 transition-all'
-                                >
-                                    {/* Poster */}
-                                    <div className='flex-shrink-0'>
-                                        <div className="w-[150px] h-[115px] relative overflow-hidden rounded-sm">
-                                            <img
-                                                src={booking?.movie.posterImageUrl}
-                                                className={`w-full h-full object-cover`}
-                                                alt={booking?.movie.title}
-                                            />
-                                        </div>
+                                <div key={movie._id} className='mb-4'>
+                                    <div className='relative w-[203.198px] h-[300.885px]'>
+                                        <Bookmark onClick={handleAddOrRemoveFromwatchlist} data-id={movie._id} className={`text-white/90 w-[22px] h-[25px] absolute right-1 top-1 cursor-pointer z-[100] fill-red-600 stroke-none`} />
+                                        <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
+                                        <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
                                     </div>
-
-                                    {/* Details */}
-                                    <div className='flex-1 flex flex-col justify-center h-[120px]'>
-                                        <div>
-                                            <h2 className='text-[15px] font-medium mb-1'>{booking?.movie.title}</h2>
-                                            <p className='text-[13px] text-white/75 mb-4'>{booking?.cinema.cinemaName}-{booking?.screen.screenName}</p>
-
-                                            <div className='space-y-0.5'>
-                                                <p className='text-[12px] text-white/50'>
-                                                    {formatShowDate(booking?.showtimeId.date)} at {formatShowTime(booking?.showtimeId.time)}
-                                                </p>
-                                                <p className='text-[12px] text-white/50'>
-                                                    Seat Number: <span className='text-white/90'>{booking?.seatsDetails.join(', ')}</span>
-                                                </p>
-                                            </div>
+                                    <div className='flex flex-col items-start'>
+                                        <h1 className='text-[16px] font-medium text-[#dedede] mt-3.5'>{movie.title}</h1>
+                                        <div className='flex items-center gap-1.5 mt-1'>
+                                            <p className='text-[12px] text-[#999] font-medium'>{movie.duration} | </p>
+                                            <p className='text-[12px] text-[#999] font-medium'>{formatDate(movie.releaseDate)}</p>
                                         </div>
-                                    </div>
-
-                                    {/* Price and Action */}
-                                    <div className='flex flex-col items-end justify-center h-[160px] mr-2'>
-                                        <div className='text-right'>
-                                            <p className='text-[20px] font-medium'>{booking?.total}</p>
-                                            <p className='text-[11px] text-white/50 mt-0.5'>Total Tickets: {booking?.seatsDetails.length}</p>
+                                        <div className='flex items-center gap-1 mt-1.5'>
+                                            <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px]" />
                                         </div>
-
-                                        {!isExpired && booking?.status !== 'Canceled' && (
-                                            <button
-                                                onClick={() => handleCancelBooking(booking)}
-                                                className='mt-2 px-3 py-2 bg-[#FF4646] hover:bg-[#ff5555] rounded-[1px] text-[12.5px] font-medium text-white transition-all'
-                                            >
-                                                Cancel Booking
-                                            </button>
-                                        )}
-                                        {booking?.status === 'Canceled' ?
-                                            <p className='text-[13px] mt-2 text-gray-500'>Booking Canceled</p>
-                                            :
-                                            ''}
                                     </div>
                                 </div>
                             );
@@ -162,61 +127,10 @@ function MyWatchlist() {
                     </div>
                 ) : (
                     <div className='text-center py-32'>
-                        <p className='text-[16px] text-white/40'>No bookings yet</p>
+                        <p className='text-[16px] text-white/40'>No movies yet</p>
                     </div>
                 )}
             </div>
-
-            {/* Cancel Confirmation Modal */}
-            {cancelModalVisible && selectedBooking && (
-                <div
-                    className='fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50 px-4'
-                    onClick={() => setCancelModalVisible(false)}
-                >
-                    <div
-                        className='bg-black shadow-2xl rounded-lg border border-white/5 p-8 max-w-md w-full'
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className='flex items-start justify-between mb-5'>
-                            <div>
-                                <p className='text-[12px] text-white/50'>BOOKING ID: {selectedBooking?._id}</p>
-                            </div>
-                            <button
-                                onClick={() => setCancelModalVisible(false)}
-                                className='text-white/60 hover:text-white transition-colors'
-                            >
-                                <X className='w-5 h-5' />
-                            </button>
-                        </div>
-
-                        <div className='mb-3 p-2 border border-white/5 rounded-sm'>
-                            <p className='text-[15px] font-normal mb-2'>{selectedBooking?.movie.title}</p>
-                            <p className='text-[13px] text-white/60'>{selectedBooking?.cinema.cinemaName}</p>
-                            <p className='text-[13px] text-white/60'>{formatShowDate(selectedBooking?.showtimeId.date)} at {formatShowTime(selectedBooking?.showtimeId.date)}</p>
-                            <p className='text-[13px] text-white/60 mt-2'>Seats: {selectedBooking?.seatsDetails.join(', ')}</p>
-                        </div>
-
-                        <p className='text-[13px] text-white/70 mb-8'>
-                            Cancelling this booking is permanent, non-refundable, cannot be undone, and will immediately release your seats according to SYNEMA policies.
-                        </p>
-
-                        <div className='flex gap-3'>
-                            <button
-                                onClick={() => setCancelModalVisible(false)}
-                                className='flex-1 px-6 py-2.5 border border-white/20 hover:border-white/40 rounded-xs tracking-widest  transition-all text-[13px] font-normal'
-                            >
-                                Keep Booking
-                            </button>
-                            <button
-                                onClick={confirmCancelBooking}
-                                className='flex-1 px-6 h-[38px] text-black bg-white rounded-xs tracking-widest transition-all text-[13px] font-medium'
-                            >
-                                Yes, Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {/* sign in model */}
             {signInVisible ? <SignIn setSignInVisible={setSignInVisible} setSignUpVisible={setSignUpVisible} /> : ''}
