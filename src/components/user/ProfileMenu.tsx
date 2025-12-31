@@ -40,7 +40,7 @@ function ProfileMenu({ closeMenu }: { closeMenu: () => void }) {
                 <li className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Profile
                 </li>
-                <li className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
+                <li onClick={(e) => navigate('/mywatchlist') } className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Watchlist
                 </li>
                 <li onClick={(e) => navigate('/mybookings') } className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
