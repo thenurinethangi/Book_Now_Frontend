@@ -4,7 +4,8 @@ import Navigation from '../components/user/Navigation';
 import SignIn from '../components/user/SignIn';
 import SignUp from '../components/user/SignUp';
 import OTPModel from '../components/user/OTPModel';
-import { getMyBookings } from '../services/user/bookingService';
+import { cancelBooking, getMyBookings } from '../services/user/bookingService';
+import { toast } from 'react-toastify';
 
 function MyBookings() {
 
@@ -58,13 +59,18 @@ function MyBookings() {
         setCancelModalVisible(true);
     }
 
-    function confirmCancelBooking() {
-        
-        try{
+    async function confirmCancelBooking() {
 
+        setCancelModalVisible(false);
+
+        try {
+            const res = await cancelBooking(selectedBooking._id);
+            console.log(res.data.data);
+            loadBookings();
         }
-        catch(e){
-            
+        catch (e) {
+            toast.error('Cancellation failed!');
+            console.log(e);
         }
     }
 
@@ -174,7 +180,7 @@ function MyBookings() {
                         <div className='mb-3 p-2 border border-white/5 rounded-sm'>
                             <p className='text-[15px] font-normal mb-2'>{selectedBooking?.movie.title}</p>
                             <p className='text-[13px] text-white/60'>{selectedBooking?.cinema.cinemaName}</p>
-                            <p className='text-[13px] text-white/60'>{formatShowDate(selectedBooking?.date)} at {formatShowTime(selectedBooking?.date)}</p>
+                            <p className='text-[13px] text-white/60'>{formatShowDate(selectedBooking?.showtimeId.date)} at {formatShowTime(selectedBooking?.showtimeId.date)}</p>
                             <p className='text-[13px] text-white/60 mt-2'>Seats: {selectedBooking?.seatsDetails.join(', ')}</p>
                         </div>
 
