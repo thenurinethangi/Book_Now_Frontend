@@ -120,7 +120,7 @@ function ComingSoonMovies(props: any) {
 
 
     return (
-        <div className='grid grid-cols-5 gap-8 px-15 mt-11 mb-27'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 [min-width:900px]:grid-cols-4 lg:grid-cols-5 gap-9 px-4 sm:px-6 md:px-10 lg:px-15 justify-items-center md:justify-items-start mt-11 mb-27'>
             {/* single movie */}
             {comingSoonMovies.length > 0
                 ? comingSoonMovies.map((movie: any) => (
