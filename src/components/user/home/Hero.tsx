@@ -127,7 +127,7 @@ function Hero() {
 
                         {/* Overlay Content */}
                         <div className='w-full h-full absolute top-0 inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end'>
-                            <div className='px-20 py-20'>
+                            <div className='px-10 py-20 sm:px-20'>
                                 <p className={`text-black mb-1.5 rounded-xs text-[10px] font-semibold p-1 inline ${slide.status === 'Now Showing' ? 'bg-[#02a8b3]' : 'bg-[#f5cc50]'}`}>{slide.status.toUpperCase()}</p>
                                 <h1 className='text-[32px] font-medium'>{slide.title}</h1>
                                 <p className='text-[#999] font-normal mt-2.5 text-[16px] leading-normal w-[80%]'>{slide.description}</p>
