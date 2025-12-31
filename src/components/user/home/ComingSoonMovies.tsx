@@ -137,7 +137,7 @@ function ComingSoonMovies(props: any) {
                                 <p className='text-[12px] text-[#999] font-medium'>{formatDate(movie.releaseDate)}</p>
                             </div>
                             <div className='flex items-center gap-1 mt-1.5'>
-                                <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px]" />
+                                <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px] cursor-pointer" />
                             </div>
                         </div>
                     </div>

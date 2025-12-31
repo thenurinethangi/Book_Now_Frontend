@@ -8,7 +8,7 @@ import { cancelBooking, getMyBookings } from '../services/user/bookingService';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
-import { getAllWatchlistMovies } from '../services/user/watchlistService';
+import { getAllWatchlistMovies, removeMovieFromWatchlist } from '../services/user/watchlistService';
 
 function MyWatchlist() {
 
@@ -62,30 +62,20 @@ function MyWatchlist() {
         }
     }
 
-    async function handleAddOrRemoveFromwatchlist(e: React.MouseEvent<HTMLElement>) {
+    async function handleRemoveFromwatchlist(e: React.MouseEvent<HTMLElement>) {
 
         const id = e.currentTarget.dataset.id;
 
-        // if (id && wachlistMovies.includes(id)) {
-        //     try {
-        //         const res = await removeMovieFromWatchlist({ movieId: id });
-        //         console.log(res.data);
-        //         loadAllNowShowingMovies();
-        //     }
-        //     catch (e) {
-        //         console.log(e);
-        //     }
-        // }
-        // else if (id && !wachlistMovies.includes(id)) {
-        //     try {
-        //         const res = await addMovieToWatchlist({ movieId: id });
-        //         console.log(res.data);
-        //         loadAllNowShowingMovies();
-        //     }
-        //     catch (e) {
-        //         console.log(e);
-        //     }
-        // }
+        if (id) {
+            try {
+                const res = await removeMovieFromWatchlist({ movieId: id });
+                console.log(res.data);
+                loadWatchlistMovies();
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
     }
 
     return (
@@ -102,23 +92,23 @@ function MyWatchlist() {
             {/* Bookings List */}
             <div className='px-20 pb-20'>
                 {watchlistMovies.length > 0 ? (
-                    <div className='flex flex-col gap-5'>
-                        {watchlistMovies.map((movie: any) => {
+                    <div className='flex gap-9 flex-wrap'>
+                        {watchlistMovies.map((wl: any) => {
                             return (
-                                <div key={movie._id} className='mb-4'>
+                                <div key={wl.movieId._id} className='mb-4'>
                                     <div className='relative w-[203.198px] h-[300.885px]'>
-                                        <Bookmark onClick={handleAddOrRemoveFromwatchlist} data-id={movie._id} className={`text-white/90 w-[22px] h-[25px] absolute right-1 top-1 cursor-pointer z-[100] fill-red-600 stroke-none`} />
-                                        <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
+                                        <Bookmark onClick={handleRemoveFromwatchlist} data-id={wl.movieId._id} className={`text-white/90 w-[22px] h-[25px] absolute right-1 top-1 cursor-pointer z-[100] fill-red-600 stroke-none`} />
+                                        <img src={wl.movieId.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
                                         <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
                                     </div>
                                     <div className='flex flex-col items-start'>
-                                        <h1 className='text-[16px] font-medium text-[#dedede] mt-3.5'>{movie.title}</h1>
+                                        <h1 className='text-[16px] font-medium text-[#dedede] mt-3.5'>{wl.movieId.title}</h1>
                                         <div className='flex items-center gap-1.5 mt-1'>
-                                            <p className='text-[12px] text-[#999] font-medium'>{movie.duration} | </p>
-                                            <p className='text-[12px] text-[#999] font-medium'>{formatDate(movie.releaseDate)}</p>
+                                            <p className='text-[12px] text-[#999] font-medium'>{wl.movieId.duration} | </p>
+                                            <p className='text-[12px] text-[#999] font-medium'>{formatDate(wl.movieId.releaseDate)}</p>
                                         </div>
                                         <div className='flex items-center gap-1 mt-1.5'>
-                                            <Tags onClick={handleNavigateToMovieDetailsPage} data-id={movie._id} className="text-white/90 w-[22px] h-[22px]" />
+                                            <Tags onClick={handleNavigateToMovieDetailsPage} data-id={wl.movieId._id} className="text-white/90 w-[22px] h-[22px] cursor-pointer" />
                                         </div>
                                     </div>
                                 </div>
