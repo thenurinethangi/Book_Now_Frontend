@@ -6,8 +6,14 @@ import SignUp from '../components/user/SignUp';
 import OTPModel from '../components/user/OTPModel';
 import { cancelBooking, getMyBookings } from '../services/user/bookingService';
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 function MyBookings() {
+
+    const navigate = useNavigate();
+
+    const { user, loading } = useAuth();
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
@@ -21,6 +27,12 @@ function MyBookings() {
     useEffect(() => {
         loadBookings();
     }, []);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/');
+        }
+    }, [loading, user, navigate]);
 
     async function loadBookings() {
         try {

@@ -1,8 +1,12 @@
 import { useEffect, useRef } from "react";
 import { logout } from "../../services/user/authService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function ProfileMenu({ closeMenu }: { closeMenu: () => void }) {
+
+    const navigate = useNavigate();
+
     const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -39,7 +43,7 @@ function ProfileMenu({ closeMenu }: { closeMenu: () => void }) {
                 <li className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Watchlist
                 </li>
-                <li className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
+                <li onClick={(e) => navigate('/mybookings') } className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Bookings
                 </li>
 
