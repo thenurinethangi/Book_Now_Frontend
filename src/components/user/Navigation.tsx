@@ -1,4 +1,4 @@
-import { Search, User } from "lucide-react";
+import { Menu, Search, User, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ function Navigation(props: any) {
 
     const [activePage, setActivePage] = useState('');
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         setActivePage(props.page);
@@ -29,8 +30,8 @@ function Navigation(props: any) {
     }
 
     return (
-        <nav className='px-9 flex justify-between items-center w-full bg-transparent absolute top-0 z-10'>
-            <div className='flex items-center gap-10'>
+        <nav className='px-9 flex md:justify-between justify-end items-center w-full bg-transparent absolute top-0 z-10'>
+            <div className='hidden md:flex items-center gap-10'>
                 <div className="flex items-center space-x-3 ml-4 mr-9">
                     <div className="flex items-center justify-center z-10">
                         <img onClick={(e) => navigate('/')} src={logo2} width={'80px'} alt="logo" className="cursor-pointer"></img>
@@ -50,12 +51,21 @@ function Navigation(props: any) {
                     <span className={`absolute left-0 -bottom-1 h-[2px] w-full bg-red-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${activePage === 'aboutus' ? 'opacity-100' : 'opacity-0'}`} />
                 </div>
             </div>
-            <div className='flex items-center gap-5'>
+            <div className='flex items-center gap-5 mt-6 md:mt-0'>
                 <Search className='w-5 h-5 cursor-pointer' />
                 <User onClick={handleUserProfile} className='w-[18px] h-[18px] cursor-pointer' />
                 {showProfileMenu && (
                     <ProfileMenu closeMenu={() => setShowProfileMenu(false)} />
                 )}
+
+                {/* Hamburger for mobile */}
+                <div className='md:hidden'>
+                    {mobileMenuOpen ? (
+                        <X onClick={() => setMobileMenuOpen(false)} className='w-6 h-6 cursor-pointer text-white' />
+                    ) : (
+                        <Menu onClick={() => setMobileMenuOpen(true)} className='w-6 h-6 cursor-pointer text-white' />
+                    )}
+                </div>
             </div>
         </nav>
     )
