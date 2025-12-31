@@ -25,20 +25,20 @@ function SummeryModal({ movie, isVisible, onClose }: SummeryModalProps) {
 
         setIsLoading(true);
         try {
-            // const res = await generateMovieSummery({ movieTitle: movie?.title });
-            // console.log(res.data.data);
-            // setSummery(res.data.data);
-            const demoSummary = `Sixteen years after the Na'vi successfully repelled the human invaders from Pandora, Jake Sully lives as the chief of the Omatikaya clan alongside his mate Neytiri. They raise a family consisting of their eldest son Neteyam, younger son Lo'ak, youngest daughter Tuktirey or Tuk, and adopted daughter Kiri, who was miraculously born from the inert avatar of the late scientist Dr. Grace Augustine.
+            const res = await generateMovieSummery({ movieTitle: movie?.title });
+            console.log(res.data.data);
+            setSummery(res.data.data);
+//             const demoSummary = `Sixteen years after the Na'vi successfully repelled the human invaders from Pandora, Jake Sully lives as the chief of the Omatikaya clan alongside his mate Neytiri. They raise a family consisting of their eldest son Neteyam, younger son Lo'ak, youngest daughter Tuktirey or Tuk, and adopted daughter Kiri, who was miraculously born from the inert avatar of the late scientist Dr. Grace Augustine.
 
-The peace shatters when the Resources Development Administration (RDA) returns in force, driven by Earth's environmental collapse and intent on colonizing Pandora. Leading them is Colonel Quaritch, resurrected in a Na'vi avatar body enhanced for combat, along with a squad of recombinant marines.
+// The peace shatters when the Resources Development Administration (RDA) returns in force, driven by Earth's environmental collapse and intent on colonizing Pandora. Leading them is Colonel Quaritch, resurrected in a Na'vi avatar body enhanced for combat, along with a squad of recombinant marines.
 
-Initially wary of outsiders, the Metkayina accept the Sullys after Tonowari recognizes Jake's status as a mighty warrior. The family must adapt to marine life, learning to breathe underwater longer, ride ilu sea mounts, and bond with tulkun—the intelligent, whale-like creatures central to Metkayina culture.
+// Initially wary of outsiders, the Metkayina accept the Sullys after Tonowari recognizes Jake's status as a mighty warrior. The family must adapt to marine life, learning to breathe underwater longer, ride ilu sea mounts, and bond with tulkun—the intelligent, whale-like creatures central to Metkayina culture.
 
-Quaritch's forces escalate their campaign, establishing a coastal base and harvesting tulkun for amrita, a youth-extending substance from their brains. The RDA whalers begin a ruthless cull, and Lo'ak races to warn his friend Payakan, but they stumble into an ambush.
+// Quaritch's forces escalate their campaign, establishing a coastal base and harvesting tulkun for amrita, a youth-extending substance from their brains. The RDA whalers begin a ruthless cull, and Lo'ak races to warn his friend Payakan, but they stumble into an ambush.
 
-In the aftermath, the Sullys mourn Neteyam with a poignant sea burial, honoring Metkayina traditions. Jake vows unyielding resistance against the RDA, as humanity's full-scale invasion looms.`;
+// In the aftermath, the Sullys mourn Neteyam with a poignant sea burial, honoring Metkayina traditions. Jake vows unyielding resistance against the RDA, as humanity's full-scale invasion looms.`;
             
-            setSummery(demoSummary);
+//             setSummery(demoSummary);
         } catch (e) {
             console.error(e);
             setSummery('Failed to generate summary. Please try again.');
