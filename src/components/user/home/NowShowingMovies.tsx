@@ -4,14 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { Search, User, Tags, Bookmark } from "lucide-react";
 import { getAllNowShowingMovies, getMoviesBookingsCount } from '../../../services/user/movieService';
 import ShowingMovieFilterModel from '../movie/ShowingMovieFilterModel';
+import { addMovieToWatchlist, getAllWatchlistMovies, removeMovieFromWatchlist } from '../../../services/user/watchlistService';
+import { useAuth } from '../../../context/authContext';
 
 function NowShowingMovies(props: any) {
 
     const navigate = useNavigate();
 
+    const { user, loading } = useAuth();
+
     const [nowShowingMovies, setNowShowingMovies] = useState<any>([]);
     const [immutableNowShowingMovies, setImmutableNowShowingMovies] = useState([]);
     const [nowShowingMoviesBookingsCount, setNowShowingMoviesBookingsCount] = useState([]);
+    const [wachlistMovies, setWachlistMovies] = useState<string[]>([]);
 
     const [genre, setGenre] = useState([]);
     const [popularity, setPopularity] = useState('');
@@ -30,6 +35,16 @@ function NowShowingMovies(props: any) {
             const res2 = await getMoviesBookingsCount(res.data.data);
             console.log(res2.data.data);
             setNowShowingMoviesBookingsCount(res2.data.data);
+
+            const res3 = await getAllWatchlistMovies();
+            console.log(res3.data.data);
+
+            let arr = [];
+            for (let i = 0; i < res3.data.data.length; i++) {
+                const e = res3.data.data[i];
+                arr.push(e.movieId);
+            }
+            setWachlistMovies(arr);
         }
         catch (e) {
             console.log(e);
@@ -126,15 +141,46 @@ function NowShowingMovies(props: any) {
         }
     }
 
+    async function handleAddOrRemoveFromwatchlist(e: React.MouseEvent<HTMLElement>) {
+
+        if (!user && !loading) {
+            props.setSignInVisible(true);
+            return;
+        }
+
+        const id = e.currentTarget.dataset.id;
+
+        if (id && wachlistMovies.includes(id)) {
+            try {
+                const res = await removeMovieFromWatchlist({ movieId: id });
+                console.log(res.data);
+                loadAllNowShowingMovies();
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+        else if (id && !wachlistMovies.includes(id)) {
+            try {
+                const res = await addMovieToWatchlist({ movieId: id });
+                console.log(res.data);
+                loadAllNowShowingMovies();
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+    }
+
 
     return (
         <div className='grid grid-cols-5 gap-9 px-15 mt-11 mb-10'>
             {/* single movie */}
             {nowShowingMovies.length > 0
                 ? nowShowingMovies.map((movie: any) => (
-                    <div className='mb-4'>
+                    <div key={movie._id} className='mb-4'>
                         <div className='relative w-[203.198px] h-[300.885px]'>
-                            <Bookmark className="text-white/90 w-[22px] h-[25px] absolute right-1 top-1" />
+                            <Bookmark onClick={handleAddOrRemoveFromwatchlist} data-id={movie._id} className={`text-white/90 w-[22px] h-[25px] absolute right-1 top-1 cursor-pointer z-[100] ${wachlistMovies.includes(movie._id) ? 'fill-red-600 stroke-none' : ''}`} />
                             <img src={movie.posterImageUrl} className='rounded-sm object-cover w-full h-full object-top'></img>
                             <div className=" w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent hover:from-black/50 hover:via-black/20 hover:to-transparent transition-all duration-700 ease-in-out"></div>
                         </div>

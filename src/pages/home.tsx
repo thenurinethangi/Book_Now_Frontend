@@ -46,10 +46,10 @@ function Home() {
             <Tabs tab={tab} setTab={setTab} handleClickKeyFilters={handleClickKeyFilters} />
 
             {/* movie container */}
-            {tab === 'Now Showing' ? <NowShowingMovies showNowShowingFiltersModel={showNowShowingFiltersModel} setShowNowShowingFiltersModel={setShowNowShowingFiltersModel} /> : ''}
+            {tab === 'Now Showing' ? <NowShowingMovies showNowShowingFiltersModel={showNowShowingFiltersModel} setShowNowShowingFiltersModel={setShowNowShowingFiltersModel} setSignInVisible={setSignInVisible} /> : ''}
 
             {/* movie container */}
-            {tab === 'Coming Soon' ? <ComingSoonMovies showComingSoonFiltersModel={showComingSoonFiltersModel} setShowComingSoonFiltersModel={setShowComingSoonFiltersModel} /> : ''}
+            {tab === 'Coming Soon' ? <ComingSoonMovies showComingSoonFiltersModel={showComingSoonFiltersModel} setShowComingSoonFiltersModel={setShowComingSoonFiltersModel} setSignInVisible={setSignInVisible} /> : ''}
 
             <div className='mb-25'></div>
 

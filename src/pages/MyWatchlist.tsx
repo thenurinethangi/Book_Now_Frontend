@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
-function MyBookings() {
+function MyWatchlist() {
 
     const navigate = useNavigate();
 
@@ -94,7 +94,7 @@ function MyBookings() {
 
             {/* Header */}
             <div className='px-20 pt-37 pb-6'>
-                <h1 className='text-[16.5px] tracking-wide'>My Bookings</h1>
+                <h1 className='text-[16.5px] tracking-wide'>My Watchlist</h1>
             </div>
 
             {/* Bookings List */}
@@ -230,4 +230,4 @@ function MyBookings() {
     );
 }
 
-export default MyBookings;
+export default MyWatchlist;
