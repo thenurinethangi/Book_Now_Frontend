@@ -291,7 +291,7 @@ function BookingFailure() {
                             {/* <h2 className="text-[30px] font-light mb-2 tracking-wide font-[SourceSans]">
                                 2300 LKR
                             </h2> */}
-                            <h2 className="text-[22px] font-medium mb-2 tracking-wide font-sans italic">
+                            <h2 className="text-[22px] font-medium mb-2 tracking-wide font-sans italic text-center">
                                 Payment Failed
                             </h2>
                             <p className="text-[13px] text-white/90 mb-8 text-center w-[85%] font-medium italic">
