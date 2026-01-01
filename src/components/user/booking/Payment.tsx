@@ -107,7 +107,7 @@ function UserPayment(props: PaymentProps) {
             </div>
 
             {/* Main Content */}
-            <div className='px-25 mx-auto mt-17 flex gap-8'>
+            <div className='px-10 lg:px-25 mx-auto mt-17 flex flex-wrap gap-8'>
                 {/* Payment Methods Section */}
                 <div className='flex-1'>
                     <div className='bg-[#181818] rounded-sm overflow-hidden mb-6'>
