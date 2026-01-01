@@ -176,14 +176,24 @@ const CinemaOwnerDashboard = () => {
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
 
+            <style>{`
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
+
             {/* Sidebar Navigation */}
             <SidebarNavigation page={'home'} />
 
             {/* Main Content */}
-            <div className='flex-1 ml-[65px]  text-white px-7 py-4'>
+            <div className='flex-1 ml-[65px]  text-white px-5 sm:px-7 py-4'>
 
                 {/* Header */}
-                <div className='flex justify-between items-center mb-6'>
+                <div className='flex flex-wrap justify-between items-center mb-6'>
                     <div>
                         <div className="flex items-center space-x-3 ml-4 relative translate-y-4.5">
                             <div className="flex items-center justify-center z-10 absolute -translate-x-4">
@@ -192,40 +202,41 @@ const CinemaOwnerDashboard = () => {
                         </div>
                         <p className='text-gray-500 text-[15px] mt-10'>Welcome back, here's what's happening today</p>
                     </div>
-                    <div className='flex items-center gap-4'>
+                    <div className='mt-2.5 sm:mt-0 flex items-center gap-4'>
                         <div className='relative'>
                             <Search className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 transform -translate-y-1/2" />
                             <input
                                 type="text"
                                 placeholder="Search..."
-                                className='bg-[#1e1e1e] border border-gray-500 rounded-md pl-10 pr-4 py-2 text-[13px] text-gray-300 focus:outline-none focus:border-red-900 w-[250px]'
+                                className='bg-[#1e1e1e] border border-gray-500 rounded-md pl-10 pr-4 py-2 text-[13px] text-gray-300 focus:outline-none focus:border-gray-600 w-[250px]'
                             />
                         </div>
                     </div>
                 </div>
 
                 {/* Stats Grid */}
-                <div className="flex justify-center items-center gap-20 mb-5 bg-[#1e1e1e] rounded-md py-[22px] border border-gray-700">
+                <div className="w-full flex flex-wrap justify-center items-center gap-5 lg:gap-20 mb-5 bg-transparent lg:bg-[#1e1e1e] rounded-md py-[22px] lg:border lg:border-gray-700 overflow-x-auto no-scrollbar overscroll-x-contain px-2 sm:px-4">
                     {stats.map((stat, index) => (
                         <div
                             key={index}
-                            className="group relative px-5.5 py-3 backdrop-blur-sm bg-[#1e1e1e] transition-all duration-300 hover:transform hover:scale-105 overflow-hidden"
+                            className="group relative px-5.5 lg:px-5.5 py-7.5 lg:py-3 rounded-sm lg:rounded-none backdrop-blur-sm bg-[#1e1e1e] transition-all duration-300 hover:transform hover:scale-105 overflow-hidden flex-shrink-0"
                         >
                             <div className="absolute inset-0 transition-all duration-300"></div>
 
-                            <div className="relative z-10 flex items-center gap-4">
+                            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4">
                                 <div className="flex items-center justify-between mb-4 gap-5">
                                     <div className="text-gray-500 group-hover:scale-110 transition-transform">
                                         {stat.icon}
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="text-[17px] font-normal mb-1">{stat.value}
-                                        <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-green-500' : 'text-red-500'} ml-5`}>
+                                    <div className="text-[17px] font-normal mb-1 whitespace-nowrap">
+                                        {stat.value}
+                                        <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-green-500' : 'text-red-500'} ml-2 sm:ml-5`}>
                                             {stat.change}
                                         </span>
                                     </div>
-                                    <div className="text-[12.8px] text-gray-400">{stat.title}</div>
+                                    <div className="text-[12.8px] text-gray-400 whitespace-nowrap">{stat.title}</div>
                                 </div>
                             </div>
                         </div>
@@ -233,7 +244,7 @@ const CinemaOwnerDashboard = () => {
                 </div>
 
                 {/* Main Grid Layout */}
-                <div className='grid grid-cols-3 gap-4 mb-6'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6'>
 
                     <div className="col-span-2 max-w-full overflow-x-auto bg-[#1e1e1e] rounded-md border border-gray-700 p-5">
                         <div className="mb-5">

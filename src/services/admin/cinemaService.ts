@@ -38,6 +38,6 @@ export const makeCinemaRejecte = async (id: string) => {
 
 export const deleteRejectedCinema = async (id: string) => {
 
-    const res = await api.put('/cinema/rejected/delete/'+id, { withCredentials: true });
+    const res = await api.delete('/cinema/rejected/delete/'+id, { withCredentials: true });
     return res;
 }

@@ -149,7 +149,7 @@ const SignUp = (props: any) => {
             <div className={`overflow-y-auto overflow-x-hidden fixed inset-0 w-screen h-screen bg-black/40 backdrop-blur-md flex justify-end items-center z-[100] transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
                 <div className={`h-screen py-10 px-7 bg-black shadow-2xl rounded-lg flex flex-col justify-start items-center gap-5 relative transition-transform duration-300 ${isVisible ? "translate-x-0" : "translate-x-20"}`}>
 
-                    <X onClick={handleCloseSignUpModel} className='absolute right-4.5 top-4.5 w-5.5 h-5.5' />
+                    <X onClick={handleCloseSignUpModel} className='absolute right-4.5 top-4.5 w-5.5 h-5.5 cursor-pointer' />
 
                     <div className="flex justify-center items-center space-x-3 absolute left-0.5 top-0.5">
                         <div className="flex items-center justify-center z-10">
@@ -221,7 +221,7 @@ const SignUp = (props: any) => {
                                 <p className='text-[14.5px] text-[#9E9E9E]'>I have read and agree to the Terms & Conditions and Privacy Policy</p>
                             </div>
                         </div>
-                        <button className='flex justify-center items-center gap-2.5 w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3'>Sign up
+                        <button className='flex justify-center items-center gap-2.5 w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3 cursor-pointer'>Sign up
                             {isLoading ? <LoadingSpinner /> : ''}
                         </button>
                     </form>

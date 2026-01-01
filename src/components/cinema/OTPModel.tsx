@@ -95,7 +95,7 @@ function OTPModel(props: any) {
                     <input onChange={(e) => setno5(e.target.value)} value={no5} className='w-[40px] border-[1.4px] border-gray-200 rounded-sm text-[22px] font-bold text-gray-500 text-center' style={{ padding: '8px', marginBottom: '1px', marginTop: '10px' }} type='text' maxLength={1} inputMode='numeric' pattern='[0-9]'></input>
                     <input onChange={(e) => setno6(e.target.value)} value={no6} className='w-[40px] border-[1.4px] border-gray-200 rounded-sm text-[22px] font-bold text-gray-500 text-center' style={{ padding: '8px', marginBottom: '1px', marginTop: '10px' }} type='text' maxLength={1} inputMode='numeric' pattern='[0-9]'></input>
                 </div>
-                <button className='w-[330px] bg-red-800 text-white rounded-[3px] text-[14.7px]' style={{ padding: '7.5px' }}>Submit</button>
+                <button className='w-[330px] bg-red-800 text-white rounded-[3px] text-[14.7px] cursor-pointer' style={{ padding: '7.5px' }}>Submit</button>
             </div>
         </form>
     )

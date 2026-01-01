@@ -95,7 +95,7 @@ const SignIn = (props: any) => {
                 <form onSubmit={handleSignIn} className='flex flex-col gap-4 font-[Poppins]'>
                     <input value={email} onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Email' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
                     <input value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Password' required className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
-                    <button className='w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3'>Sign in</button>
+                    <button className='w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3 cursor-pointer'>Sign in</button>
                 </form>
 
                 <div>
