@@ -23,3 +23,9 @@ export const getThisYearEachMonthRevenue = async () => {
     const res = await api.get('/transaction/cinema/week/revenue', { withCredentials: true });
     return res;
 }
+
+export const getScreenOccupancy = async () => {
+
+    const res = await api.get('/screen/Occupancy', { withCredentials: true });
+    return res;
+}

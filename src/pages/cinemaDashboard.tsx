@@ -5,7 +5,7 @@ import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import Chart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
-import { getActiveScreen, getThisYearEachMonthRevenue, getTodayBooking, getTodayRevenue } from '../services/cinema/dashboardService';
+import { getActiveScreen, getScreenOccupancy, getThisYearEachMonthRevenue, getTodayBooking, getTodayRevenue } from '../services/cinema/dashboardService';
 
 const CinemaOwnerDashboard = () => {
 
@@ -15,6 +15,7 @@ const CinemaOwnerDashboard = () => {
     const [activeScreens, setActiveScreens] = useState<any>({});
 
     const [weekRevenue, setWeekRevenue] = useState<any>({});
+    const [screenOccupancy, setScreenOccupancy] = useState<any>([]);
 
     useEffect(() => {
         init();
@@ -37,10 +38,56 @@ const CinemaOwnerDashboard = () => {
             const res4 = await getThisYearEachMonthRevenue();
             console.log(res4.data.data);
             setWeekRevenue(res4.data.data);
+
+            const res5 = await getScreenOccupancy();
+            console.log(res5.data.data);
+            setScreenOccupancy(res5.data.data);
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+    const redShades = [
+        '#7f1d1d',
+        '#8b1c1c',
+        '#991b1b',
+        '#b91c1c',
+        '#c81e1e',
+        '#dc2626',
+        '#e02424',
+        '#ef4444',
+        '#f05252',
+        '#f87171',
+        '#f98080',
+        '#fb9b9b',
+        '#fca5a5',
+        '#fecaca',
+        '#ffd1d1',
+        '#ffe4e4',
+        '#fff1f1',
+        '#ffeded',
+        '#fff5f5',
+        '#fffafa'
+    ];
+
+    const screenData = [
+        // { name: 'IMX', value: 92, color: '#b91c1c' },
+        // { name: 'SX 3D', value: 85, color: '#dc2626' },
+        // { name: 'Bat Max', value: 78, color: '#ef4444' },
+        // { name: 'XXC', value: 65, color: '#f87171' }
+    ];
+
+    let totalOccupancy = 0;
+    for (let i = 0; i < screenOccupancy.length; i++) {
+        const e = screenOccupancy[i];
+        totalOccupancy += e.occupancy;
+        const obj = {
+            name: e.screenName,
+            value: e.occupancy,
+            color: redShades[i]
+        };
+        screenData.push(obj);
     }
 
     const stats = [
@@ -62,8 +109,8 @@ const CinemaOwnerDashboard = () => {
         },
         {
             title: 'Occupancy Rate',
-            value: occupancyRate,
-            change: '+5.3%',
+            value: `${totalOccupancy/screenOccupancy.length}%`,
+            change: `${totalOccupancy/screenOccupancy.length}%`,
             icon: <Users className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-purple-500'
@@ -76,13 +123,6 @@ const CinemaOwnerDashboard = () => {
             trend: 'up',
             color: 'text-red-500'
         }
-    ];
-
-    const screenData = [
-        { name: 'IMX', value: 92, color: '#b91c1c' },
-        { name: 'SX 3D', value: 85, color: '#dc2626' },
-        { name: 'Bat Max', value: 78, color: '#ef4444' },
-        { name: 'XXC', value: 65, color: '#f87171' }
     ];
 
     const upcomingShows = [
@@ -219,7 +259,7 @@ const CinemaOwnerDashboard = () => {
                     {stats.map((stat, index) => (
                         <div
                             key={index}
-                            className="group relative px-5.5 lg:px-5.5 py-7.5 lg:py-3 rounded-sm lg:rounded-none backdrop-blur-sm bg-[#1e1e1e] transition-all duration-300 hover:transform hover:scale-105 overflow-hidden flex-shrink-0"
+                            className="group relative px-5.5 lg:px-5.5 py-7.5 lg:py-3 rounded-sm lg:rounded-none border border-gray-700 lg:border-none backdrop-blur-sm bg-[#1e1e1e] transition-all duration-300 hover:transform hover:scale-105 overflow-hidden flex-shrink-0"
                         >
                             <div className="absolute inset-0 transition-all duration-300"></div>
 
