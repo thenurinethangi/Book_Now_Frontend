@@ -350,9 +350,9 @@ function UserSheetSelect() {
                         </div>
                     </div>
 
-                    <div className='px-15 mt-15 flex flex-col items-center'>
+                    <div className='px-8 sm:px-15 mt-15 flex flex-col items-center w-screen overflow-x-auto no-scrollbar overscroll-x-contain'>
                         {/* screen */}
-                        <div className="w-[50%] mx-auto mb-6">
+                        <div className="w-[100%] sm:w-[50%] mx-auto mb-6">
                             <svg width="100%" height="35" viewBox="0 0 600 35" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
                                 <defs>
                                     {/* Screen gradient matching #121212 environment */}
@@ -413,7 +413,7 @@ function UserSheetSelect() {
                         ))}
 
                         {/* category */}
-                        <div className='mt-25 flex items-center gap-10 py-2 px-5 rounded-sm'>
+                        <div className='mt-25 flex flex-wrap items-center gap-10 py-2 px-5 rounded-sm'>
                             {seatTypes.map((type: any, index: number) => (
                                 <div key={type} className='flex items-center gap-3'>
                                     <div className={`w-[22px] h-[22px] ${getSeatColor(type)} rounded-xs`}></div>
