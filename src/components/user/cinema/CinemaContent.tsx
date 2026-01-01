@@ -150,7 +150,7 @@ function CinemaContent() {
 
     return (
         <div className='pb-10'>
-            <div className="bg-red-100/10 mx-12 mt-10 h-[80px] flex justify-between items-center pl-6 pr-6 backdrop-blur-sm">
+            <div className="bg-red-100/10 mx-7 sm:mx-12 mt-10 h-[110px] sm:h-[80px] flex flex-wrap justify-between items-center gap-2.5 pl-6 pr-6 backdrop-blur-sm">
                 <div className="flex items-center gap-6">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
@@ -176,10 +176,10 @@ function CinemaContent() {
                 </div>
             </div>
 
-            <div className='grid grid-cols-4 gap-9 px-15 mt-11 mb-10'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-9 px-15 mt-11 mb-10'>
                 {filteredCinemas.length > 0
                     ? filteredCinemas.map((cinema: any) => (
-                        <div key={cinema._id} className='group cursor-pointer mb-3'>
+                        <div key={cinema._id} className='group cursor-pointer mb-3 w-full'>
                             <div onClick={handleNavigateToSingleCinemaPage} data-id={cinema._id} className='relative w-[257.5px] h-[205px] rounded-sm'>
                                 <img src={cinema.cinemaImageUrl} className='object-cover w-full h-full object-top transition-transform duration-500 group-hover:scale-105'></img>
                                 <div className="w-full h-full absolute inset-0 bg-gradient-to-t from-black/40 via-black/15 to-transparent group-hover:from-black/60 group-hover:via-black/25 group-hover:scale-105 transition-all duration-500"></div>
@@ -190,7 +190,7 @@ function CinemaContent() {
                             </div>
 
                             <div className='flex flex-col items-start mt-3.5 -translate-x-2'>
-                                <p className='text-[20.5px] text-white/90 tracking-[0.5px] font-normal font-[Nunito_Sans] leading-relaxed line-clamp-2'>{cinema.address}</p>
+                                <p className='text-[20.5px] text-white/90 tracking-[0.5px] font-normal font-[Nunito_Sans] leading-relaxed line-clamp-2 w-[70%] sm:w-[100%]'>{cinema.address}</p>
 
                                 <div className='flex items-center gap-1.5 mt-2.5'>
                                     {cinema.formats.map((f: string, index: number) => (
