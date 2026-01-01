@@ -279,8 +279,8 @@ function Showtimes(props: any) {
 
     return (
         <div className='mb-47 mt-12'>
-            <div className='px-17 flex flex-col gap-4'>
-                <div className='flex items-center justify-start gap-2.5 overflow-x-auto no-scrollbar overscroll-x-contain'>
+            <div className='px-10 sm:px-17 flex flex-col gap-4'>
+                <div className='flex flex-wrap items-center justify-start gap-2.5 overflow-x-auto no-scrollbar overscroll-x-contain'>
                     {dates.map((d, index: number) => (
                         <div
                             onClick={(e) => {
@@ -308,10 +308,10 @@ function Showtimes(props: any) {
                 </div>
             </div>
 
-            <div className='mt-12 px-17'>
+            <div className='mt-12 px-10 sm:px-17'>
                 { selectedDateShowtimes.length > 0 ? selectedDateShowtimes.map((showtimesOfSingleMovie: any, index: number) => (
                     <div key={index} className='mb-12 flex flex-col gap-8'>
-                        <div className='flex items-end gap-8'>
+                        <div className='flex flex-wrap items-end gap-8'>
                             <div className="shrink-0">
                                 <img src={showtimesOfSingleMovie[0].movieId.posterImageUrl} className='w-[156px] h-[231px] object-cover object-center rounded-sm'></img>
                             </div>

@@ -53,8 +53,8 @@ function SingleCinemaPage() {
             <SingleCinemaHero cinema={cinema} />
 
             {/* tabs */}
-            <div className='mt-7 px-15 flex items-center'>
-                <div className='flex items-center'>
+            <div className='mt-7 px-8 sm:px-15 flex items-center whitespace-nowrap'>
+                <div className='flex flex-wrap items-center'>
                     <div onClick={(e) => setTab('Sessions')} className={`px-2.5 pb-2 text-[22px] font-medium cursor-pointer ${tab === 'Sessions' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Sessions</div>
                     <div onClick={(e) => setTab('Offers & Events')} className={`px-2.5 pb-2 opacity-70 text-[22px] font-medium cursor-pointer ${tab === 'Offers & Events' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>Offers & Events</div>
                     <div onClick={(e) => setTab('About')} className={`px-2.5 pb-2 opacity-70 text-[22px] font-medium cursor-pointer ${tab === 'About' ? 'border-b-2 border-[#ff2e38] opacity-95' : 'opacity-70'}`}>About</div>
