@@ -93,12 +93,12 @@ function MyBookings() {
             <Navigation setSignInVisible={setSignInVisible} page='' />
 
             {/* Header */}
-            <div className='px-20 pt-37 pb-6'>
+            <div className='px-15 md:px-20 pt-37 pb-6'>
                 <h1 className='text-[16.5px] tracking-wide'>My Bookings</h1>
             </div>
 
             {/* Bookings List */}
-            <div className='px-20 pb-20'>
+            <div className='px-15 md:px-20 pb-20'>
                 {bookings.length > 0 ? (
                     <div className='flex flex-col gap-5'>
                         {bookings.map((booking: any) => {
@@ -106,11 +106,11 @@ function MyBookings() {
                             return (
                                 <div
                                     key={booking?._id}
-                                    className='w-[710px] h-[128px] flex items-center gap-6 p-2 bg-[#1a1a1a]/40 rounded-md border border-white/5 hover:border-white/10 transition-all'
+                                    className='w-[100%] h-[480px] md:w-[710px] md:h-[128px] pt-3 md:pt-0 flex flex-col md:flex-row items-center gap-6 p-2 bg-[#1a1a1a]/40 rounded-md border border-white/5 hover:border-white/10 transition-all'
                                 >
                                     {/* Poster */}
                                     <div className='flex-shrink-0'>
-                                        <div className="w-[150px] h-[115px] relative overflow-hidden rounded-sm">
+                                        <div className="w-full h-[200px] md:w-[150px] md:h-[115px] relative overflow-hidden rounded-sm">
                                             <img
                                                 src={booking?.movie.posterImageUrl}
                                                 className={`w-full h-full object-cover`}
@@ -120,16 +120,16 @@ function MyBookings() {
                                     </div>
 
                                     {/* Details */}
-                                    <div className='flex-1 flex flex-col justify-center h-[120px]'>
+                                    <div className='flex-1 flex flex-col justify-center items-center md:items-start h-[120px]'>
                                         <div>
-                                            <h2 className='text-[15px] font-medium mb-1'>{booking?.movie.title}</h2>
-                                            <p className='text-[13px] text-white/75 mb-4'>{booking?.cinema.cinemaName}-{booking?.screen.screenName}</p>
+                                            <h2 className='text-[15px] font-medium mb-1 text-center md:text-start'>{booking?.movie.title}</h2>
+                                            <p className='text-[13px] text-white/75 mb-4 text-center md:text-start'>{booking?.cinema.cinemaName}-{booking?.screen.screenName}</p>
 
                                             <div className='space-y-0.5'>
-                                                <p className='text-[12px] text-white/50'>
+                                                <p className='text-[12px] text-white/50 text-center md:text-start'>
                                                     {formatShowDate(booking?.showtimeId.date)} at {formatShowTime(booking?.showtimeId.time)}
                                                 </p>
-                                                <p className='text-[12px] text-white/50'>
+                                                <p className='text-[12px] text-white/50 text-center md:text-start'>
                                                     Seat Number: <span className='text-white/90'>{booking?.seatsDetails.join(', ')}</span>
                                                 </p>
                                             </div>
