@@ -96,7 +96,7 @@ function SingleMovie() {
                 </div>
             </div>
 
-            <div className='px-13 -translate-y-30 flex gap-10'>
+            <div className='px-8 sm:px-13 -translate-y-75 sm:-translate-y-30 flex flex-wrap sm:flex-nowrap gap-10'>
                 <div className='mr-5'>
                     <div className="w-[200px] h-[300px] relative overflow-hidden">
                         <img src={movie.posterImageUrl} className="w-full h-full object-cover rounded-[1.5px]" />
@@ -107,7 +107,7 @@ function SingleMovie() {
                     </div>
                 </div>
 
-                <div className='w-[60%] pt-23 flex flex-col items-start gap-4'>
+                <div className='w-[100%] sm:w-[60%] pt-2 sm:pt-[93px] flex flex-col items-start gap-4'>
                     <h1 className='text-[32px] font-medium'>{movie.title}</h1>
                     <div>
                         <p className='text-white/70 mb-[1px]'>DIRECTORS</p>
@@ -123,7 +123,7 @@ function SingleMovie() {
                     </div>
                 </div>
 
-                <div className='flex flex-col items-start gap-4 -translate-y-1 translate-x-3'>
+                <div className='flex flex-col items-start gap-4 sm:-translate-y-1 sm:translate-x-3'>
                     <div>
                         <p className='text-white/80 mb-[1px]'>DUNTIME</p>
                         <p className='text-[15px]'>{movie.duration}</p>

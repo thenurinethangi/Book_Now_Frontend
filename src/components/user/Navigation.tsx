@@ -67,6 +67,16 @@ function Navigation(props: any) {
                     )}
                 </div>
             </div>
+
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+                <div className='absolute top-full left-0 w-full bg-black/90 flex flex-col items-start px-6 py-4 gap-4 md:hidden'>
+                    <div onClick={() => { navigate('/movie'); setActivePage('movie'); setMobileMenuOpen(false); }} className='text-white cursor-pointer'>Movie</div>
+                    <div onClick={() => { navigate('/cinema'); setActivePage('cinema'); setMobileMenuOpen(false); }} className='text-white cursor-pointer'>Cinema</div>
+                    <div onClick={() => { setActivePage('showtime'); setMobileMenuOpen(false); }} className='text-white cursor-pointer'>Showtime</div>
+                    <div onClick={() => { navigate('/aboutus'); setActivePage('aboutus'); setMobileMenuOpen(false); }} className='text-white cursor-pointer'>About Us</div>
+                </div>
+            )}
         </nav>
     )
 }

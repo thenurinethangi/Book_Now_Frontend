@@ -209,7 +209,7 @@ function Showtimes(props: any) {
 
     return (
         <div className='mb-47'>
-            <div className='px-13 flex items-center justify-between'>
+            <div className='px-8 sm:px-13 flex items-center justify-between'>
                 <div>
                     <ChevronLeft />
                 </div>
@@ -224,7 +224,7 @@ function Showtimes(props: any) {
                                 setTime('');
                             }
                         }}
-                            key={index} className={`mx-8.5 cursor-pointer ${showtimesList[index]?.length > 0 && selectedDate.toLowerCase() !== d.toLowerCase() ? 'text-white' : 'text-[#BDBDBD] font-light opacity-70'} ${selectedDate.toLowerCase() === d.toLowerCase() ? 'border-b-4 border-b-red-500 pb-3.5 px-3 text-red-600 font-medium' : ''}`}>{d}</div>
+                            key={index} className={`whitespace-nowrap mx-8.5 cursor-pointer ${showtimesList[index]?.length > 0 && selectedDate.toLowerCase() !== d.toLowerCase() ? 'text-white' : 'text-[#BDBDBD] font-light opacity-70'} ${selectedDate.toLowerCase() === d.toLowerCase() ? 'border-b-4 border-b-red-500 pb-3.5 px-3 text-red-600 font-medium' : ''}`}>{d}</div>
                     ))}
                 </div>
                 <div>
@@ -241,15 +241,15 @@ function Showtimes(props: any) {
                 <ListFilterPlus className='w-5.5 h-5.5 text-white/95' />
             </div>
 
-            <div className='px-14 mt-2'>
+            <div className='px-8 sm:px-14 mt-2'>
                 {/* single screen show time */}
                 {selectedDateShowtimes.length > 0 ? selectedDateShowtimes.map((s: any, index: number) => (
-                    <div key={index} className='flex items-center gap-5 mb-7'>
+                    <div key={index} className='flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-7'>
                         <div className='w-[25%]'>
                             <p className='text-[16.8px] font-normal'>{s[0].screenId.screenName}</p>
                             <p className='text-[12px] text-gray-500 font-normal'>{s[0].cinemaId.cinemaName}</p>
                         </div>
-                        <div className='flex items-center relative gap-13'>
+                        <div className='flex flex-wrap items-center ml-8 sm:ml-0 relative gap-13'>
                             {s.map((t: any, index: number) => (
                                 <div key={index} className='flex items-center -translate-x-2.5 relative'>
                                     <div className={`absolute left-0 rotate-270 w-[72.3px] py-[1px] text-center text-black font-medium border text-[14px] origin-top-left -translate-x-[23px] translate-y-[48px] ${isTimeNotPast(t.time) ? 'bg-red-400 border-red-300' : 'bg-gray-500 border-gray-400'}`}>{t.formatShowing}</div>
