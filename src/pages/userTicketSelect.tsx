@@ -104,7 +104,7 @@ function UserTicketSelect(props: any) {
             </div>
 
             {/* Main Content */}
-            <div className='px-25 mx-auto mt-17 flex gap-8'>
+            <div className='px-10 lg:px-25 mx-auto mt-17 flex flex-wrap gap-8'>
                 {/* Tickets Section */}
                 <div className='flex-1'>
                     <div className='bg-[#1e1e1e] rounded-sm overflow-hidden'>
