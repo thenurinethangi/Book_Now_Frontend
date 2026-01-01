@@ -6,6 +6,7 @@ import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 
 import { toast } from 'react-toastify';
 import { signUp } from '../../services/cinema/auth';
+import LoadingSpinner from '../user/LoadingSpinner';
 
 const SignUp = (props: any) => {
 
@@ -38,6 +39,8 @@ const SignUp = (props: any) => {
     const [adminLastName, setAdminLastName] = useState('');
     const [adminPassword, setAdminPassword] = useState('');
 
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         setTimeout(() => setIsVisible(true), 10);
     }, []);
@@ -60,6 +63,8 @@ const SignUp = (props: any) => {
 
     async function handleSignUp(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        setIsLoading(true);
 
         if (!cinemaName.trim() || !description.trim() || !cinemaEmail.trim() || !cinemaPhoneNo.trim() || !address.trim() || !city.trim() || !distric.trim() || !postCode.trim() || !googleMapLink.trim() || !noOfScreens.trim() || !ownerEmail.trim() || !ownerName.trim() || !ownerNicNo.trim() || !adminEmail.trim() || !adminFirstName.trim() || !adminLastName.trim() || !adminPassword.trim()) {
             toast.warn("Please fill all required fields.");
@@ -123,7 +128,7 @@ const SignUp = (props: any) => {
         formdata.append("adminPassword", adminPassword);
 
         const data = await signUp(formdata);
-        
+
         if (data.status === 200) {
             setIsVisible(false);
             setTimeout(() => {
@@ -135,6 +140,8 @@ const SignUp = (props: any) => {
         else {
             toast.error('Failed to sign up, please try again later!');
         }
+
+        setIsLoading(false);
     }
 
     return (
@@ -214,7 +221,9 @@ const SignUp = (props: any) => {
                                 <p className='text-[14.5px] text-[#9E9E9E]'>I have read and agree to the Terms & Conditions and Privacy Policy</p>
                             </div>
                         </div>
-                        <button className='w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3'>Sign up</button>
+                        <button className='flex justify-center items-center gap-2.5 w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3'>Sign up
+                            {isLoading ? <LoadingSpinner /> : ''}
+                        </button>
                     </form>
 
                     <div className='-translate-y-1 pb-6'>
