@@ -106,7 +106,7 @@ function BookingSuccess() {
     }
 
     return (
-        <div className={`bg-[#121212] font-[Poppins] text-white overflow-x-hidden relative pb-15 min-h-screen transition-all duration-300 ${isLoad ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`bg-[#121212] font-[Poppins] text-white overflow-x-hidden overflow-y-hidden relative pb-15 min-h-screen transition-all duration-300 ${isLoad ? 'opacity-100' : 'opacity-0'}`}>
 
             {/* Floating Confetti Animation */}
             {showConfetti && (
@@ -261,7 +261,7 @@ function BookingSuccess() {
                             {/* <h2 className="text-[30px] font-light mb-2 tracking-wide font-[SourceSans]">
                                 2300 LKR
                             </h2> */}
-                            <h2 className="text-[22px] font-medium mb-2 tracking-wide font-sans italic">
+                            <h2 className="text-[22px] font-medium mb-2 tracking-wide font-sans italic text-center">
                                 Booking Successfull
                             </h2>
                             <p className="text-[13px] text-white/90 mb-8 text-center w-[85%] font-medium italic">
@@ -309,14 +309,14 @@ function BookingSuccess() {
                 <div className="px-15 mt-5 mb-7 flex justify-center items-center">
                     <div className="px-5 rounded-sm flex flex-col items-center relative">
 
-                        {/* Your exact ticket design */}
-                        <div className="mx-auto mb-6 relative w-[730px] h-[293px] z-10 animate-fade-in bg-transparent" style={{ animationDelay: '0.3s' }}>
+                        {/*mticket design */}
+                        <div className="rotate-90 sm:rotate-0  mx-auto mb-6 relative w-[600px] h-[293px] md:w-[730px] md:h-[293px] z-10 animate-fade-in bg-transparent" style={{ animationDelay: '0.3s' }}>
                             <img src={tk} className="w-full h-full object-cover opacity-80" alt="ticket" />
 
                             <div className="absolute top-0 left-0 right-0 bottom-0 flex font-mono" style={{ padding: '40px 20px 40px 70px' }}>
                                 <div className="flex-1 flex flex-col justify-between pr-6">
                                     <div className="space-y-1">
-                                        <h1 className="text-[30px] font-extrabold leading-none tracking-tight text-white font-mono">
+                                        <h1 className="text-[24px] md:text-[30px] font-extrabold leading-none tracking-tight text-white font-mono">
                                             {data.showtime?.movieId.title}
                                         </h1>
                                         <div className="flex items-center gap-3">
@@ -387,7 +387,7 @@ function BookingSuccess() {
                                     </div>
 
                                     <div className="text-center">
-                                        <p className="text-[26px] font-black text-white leading-none">{data.transaction?.amount}</p>
+                                        <p className="text-[20px] md:text-[26px] font-black text-white leading-none">{data.transaction?.amount}</p>
                                         <p className="text-[10px] font-bold text-white/60 tracking-wider">LKR</p>
                                     </div>
 
