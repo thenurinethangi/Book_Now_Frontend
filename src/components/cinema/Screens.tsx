@@ -107,8 +107,14 @@ function Screens(props: any) {
         e.stopPropagation();
 
         let status = e.currentTarget.getAttribute("data-status");
+        let bookings: any = e.currentTarget.dataset.bookings;
 
         if (!activeOptionsId || !status) {
+            return;
+        }
+
+        if (bookings && bookings > 0) {
+            toast.warn('This screen has bookings, so it cannot be marked as unavailable!');
             return;
         }
 
@@ -252,6 +258,7 @@ function Screens(props: any) {
                         <button
                             onClick={switchStatus}
                             data-status={screen.status}
+                            data-bookings={screensBookings[index]?.bookings}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#252525] transition-colors group"
                         >
                             {screen.status === "ACTIVE" ? (

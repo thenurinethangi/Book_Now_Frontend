@@ -109,8 +109,8 @@ const CinemaOwnerDashboard = () => {
         },
         {
             title: 'Occupancy Rate',
-            value: `${totalOccupancy/screenOccupancy.length}%`,
-            change: `${totalOccupancy/screenOccupancy.length}%`,
+            value: `${Math.round(totalOccupancy/screenOccupancy.length)}%`,
+            change: `${Math.round(totalOccupancy/screenOccupancy.length)}%`,
             icon: <Users className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-purple-500'

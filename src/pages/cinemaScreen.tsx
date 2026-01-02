@@ -26,6 +26,10 @@ function CinemaScreen() {
 
     }, [data]);
 
+    // useEffect(() => {
+    //     loadScreenOccupancy();
+    // },[]);
+
     async function loadScreenOccupancy() {
 
         try {
@@ -34,8 +38,8 @@ function CinemaScreen() {
             setScreenOccupancy(res5.data.data);
 
             let tOccupancy = 0;
-            for (let i = 0; i < screenOccupancy.length; i++) {
-                const e = screenOccupancy[i];
+            for (let i = 0; i < res5.data.data.length; i++) {
+                const e = res5.data.data[i];
                 tOccupancy += e.occupancy;
             }
             setTotalOccupancy(tOccupancy);
@@ -119,7 +123,7 @@ function CinemaScreen() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Occupancy</p>
-                                <p className='text-[18px] font-medium text-white'>{totalOccupancy / screenOccupancy.length}%</p>
+                                <p className='text-[18px] font-medium text-white'>{Math.round(totalOccupancy / screenOccupancy.length)}%</p>
                             </div>
                             <div className='w-8 h-1.5 bg-gray-800 rounded-full overflow-hidden'>
                                 <div className='h-full w-[48%] bg-gradient-to-r from-red-700 to-red-900 rounded-full' />
