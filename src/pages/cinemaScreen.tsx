@@ -6,18 +6,18 @@ import AddScreen from '../components/cinema/AddScreen';
 
 function CinemaScreen() {
 
-    const [show,setShow] = useState('screens');
+    const [show, setShow] = useState('screens');
     const [loadScreens, setLoadScreens] = useState(false);
-    const [data,setData] = useState([]);
-    const [totalSeats,setTotalSeats] = useState(0);
+    const [data, setData] = useState([]);
+    const [totalSeats, setTotalSeats] = useState(0);
 
     useEffect(() => {
         let total = 0;
         data.forEach((d: any) => {
-            total+=Number(d.numberOfSeats);
+            total += Number(d.numberOfSeats);
         });
         setTotalSeats(total);
-    },[data]);
+    }, [data]);
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -28,19 +28,19 @@ function CinemaScreen() {
             {/* Main Content */}
             <div className='flex-1 text-white px-7 py-3 pt-6.5 overflow-auto ml-[65px]'>
                 {/* Header */}
-                <div className='flex justify-between items-center mb-[22px]'>
-                    <div>
+                <div className='flex flex-wrap justify-between items-center mb-[22px]'>
+                    <div className='mr-27'>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
                                 <span className='text-[18px] font-medium text-gray-500'>Home {`>`}</span>&nbsp;Screens
                             </span>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="mt-2.5 sm:mt-0 flex items-center gap-3">
                         <div className="relative">
-                            <input 
-                                type="text" 
-                                placeholder="Search screens..." 
+                            <input
+                                type="text"
+                                placeholder="Search screens..."
                                 className="bg-[#1e1e1e] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900 w-64"
                             />
                             <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
@@ -50,16 +50,16 @@ function CinemaScreen() {
 
                 {/* Tabs */}
                 <div className='flex items-center gap-6 border-b border-gray-800 mb-6'>
-                    <button onClick={(e) => setShow('screens')} className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${show === 'screens' ? 'text-white border-b-2 border-red-900': 'text-gray-500 hover:text-gray-300 transition-colors'}`}>
+                    <button onClick={(e) => setShow('screens')} className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${show === 'screens' ? 'text-white border-b-2 border-red-900' : 'text-gray-500 hover:text-gray-300 transition-colors'}`}>
                         Screens
                     </button>
-                    <button onClick={(e) => setShow('setup')} className={`px-2.5 pb-2 text-[18px] text-gray-500 hover:text-gray-300 transition-colors ${show === 'setup' ? 'text-white border-b-2 border-red-900': 'text-gray-500 hover:text-gray-300 transition-colors'}`}>
+                    <button onClick={(e) => setShow('setup')} className={`px-2.5 pb-2 text-[18px] text-gray-500 hover:text-gray-300 transition-colors ${show === 'setup' ? 'text-white border-b-2 border-red-900' : 'text-gray-500 hover:text-gray-300 transition-colors'}`}>
                         Setup
                     </button>
                 </div>
 
                 {/* Stats Overview */}
-                <div className='grid grid-cols-4 gap-4 mb-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
                     <div className='bg-[#1e1e1e] rounded-lg p-4 border border-gray-800'>
                         <div className='flex items-center justify-between'>
                             <div>
@@ -101,11 +101,11 @@ function CinemaScreen() {
                 </div>
 
                 {/* Cinema Screens Grid */}
-                { show === 'screens' ? <Screens loadScreens={loadScreens} setData={setData} /> : '' }
+                {show === 'screens' ? <Screens loadScreens={loadScreens} setData={setData} /> : ''}
 
                 {/* add a new screen */}
-                { show === 'setup' ? <AddScreen loadScreens={loadScreens} setLoadScreens={setLoadScreens} setShow={setShow} /> : '' }
-                
+                {show === 'setup' ? <AddScreen loadScreens={loadScreens} setLoadScreens={setLoadScreens} setShow={setShow} /> : ''}
+
             </div>
         </div>
     )

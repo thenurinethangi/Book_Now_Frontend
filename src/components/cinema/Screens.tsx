@@ -15,6 +15,7 @@ import {
 import { toast } from "react-toastify";
 
 function Screens(props: any) {
+
     const [screens, setScreens] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState<string | null>(null);
 
@@ -70,15 +71,15 @@ function Screens(props: any) {
             return;
         }
 
-        if(status ===  'ACTIVE'){
+        if (status === 'ACTIVE') {
             status = 'UNAVAILABLE'
         }
-        else{
+        else {
             status = 'ACTIVE'
         }
 
         try {
-            const res = await updateScreenStatus(activeOptionsId,status);
+            const res = await updateScreenStatus(activeOptionsId, status);
 
             toast.success(`Screen ID ${activeOptionsId} is now ${status.toLowerCase()}.`);
             setActiveOptionsId(null);
@@ -89,7 +90,7 @@ function Screens(props: any) {
     }
 
     return (
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {screens.map((screen: any, index: number) => (
                 <div
                     key={screen._id}
@@ -99,8 +100,8 @@ function Screens(props: any) {
                         <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-10">
                             <div
                                 className={`px-2 py-1 rounded text-[9px] font-bold ${screen.status === "ACTIVE"
-                                        ? "bg-green-500/20 text-green-500"
-                                        : "bg-orange-500/20 text-orange-500"
+                                    ? "bg-green-500/20 text-green-500"
+                                    : "bg-orange-500/20 text-orange-500"
                                     }`}
                             >
                                 {screen.status}
