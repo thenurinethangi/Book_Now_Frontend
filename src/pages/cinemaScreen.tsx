@@ -3,6 +3,7 @@ import { Tv, Search, Users } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import Screens from '../components/cinema/Screens';
 import AddScreen from '../components/cinema/AddScreen';
+import { getScreenOccupancy } from '../services/cinema/dashboardService';
 
 function CinemaScreen() {
 
@@ -11,13 +12,40 @@ function CinemaScreen() {
     const [data, setData] = useState([]);
     const [totalSeats, setTotalSeats] = useState(0);
 
+    const [screenOccupancy, setScreenOccupancy] = useState<any>([]);
+    const [totalOccupancy, setTotalOccupancy] = useState<number>(0);
+
     useEffect(() => {
         let total = 0;
         data.forEach((d: any) => {
             total += Number(d.numberOfSeats);
         });
         setTotalSeats(total);
+
+        loadScreenOccupancy();
+
     }, [data]);
+
+    async function loadScreenOccupancy() {
+
+        try {
+            const res5 = await getScreenOccupancy();
+            console.log(res5.data.data);
+            setScreenOccupancy(res5.data.data);
+
+            let tOccupancy = 0;
+            for (let i = 0; i < screenOccupancy.length; i++) {
+                const e = screenOccupancy[i];
+                tOccupancy += e.occupancy;
+            }
+            setTotalOccupancy(tOccupancy);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -91,7 +119,7 @@ function CinemaScreen() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Occupancy</p>
-                                <p className='text-[18px] font-medium text-white'>48%</p>
+                                <p className='text-[18px] font-medium text-white'>{totalOccupancy / screenOccupancy.length}%</p>
                             </div>
                             <div className='w-8 h-1.5 bg-gray-800 rounded-full overflow-hidden'>
                                 <div className='h-full w-[48%] bg-gradient-to-r from-red-700 to-red-900 rounded-full' />

@@ -13,6 +13,7 @@ import {
     updateScreenStatus,
 } from "../../services/cinema/screenService";
 import { toast } from "react-toastify";
+import { getScreenOccupancy } from "../../services/cinema/dashboardService";
 
 function Screens(props: any) {
 
@@ -35,7 +36,8 @@ function Screens(props: any) {
             setScreens(res.data.data);
             props.setData(res.data.data);
             console.log(res.data.data);
-        } catch (e) {
+        } 
+        catch (e) {
             console.log(e);
         }
     }
