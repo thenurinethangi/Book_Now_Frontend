@@ -245,7 +245,7 @@ function UserSheetSelect() {
 
     async function handleShowTicketSelectTab() {
 
-        if(!user){
+        if (!user) {
             setSignInVisible(true);
             return;
         }
@@ -438,7 +438,7 @@ function UserSheetSelect() {
 
                         <div className='mt-25'>
                             <button onClick={handleShowTicketSelectTab} className='flex items-center gap-2.5 px-7 py-3 rounded-br-3xl text-[14.8px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300'>Continue To Next
-                                { isLoading ? <LoadingSpinner /> : ''}
+                                {isLoading ? <LoadingSpinner /> : ''}
                             </button>
                         </div>
 

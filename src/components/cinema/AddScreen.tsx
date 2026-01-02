@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Plus, Rows, X } from 'lucide-react';
+import { Plus, Rows, X, Upload, Edit2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import RowColQsModal from './RowColQsMpdel';
 import SeatDesigner from './SeatDesigner';
 import { addNewScreen } from '../../services/cinema/screenService';
+import LoadingSpinner from '../user/LoadingSpinner';
 
 function AddScreen(props: any) {
 
@@ -22,6 +23,29 @@ function AddScreen(props: any) {
     const [columns, setColumns] = useState(1);
 
     const [seatLayout, setSeatLayout] = useState(null);
+
+    const [imagePreview, setImagePreview] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setScreenImage(file);
+
+            // Create preview URL
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleRemoveImage = () => {
+        setScreenImage(null);
+        setImagePreview(null);
+    };
 
     const addScreenType = () => {
         setScreenTypes([...screenTypes, '']);
@@ -66,6 +90,9 @@ function AddScreen(props: any) {
     }
 
     const handleSaveSeatLayout = async (layout: any) => {
+
+        setIsLoading(true);
+
         setSeatLayout(layout);
 
         if (!screenName || !noOfSeats || !description || !screenTypes || !seatTypes || !screenImage || !layout) {
@@ -92,12 +119,13 @@ function AddScreen(props: any) {
 
         try {
             const res = await addNewScreen(formdata);
-            
+
             toast.success(`Added new screen ${screenName}.`);
             setScreenName('');
             setDescription('');
             setNoOfSeats(1);
             setScreenImage(null);
+            setImagePreview(null);
             setScreenTypes(['3D']);
             setSeatTypes(['ODC']);
             setSeatLayout(null);
@@ -113,11 +141,13 @@ function AddScreen(props: any) {
             setDescription('');
             setNoOfSeats(1);
             setScreenImage(null);
+            setImagePreview(null);
             setScreenTypes(['3D']);
             setSeatTypes(['ODC']);
             setSeatLayout(null);
         }
 
+        setIsLoading(false);
         setShowSeatLayoutModel(false);
     };
 
@@ -228,24 +258,63 @@ function AddScreen(props: any) {
 
                     <div className='grid grid-cols-1 py-4 px-6'>
                         <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Screen image</label>
-                        <div className="flex justify-center p-10 bg-[#121212] border border-dashed border-gray-700 rounded-lg relative">
-                            <div className="flex max-w-[260px] flex-col items-center gap-4">
-                                <div className="inline-flex h-13 w-13 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition dark:border-gray-800 dark:text-gray-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M20.0004 16V18.5C20.0004 19.3284 19.3288 20 18.5004 20H5.49951C4.67108 20 3.99951 19.3284 3.99951 18.5V16M12.0015 4L12.0015 16M7.37454 8.6246L11.9994 4.00269L16.6245 8.6246" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                                    </svg>
+
+                        {!imagePreview ? (
+                            // Upload Area
+                            <div className="flex justify-center p-10 bg-[#121212] border border-dashed border-gray-700 rounded-lg relative hover:border-gray-600 transition-colors">
+                                <div className="flex max-w-[260px] flex-col items-center gap-4">
+                                    <div className="inline-flex h-13 w-13 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition dark:border-gray-800 dark:text-gray-400">
+                                        <Upload className="w-6 h-6" />
+                                    </div>
+                                    <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+                                        <span className="font-medium text-gray-800 dark:text-white/90">Click to upload</span>
+                                        {' '}or drag and drop SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                    </p>
                                 </div>
-                                <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-                                    <span className="font-medium text-gray-800 dark:text-white/90">Click to upload</span>
-                                    {' '}or drag and drop SVG, PNG, JPG or GIF (MAX. 800x400px)
-                                </p>
+                                <input
+                                    onChange={handleImageChange}
+                                    type='file'
+                                    accept="image/*"
+                                    required
+                                    className='opacity-0 w-full h-full absolute cursor-pointer'
+                                />
                             </div>
-                            <input onChange={(e) => setScreenImage(e.target.files[0])} type='file' required className='opacity-0 w-full h-full absolute' />
-                        </div>
+                        ) : (
+                            // Image Preview with Edit/Remove
+                            <div className="relative bg-[#121212] border border-gray-700 rounded-lg overflow-hidden">
+                                <img
+                                    src={imagePreview}
+                                    alt="Screen preview"
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="absolute top-3 right-3 flex gap-2">
+                                    <label className="cursor-pointer bg-[#1e1e1e]/90 backdrop-blur-sm border border-gray-700 hover:border-gray-500 rounded-lg p-2.5 transition-all">
+                                        <Edit2 className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
+                                        <input
+                                            onChange={handleImageChange}
+                                            type='file'
+                                            accept="image/*"
+                                            className='hidden'
+                                        />
+                                    </label>
+                                    <button
+                                        onClick={handleRemoveImage}
+                                        className="bg-[#1e1e1e]/90 backdrop-blur-sm border border-gray-700 hover:border-red-700 hover:text-red-700 rounded-lg p-2.5 transition-all"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                                <div className="p-3 bg-[#1e1e1e]/50 border-t border-gray-700">
+                                    <p className="text-xs text-gray-400 truncate">
+                                        {screenImage?.name}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className='flex justify-end py-4 px-6'>
-                        <button onClick={handleAddNewScreen} className='bg-red-700 px-5 py-2.5 rounded-lg font-medium text-[15px]'>Add Seat Layout -{'>'}</button>
+                        <button onClick={handleAddNewScreen} className='px-6 py-2.5 rounded-br-2xl rounded-tl-2xl text-[14.5px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300'>Add Seat Layout</button>
                     </div>
                 </div>
             </div>
@@ -254,6 +323,7 @@ function AddScreen(props: any) {
                 rows={rows}
                 cols={columns}
                 seatTypes={seatTypes}
+                isLoading={isLoading}
                 onSave={handleSaveSeatLayout}
                 onClose={() => setShowSeatLayoutModel(false)}
             /> : ''}

@@ -2,11 +2,13 @@ import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import LoadingSpinner from "../user/LoadingSpinner";
 
 interface SeatDesignerProps {
     rows: number;
     cols: number;
     seatTypes: string[];
+    isLoading: boolean;
     onSave: (seatLayout: (string | null)[][]) => void;
     onClose: () => void;
 }
@@ -84,7 +86,7 @@ function SeatCell({
 }
 
 /* Main layout builder */
-export default function SeatDesigner({ rows, cols, seatTypes, onSave, onClose }: SeatDesignerProps) {
+export default function SeatDesigner({ rows, cols, seatTypes, isLoading, onSave, onClose }: SeatDesignerProps) {
     const [seats, setSeats] = useState<DroppedSeat[]>([]);
     
     // Generate pastel colors for seat types
@@ -226,15 +228,16 @@ export default function SeatDesigner({ rows, cols, seatTypes, onSave, onClose }:
                         <div className="flex gap-4 mt-2">
                             <button
                                 onClick={onClose}
-                                className="px-5 py-2 bg-[#1e1e1e] border border-gray-800 rounded-lg font-medium hover:border-gray-600 transition-colors text-[14.5px] text-white/90"
+                                className="px-5 py-2 bg-[#1e1e1e] border border-gray-800 rounded-sm font-medium hover:border-gray-600 transition-colors text-[14.5px] text-white/90"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleSaveLayout}
-                                className="px-6 py-2 bg-red-700 rounded-lg font-medium hover:bg-red-600 transition-colors text-[14.5px] text-white/90"
+                                className="flex items-center gap-2.5 px-6 py-2 rounded-sm font-medium bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300 text-[14.5px] text-white/90"
                             >
                                 Add Seat Layout
+                                {isLoading ? <LoadingSpinner /> : ''}
                             </button>
                         </div>
                     </div>
