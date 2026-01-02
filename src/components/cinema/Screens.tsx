@@ -10,15 +10,41 @@ import { useEffect, useState } from "react";
 import {
     deleteAScreen,
     getAllScreens,
+    getTodayBookingsOfScreens,
     updateScreenStatus,
 } from "../../services/cinema/screenService";
 import { toast } from "react-toastify";
 import { getScreenOccupancy } from "../../services/cinema/dashboardService";
 
+const ConfirmToast = (props: any) => {
+    const { closeToast, onConfirm } = props;
+
+    return (
+        <div className='font-[Poppins]'>
+            <p className='text-[17px] mb-1.5'>Delete Screen?</p>
+            <p className='text-[14px] text-gray-500'>This deletion will be permanent and cannot be undone. You will no longer be able to add showtimes to this screen.</p>
+            <div className="flex gap-3 mt-3">
+                <button onClick={closeToast} className='text-[13px] font-medium px-2 py-2 border border-gray-800 rounded-md'>Cancel</button>
+                <button onClick={() => { onConfirm(); closeToast(); }} className='text-[13px] font-medium px-2 h-[32px] bg-red-700 rounded-md'>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export function askConfirm(onConfirm: () => void) {
+    toast((toastProps: any) => (
+        <ConfirmToast {...toastProps} onConfirm={onConfirm} />
+    ));
+}
+
 function Screens(props: any) {
 
     const [screens, setScreens] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState<string | null>(null);
+
+    const [screensBookings, setScreensBookings] = useState<any>([]);
 
     useEffect(() => {
         const close = () => setActiveOptionsId(null);
@@ -36,30 +62,43 @@ function Screens(props: any) {
             setScreens(res.data.data);
             props.setData(res.data.data);
             console.log(res.data.data);
-        } 
+
+            const res2 = await getTodayBookingsOfScreens();
+            console.log(res2.data.data);
+            setScreensBookings(res2.data.data);
+        }
         catch (e) {
             console.log(e);
         }
     }
 
-    async function handleDeleteScreen(e: Event) {
-        //before delete you must check booking has to this screen if not you can delete
+    async function handleDeleteScreen(e: React.MouseEvent<HTMLButtonElement>) {
 
         e.stopPropagation();
+
+        const bookings: any = e.currentTarget.dataset.bookings;
+
+        if (bookings && bookings > 0) {
+            toast.warn('This screen has bookings, so it cannot be deleted!');
+            return;
+        }
 
         if (!activeOptionsId) {
             return;
         }
 
-        try {
-            const res = await deleteAScreen(activeOptionsId);
+        askConfirm(async () => {
+            try {
+                const res = await deleteAScreen(activeOptionsId);
 
-            toast.success("Screen deleted successfully!");
-            setActiveOptionsId(null);
-            loadAllScreens();
-        } catch (e) {
-            console.log(e);
-        }
+                toast.success("Screen deleted successfully!");
+                setActiveOptionsId(null);
+                loadAllScreens();
+            } catch (e) {
+                toast.error('Failed to delete screen, please try again later!');
+                console.log(e);
+            }
+        });
     }
 
     async function switchStatus(e: React.MouseEvent<HTMLButtonElement>) {
@@ -160,11 +199,11 @@ function Screens(props: any) {
                                     {screen.numberOfSeats} seats
                                 </span>
                             </div>
-                            {screen.status === "ACTIVE" && (
+                            {screen.status === "ACTIVE" && screensBookings[index]?.bookings > 0 && (
                                 <div className="flex items-center gap-1.5">
                                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                                     <span className="text-[12px] text-green-500">
-                                        100 bookings today
+                                        {screensBookings[index]?.bookings} bookings today
                                     </span>
                                 </div>
                             )}
@@ -238,6 +277,7 @@ function Screens(props: any) {
                         {/* Delete Option */}
                         <button
                             onClick={handleDeleteScreen}
+                            data-bookings={screensBookings[index]?.bookings}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
                         >
                             <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
