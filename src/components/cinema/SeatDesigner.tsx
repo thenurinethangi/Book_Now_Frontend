@@ -88,10 +88,10 @@ function SeatCell({
 /* Main layout builder */
 export default function SeatDesigner({ rows, cols, seatTypes, isLoading, onSave, onClose }: SeatDesignerProps) {
     const [seats, setSeats] = useState<DroppedSeat[]>([]);
-    
+
     // Generate pastel colors for seat types
     const pastelColors = ["#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#E2BAFF", "#FFD6E0", "#D6F5FF", "#E8FFD6", "#F3D9FF", "#FFF0D9", "#D9FFF8"];
-    
+
     const seatTypeColors: Record<string, string> = {};
     seatTypes.forEach((type, index) => {
         seatTypeColors[type] = pastelColors[index % pastelColors.length];
@@ -114,7 +114,7 @@ export default function SeatDesigner({ rows, cols, seatTypes, isLoading, onSave,
         const [, rowStr, colStr] = over.split('-');
         const rowIndex = parseInt(rowStr);
         const colIndex = parseInt(colStr);
-        
+
         const seatLabel = getSeatLabel(rowIndex, colIndex);
 
         // Add or replace seat in the grid
@@ -145,10 +145,10 @@ export default function SeatDesigner({ rows, cols, seatTypes, isLoading, onSave,
             const rowIndex = parseInt(rowStr);
             const colIndex = parseInt(colStr);
 
-            const alphabetUpper = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+            const alphabetUpper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
             if (rowIndex < rows && colIndex < cols) {
-                layout[rowIndex][colIndex] = {type: seat.type, id: alphabetUpper[rowIndex]+(colIndex+1)};
+                layout[rowIndex][colIndex] = { type: seat.type, id: alphabetUpper[rowIndex] + (colIndex + 1) };
             }
         });
 
@@ -200,9 +200,9 @@ export default function SeatDesigner({ rows, cols, seatTypes, isLoading, onSave,
                         </div>
 
                         {/* Seat Grid */}
-                        <div 
+                        <div
                             className="grid gap-1 p-6 bg-[#1e1e1e] border border-gray-800 rounded-lg overflow-auto max-h-[60vh]"
-                            style={{ 
+                            style={{
                                 gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
                             }}
                         >

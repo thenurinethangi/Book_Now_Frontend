@@ -24,3 +24,8 @@ export const getTodayBookingsOfScreens = async () => {
     const res = await api.get('/screen/today/bookings/count', { withCredentials: true });
     return res;
 }
+
+export const checkScreensHasShowtimes = async () => {
+    const res = await api.get('/screen/check/showtimes/available', { withCredentials: true });
+    return res;
+}

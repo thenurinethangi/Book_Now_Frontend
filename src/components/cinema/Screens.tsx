@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
+    checkScreensHasShowtimes,
     deleteAScreen,
     getAllScreens,
     getTodayBookingsOfScreens,
@@ -45,6 +46,7 @@ function Screens(props: any) {
     const [activeOptionsId, setActiveOptionsId] = useState<string | null>(null);
 
     const [screensBookings, setScreensBookings] = useState<any>([]);
+    const [screensShowtimes, setScreensShowtimes] = useState<any>([]);
 
     useEffect(() => {
         const close = () => setActiveOptionsId(null);
@@ -66,6 +68,10 @@ function Screens(props: any) {
             const res2 = await getTodayBookingsOfScreens();
             console.log(res2.data.data);
             setScreensBookings(res2.data.data);
+
+            const res3 = await checkScreensHasShowtimes();
+            console.log(res3.data.data);
+            setScreensShowtimes(res3.data.data);
         }
         catch (e) {
             console.log(e);
@@ -77,9 +83,14 @@ function Screens(props: any) {
         e.stopPropagation();
 
         const bookings: any = e.currentTarget.dataset.bookings;
+        const showtimes: any = e.currentTarget.dataset.showtimes;
 
         if (bookings && bookings > 0) {
             toast.warn('This screen has bookings, so it cannot be deleted!');
+            return;
+        }
+        if (showtimes && showtimes > 0) {
+            toast.warn('This screen has showtimes, so it cannot be deleted!');
             return;
         }
 
@@ -108,17 +119,22 @@ function Screens(props: any) {
 
         let status = e.currentTarget.getAttribute("data-status");
         let bookings: any = e.currentTarget.dataset.bookings;
+        let showtimes: any = e.currentTarget.dataset.showtimes;
 
         if (!activeOptionsId || !status) {
             return;
         }
 
-        if (bookings && bookings > 0) {
-            toast.warn('This screen has bookings, so it cannot be marked as unavailable!');
-            return;
-        }
-
         if (status === 'ACTIVE') {
+
+            if (bookings && bookings > 0) {
+                toast.warn('This screen has bookings, so it cannot be marked as unavailable!');
+                return;
+            }
+            if (showtimes && showtimes > 0) {
+                toast.warn('This screen has showtimes, so it cannot be marked as unavailable!');
+                return;
+            }
             status = 'UNAVAILABLE'
         }
         else {
@@ -259,6 +275,7 @@ function Screens(props: any) {
                             onClick={switchStatus}
                             data-status={screen.status}
                             data-bookings={screensBookings[index]?.bookings}
+                            data-showtimes={screensShowtimes[index]?.showtimes}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#252525] transition-colors group"
                         >
                             {screen.status === "ACTIVE" ? (
@@ -285,6 +302,7 @@ function Screens(props: any) {
                         <button
                             onClick={handleDeleteScreen}
                             data-bookings={screensBookings[index]?.bookings}
+                            data-showtimes={screensShowtimes[index]?.showtimes}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
                         >
                             <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
