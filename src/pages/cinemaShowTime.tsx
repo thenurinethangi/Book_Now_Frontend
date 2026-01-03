@@ -1,14 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Home, Tv, Clock, Search, Settings, Bell, User, Film, Tag, Wallet, Filter, DollarSign, CheckCircle, AlertCircle, Users, Eye, Download } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import Showtimes from '../components/cinema/Showtimes';
 import AddShowtime from '../components/cinema/AddShowtime';
+import { getAllTransactions } from '../services/cinema/transactionService';
 
 function CinemaShowTime() {
 
     const [activeTab, setActiveTab] = useState('showtimes');
-    const [load,setLoad] = useState(0);
-    const [showtimesList,setShowtimesList] = useState([]);
+    const [load, setLoad] = useState(0);
+    const [showtimesList, setShowtimesList] = useState([]);
+
+    const [revenue, setRevenue] = useState(0);
+
+    useEffect(() => {
+        calculateRevenue();
+    }, []);
+
+    async function calculateRevenue() {
+        try {
+            const res = await getAllTransactions();
+
+            let total = 0;
+            for (let i = 0; i < res.data.data.length; i++) {
+                const e = res.data.data[i];
+                total += Number(e.amount);
+            }
+            setRevenue(total);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -29,7 +52,7 @@ function CinemaShowTime() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className='grid grid-cols-4 gap-4 mb-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
                     <div className='bg-[#1e1e1e] rounded-lg p-4 border border-gray-800'>
                         <div className='flex items-center justify-between'>
                             <div>
@@ -61,7 +84,7 @@ function CinemaShowTime() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Revenue</p>
-                                <p className='text-[18px] font-medium text-white'>$10</p>
+                                <p className='text-[18px] font-medium text-white'>{revenue} LKR</p>
                             </div>
                             <DollarSign className='w-8 h-8 text-red-700 opacity-20' />
                         </div>
@@ -85,10 +108,10 @@ function CinemaShowTime() {
                 </div>
 
                 {/* Table Card */}
-                { activeTab === 'showtimes' ? <Showtimes load={load} setLoad={setLoad} setShowtimesList={setShowtimesList} /> : '' }
+                {activeTab === 'showtimes' ? <Showtimes load={load} setLoad={setLoad} setShowtimesList={setShowtimesList} /> : ''}
 
                 {/* Form */}
-                { activeTab === 'add' ? <AddShowtime setShowtimesList={setShowtimesList} /> : '' }
+                {activeTab === 'add' ? <AddShowtime setShowtimesList={setShowtimesList} /> : ''}
 
             </div>
         </div>
