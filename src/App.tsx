@@ -56,6 +56,7 @@ import ScrollToTop from './components/user/ScrollToTop';
 import { AuthProvider } from './context/authContext';
 import MyBookings from './pages/MyBookings';
 import MyWatchlist from './pages/MyWatchlist';
+import CinemaUserProfile from './pages/CinemaUserProfile';
 
 function App() {
 
@@ -113,6 +114,7 @@ function App() {
             <Route path='/cinema/:id' element={<SingleCinemaPage />}></Route>
             <Route path='/mybookings' element={<MyBookings />}></Route>
             <Route path='/mywatchlist' element={<MyWatchlist />}></Route>
+            <Route path='/cinema/profile' element={<CinemaUserProfile />}></Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
