@@ -5,17 +5,23 @@ import { getAllMovies } from "../../services/cinema/movieService";
 function Movies(props: any) {
 
     const [movies, setMovie] = useState([]);
+    const [immutableMovies, setImmutableMovies] = useState<any[]>([]);
 
     useEffect(() => {
         loadAllMovies();
 
     }, [props.loadMovies]);
 
+    useEffect(() => {
+        filterMoviesBySearch(props.searchKey);
+    }, [props.searchKey, immutableMovies]);
+
     async function loadAllMovies() {
 
         try {
             const res = await getAllMovies();
             setMovie(res.data.data);
+            setImmutableMovies(res.data.data);
             props.setmanageMovies(res.data.data);
             console.log(res.data.data);
         }
@@ -24,10 +30,35 @@ function Movies(props: any) {
         }
     }
 
+    function filterMoviesBySearch(key: string) {
+        if (!key || key.trim() === "") {
+            setMovie(immutableMovies);
+            return;
+        }
+
+        const search = key.toLowerCase();
+
+        const filtered = immutableMovies.filter((movie: any) => {
+            return (
+                movie.movieDetails?.title?.toLowerCase().includes(search) ||
+                movie.status?.toLowerCase().includes(search) ||
+                movie.formatsAvailble?.some((f: string) =>
+                    f.toLowerCase().includes(search)
+                ) ||
+                movie.movieDetails?.genres?.some((g: string) =>
+                    g.toLowerCase().includes(search)
+                ) ||
+                String(movie.movieDetails?.ratings?.imdb)?.includes(search)
+            );
+        });
+
+        setMovie(filtered);
+    }
+
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-            {movies.map((movie: any) => (
+            {movies.length > 0 && movies.map((movie: any) => (
                 <div key={movie._id} className='rounded-lg bg-[#1e1e1e] h-[210px] sm:h-[190px] flex items-start pr-2 border border-gray-800 hover:border-gray-700 transition-all duration-300 group'>
                     <div className='h-[100%] w-[22%] rounded-l-sm overflow-hidden relative'>
                         <img
@@ -55,9 +86,9 @@ function Movies(props: any) {
                                     </div>
                                     <div className='flex items-center gap-1.5'>
                                         <Tv className='w-3.5 h-3.5 text-gray-500' />
-                                        { movie.formatsAvailble.map((format: string) => (
+                                        {movie.formatsAvailble.map((format: string) => (
                                             <p className='text-[12px] text-[#999]'>{format}</p>
-                                        )) }
+                                        ))}
                                     </div>
                                     <div className='flex items-center gap-1.5'>
                                         <Tag className='w-3.5 h-3.5 text-gray-500' />
@@ -70,9 +101,9 @@ function Movies(props: any) {
                                     {movie.status}
                                 </p>
                                 <div className="flex items-center gap-2 flex-wrap">
-                                    { movie.movieDetails.genres.map((genre: string) => (
+                                    {movie.movieDetails.genres.map((genre: string) => (
                                         <p className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>{genre}</p>
-                                    )) }
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -90,6 +121,7 @@ function Movies(props: any) {
                     </div>
                 </div>
             ))}
+            {movies.length <= 0 && <p className="text-[14px] text-white/80 font-light">No Movies</p>}
         </div>
     )
 }

@@ -340,7 +340,7 @@ function Screens(props: any) {
                     </div>
                 </div>
             ))}
-            {screens.length <= 0 && <p className="text-[14px] text-white/80 font-light">No Screen</p>}
+            {screens.length <= 0 && <p className="text-[14px] text-white/80 font-light">No Screens</p>}
         </div>
     );
 }

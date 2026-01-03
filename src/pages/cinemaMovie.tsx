@@ -9,9 +9,16 @@ import ManagedMovies from '../components/admin/ManagedMovies';
 function CinemaMovie() {
 
     const [activeTab, setActiveTab] = useState('manage');
-    const [loadMovies,setLoadMovie] = useState(0);
+    const [loadMovies, setLoadMovie] = useState(0);
 
-    const [manageMovies,setManageMovies] = useState([]);
+    const [manageMovies, setManageMovies] = useState([]);
+
+    const [searchKey, setSearchKey] = useState<string>('');
+
+    function handleSearchMovies(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value.trim();
+        setSearchKey(value);
+    }
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -33,6 +40,7 @@ function CinemaMovie() {
                     <div className="mt-2.5 sm:mt-0 flex items-center gap-3">
                         <div className="relative">
                             <input
+                                onChange={handleSearchMovies}
                                 type="text"
                                 placeholder="Search screens..."
                                 className="bg-[#1e1e1e] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
@@ -75,7 +83,7 @@ function CinemaMovie() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Avg Rating</p>
-                                <p className='text-[18px] font-medium text-white'>{Math.round(manageMovies.reduce((sum: number, m: any) => sum + (Number(m?.movieDetails?.ratings?.imdb) || 0), 0)/ manageMovies.length * 10)/10}</p>
+                                <p className='text-[18px] font-medium text-white'>{Math.round(manageMovies.reduce((sum: number, m: any) => sum + (Number(m?.movieDetails?.ratings?.imdb) || 0), 0) / manageMovies.length * 10) / 10}</p>
                             </div>
                             <Star className='w-7.5 h-7.5 text-yellow-500 opacity-20 fill-yellow-500' />
                         </div>
@@ -105,12 +113,12 @@ function CinemaMovie() {
                 </div>
 
                 {/* movie container */}
-                { activeTab === 'manage'  ? <Movies loadMovies={loadMovies} setLoadMovie={setLoadMovie} setmanageMovies={setManageMovies} /> : ''}
+                {activeTab === 'manage' ? <Movies loadMovies={loadMovies} setLoadMovie={setLoadMovie} setmanageMovies={setManageMovies} searchKey={searchKey} /> : ''}
 
-                { activeTab === 'add'  ? <AddMovie manageMovies={manageMovies} setManageMovies={setManageMovies} /> : ''}
+                {activeTab === 'add' ? <AddMovie manageMovies={manageMovies} setManageMovies={setManageMovies} /> : ''}
 
-                { activeTab === 'request'  ? <RequestMovie /> : ''}
-        
+                {activeTab === 'request' ? <RequestMovie /> : ''}
+
             </div>
         </div>
     )
