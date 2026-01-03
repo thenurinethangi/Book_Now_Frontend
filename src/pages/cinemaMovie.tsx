@@ -4,6 +4,7 @@ import Movies from '../components/cinema/Movies';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import AddMovie from '../components/cinema/AddMovie';
 import RequestMovie from '../components/cinema/RequestMovie';
+import ManagedMovies from '../components/admin/ManagedMovies';
 
 function CinemaMovie() {
 
@@ -11,6 +12,9 @@ function CinemaMovie() {
     const [loadMovies,setLoadMovie] = useState(0);
 
     const [manageMovies,setManageMovies] = useState([]);
+
+    console.log('fuck')
+    console.log(manageMovies)
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -74,7 +78,7 @@ function CinemaMovie() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Avg Rating</p>
-                                <p className='text-[18px] font-medium text-white'>4.7</p>
+                                <p className='text-[18px] font-medium text-white'>{Math.round(manageMovies.reduce((sum: number, m: any) => sum + (Number(m?.movieDetails?.ratings?.imdb) || 0), 0)/ manageMovies.length * 10)/10}</p>
                             </div>
                             <Star className='w-7.5 h-7.5 text-yellow-500 opacity-20 fill-yellow-500' />
                         </div>

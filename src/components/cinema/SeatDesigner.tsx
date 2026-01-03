@@ -234,7 +234,7 @@ export default function SeatDesigner({ rows, cols, seatTypes, isLoading, onSave,
                             </button>
                             <button
                                 onClick={handleSaveLayout}
-                                className="flex items-center gap-2.5 px-6 py-2 rounded-sm font-medium bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300 text-[14.5px] text-white/90"
+                                className="flex items-center gap-2.5 px-6 py-2 rounded-sm font-medium bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 transition-all duration-300 text-[14.5px] text-white/90"
                             >
                                 Add Seat Layout
                                 {isLoading ? <LoadingSpinner /> : ''}

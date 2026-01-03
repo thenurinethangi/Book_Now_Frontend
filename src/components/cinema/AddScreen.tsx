@@ -314,7 +314,7 @@ function AddScreen(props: any) {
                     </div>
 
                     <div className='flex justify-end py-4 px-6'>
-                        <button onClick={handleAddNewScreen} className='px-6 py-2.5 rounded-br-2xl rounded-tl-2xl text-[14.5px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300'>Add Seat Layout</button>
+                        <button onClick={handleAddNewScreen} className='px-6 py-[9px] rounded-sm text-[14.5px] bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 transition-all duration-300'>Add Seat Layout</button>
                     </div>
                 </div>
             </div>

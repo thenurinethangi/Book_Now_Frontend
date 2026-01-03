@@ -169,7 +169,7 @@ function RequestMovie() {
         </div>
 
         <div className='flex justify-end py-4 px-6'>
-          <button className='flex items-center gap-2.5 px-5 py-[8.5px] rounded-md font-medium text-[14px] bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 transition-all duration-300'>Send Request
+          <button className='flex items-center gap-2.5 px-5.5 py-[8.5px] rounded-sm font-medium text-[14px] bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 transition-all duration-300'>Send Request
             {isLoading ? <LoadingSpinner /> : ''}
           </button>
         </div>

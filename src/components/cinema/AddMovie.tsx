@@ -136,7 +136,7 @@ function AddMovie(props: any) {
                     : ''}
 
                 < div className='flex justify-end py-4 px-6' >
-                    <button className='bg-red-800 px-5 py-[8.5px] rounded-md font-medium text-[14px] text-white/90 mt-1.5'>Add as available movie</button>
+                    <button className='bg-red-800 px-5 py-[8.5px] rounded-sm font-medium text-[14px] text-white/90 mt-1.5'>Add as available movie</button>
                 </div>
             </div>
         </form>
