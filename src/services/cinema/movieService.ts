@@ -35,3 +35,9 @@ export const removeMovieFromCinemasManageMovieList = async (id: string) => {
     const res = await api.delete('/cinemaMovie/remove/' + id, { withCredentials: true });
     return res;
 }
+
+export const changeStatusOfTheMovie = async (data: any) => {
+
+    const res = await api.put('/cinemaMovie/update/status', data, { headers: { "Content-Type": 'application/json' }, withCredentials: true });
+    return res;
+}

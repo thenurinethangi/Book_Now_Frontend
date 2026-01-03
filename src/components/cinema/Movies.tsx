@@ -1,6 +1,6 @@
-import { Tv, Trash, Edit, Eye, Clock, Calendar, Star, Tag } from "lucide-react";
+import { Tv, Trash, Edit, Eye, Clock, Calendar, Star, Tag, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getAllMovies, removeMovieFromCinemasManageMovieList } from "../../services/cinema/movieService";
+import { changeStatusOfTheMovie, getAllMovies, removeMovieFromCinemasManageMovieList } from "../../services/cinema/movieService";
 import { toast } from "react-toastify";
 
 const ConfirmToast = (props: any) => {
@@ -30,6 +30,9 @@ function Movies(props: any) {
 
     const [movies, setMovie] = useState([]);
     const [immutableMovies, setImmutableMovies] = useState<any[]>([]);
+
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedMovie, setSelectedMovie] = useState<any>(null);
 
     useEffect(() => {
         loadAllMovies();
@@ -99,6 +102,25 @@ function Movies(props: any) {
         });
     }
 
+    const handleStatusChange = async (id: string, newStatus: string, currentStatus: string) => {
+        if (newStatus === currentStatus) {
+            setShowEditModal(false);
+            return;
+        }
+
+        try {
+            const res = await changeStatusOfTheMovie({ id, status: newStatus });
+            console.log(res.data.data);
+            toast.success('Updated!');
+            loadAllMovies();
+        }
+        catch (e) {
+            toast.success('Failed!');
+            console.log(e);
+        }
+        setShowEditModal(false);
+    };
+
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
@@ -155,7 +177,7 @@ function Movies(props: any) {
                             <button className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] transition-colors flex items-center justify-center group/btn'>
                                 <Eye className='text-gray-500 group-hover/btn:text-gray-400 w-[15px] h-[15px]' />
                             </button>
-                            <button className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] transition-colors flex items-center justify-center group/btn'>
+                            <button onClick={(e) => { setSelectedMovie(movie); setShowEditModal(true) }} className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] transition-colors flex items-center justify-center group/btn'>
                                 <Edit className='text-gray-500 group-hover/btn:text-gray-400 w-[14px] h-[14px]' />
                             </button>
                             <button onClick={handleRemoveMovie} data-id={movie._id} className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-red-900/20 transition-colors flex items-center justify-center group/btn'>
@@ -165,6 +187,49 @@ function Movies(props: any) {
                     </div>
                 </div>
             ))}
+
+            {/* Edit Modal */}
+            {showEditModal && (
+                <div className='fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50'>
+                    <div className='bg-[#1a1a1a] rounded-lg p-5 w-[420px] border border-[#2a2a2a]'>
+                        <div className='flex justify-between items-center mb-4'>
+                            <h3 className='text-[16px] font-medium text-white'>Update Movie Status</h3>
+                            <button onClick={() => setShowEditModal(false)}>
+                                <X className='w-5 h-5 text-gray-500 hover:text-gray-300' />
+                            </button>
+                        </div>
+
+                        <div className='mb-5 p-3 bg-[#151515] rounded border border-[#252525]'>
+                            <p className='text-[13px] text-[#888] mb-1'>Movie Title</p>
+                            <p className='text-[14px] text-white font-medium mb-2'>{selectedMovie.movieDetails.title}</p>
+                            <p className='text-[12px] text-[#888]'>Current Status: <span className='text-[#ccc]'>{selectedMovie.status}</span></p>
+                        </div>
+
+                        <div className='space-y-2.5'>
+                            <button
+                                onClick={() => handleStatusChange(selectedMovie._id, 'Now Showing', selectedMovie.status)}
+                                className='w-full px-4 py-2.5 bg-[#f5cc50] text-black text-[13px] font-medium rounded hover:bg-[#f5d670] transition-colors'
+                            >
+                                ✓ Set as Now Showing
+                            </button>
+                            <button
+                                onClick={() => handleStatusChange(selectedMovie._id, 'Coming Soon', selectedMovie.status)}
+                                className='w-full px-4 py-2.5 bg-[#2a2a2a] text-white text-[13px] font-medium rounded hover:bg-[#333] transition-colors'
+                            >
+                                ⏱ Set as Coming Soon
+                            </button>
+                            <button
+                                onClick={() => setShowEditModal(false)}
+                                className='w-full px-4 py-2.5 bg-transparent border border-[#3a3a3a] text-gray-400 text-[13px] font-medium rounded hover:border-[#4a4a4a] transition-colors'
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
             {movies.length <= 0 && <p className="text-[14px] text-white/80 font-light">No Movies</p>}
         </div>
     )
