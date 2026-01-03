@@ -43,6 +43,7 @@ export function askConfirm(onConfirm: () => void) {
 function Screens(props: any) {
 
     const [screens, setScreens] = useState([]);
+    const [immutableScreens, setImmutableScreens] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState<string | null>(null);
 
     const [screensBookings, setScreensBookings] = useState<any>([]);
@@ -58,10 +59,15 @@ function Screens(props: any) {
         loadAllScreens();
     }, [props.loadScreens]);
 
+    useEffect(() => {
+        filterScreensBySearch(props.searchKey);
+    }, [props.searchKey, immutableScreens]);
+
     async function loadAllScreens() {
         try {
             const res = await getAllScreens();
             setScreens(res.data.data);
+            setImmutableScreens(res.data.data);
             props.setData(res.data.data);
             console.log(res.data.data);
 
@@ -113,7 +119,6 @@ function Screens(props: any) {
     }
 
     async function switchStatus(e: React.MouseEvent<HTMLButtonElement>) {
-        //before switch you must check booking has to this screen if not you can switch to active to unavailable
 
         e.stopPropagation();
 
@@ -152,9 +157,31 @@ function Screens(props: any) {
         }
     }
 
+    function filterScreensBySearch(key: string) {
+        if (!key || key === "") {
+            setScreens(immutableScreens);
+            return;
+        }
+
+        const search = key.toLowerCase();
+
+        const filtered = immutableScreens.filter((screen: any) => {
+            return (
+                screen.screenName?.toLowerCase().includes(search) ||
+                screen.status?.toLowerCase().includes(search) ||
+                screen.screenTypes?.some((t: string) =>
+                    t.toLowerCase().includes(search)
+                ) ||
+                String(screen.numberOfSeats)?.includes(search)
+            );
+        });
+
+        setScreens(filtered);
+    }
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {screens.map((screen: any, index: number) => (
+            {screens.length > 0 && screens.map((screen: any, index: number) => (
                 <div
                     key={screen._id}
                     className="rounded-lg bg-[#1e1e1e] border border-gray-800 hover:border-gray-700 transition-all duration-300 overflow-hidden group relative"
@@ -313,6 +340,7 @@ function Screens(props: any) {
                     </div>
                 </div>
             ))}
+            {screens.length <= 0 && <p className="text-[14px] text-white/80 font-light">No Screen</p>}
         </div>
     );
 }

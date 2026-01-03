@@ -15,6 +15,8 @@ function CinemaScreen() {
     const [screenOccupancy, setScreenOccupancy] = useState<any>([]);
     const [totalOccupancy, setTotalOccupancy] = useState<number>(0);
 
+    const [searchKey, setSearchKey] = useState<string>('');
+
     useEffect(() => {
         let total = 0;
         data.forEach((d: any) => {
@@ -49,6 +51,11 @@ function CinemaScreen() {
         }
     }
 
+    function handleSearchScreens(e: React.ChangeEvent<HTMLInputElement>) {
+
+        const value = e.target.value.trim();
+        setSearchKey(value);
+    }
 
 
     return (
@@ -71,9 +78,10 @@ function CinemaScreen() {
                     <div className="mt-2.5 sm:mt-0 flex items-center gap-3">
                         <div className="relative">
                             <input
+                                onChange={handleSearchScreens}
                                 type="text"
                                 placeholder="Search screens..."
-                                className="bg-[#1e1e1e] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900 w-64"
+                                className="bg-[#1e1e1e] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
                             />
                             <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
                         </div>
@@ -133,7 +141,7 @@ function CinemaScreen() {
                 </div>
 
                 {/* Cinema Screens Grid */}
-                {show === 'screens' ? <Screens loadScreens={loadScreens} setData={setData} /> : ''}
+                {show === 'screens' ? <Screens loadScreens={loadScreens} setData={setData} searchKey={searchKey} /> : ''}
 
                 {/* add a new screen */}
                 {show === 'setup' ? <AddScreen loadScreens={loadScreens} setLoadScreens={setLoadScreens} setShow={setShow} /> : ''}

@@ -13,9 +13,6 @@ function CinemaMovie() {
 
     const [manageMovies,setManageMovies] = useState([]);
 
-    console.log('fuck')
-    console.log(manageMovies)
-
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
 
@@ -38,7 +35,7 @@ function CinemaMovie() {
                             <input
                                 type="text"
                                 placeholder="Search screens..."
-                                className="bg-[#1e1e1e] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900 w-64"
+                                className="bg-[#1e1e1e] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
                             />
                             <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
                         </div>
