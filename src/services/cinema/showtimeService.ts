@@ -20,12 +20,18 @@ export const getAllAvailableMovies = async () => {
 
 export const checkShowtimeAlreadyExist = async (data: {}) => {
 
-    const res = await api.post('/showtime/cinema/check/availability', data, { headers: { "Content-Type": 'application/json'}, withCredentials: true });
+    const res = await api.post('/showtime/cinema/check/availability', data, { headers: { "Content-Type": 'application/json' }, withCredentials: true });
     return res;
 }
 
 export const addANewShowtime = async (data: {}) => {
 
-    const res = await api.post('/showtime/cinema/add', data, { headers: { "Content-Type": 'application/json'}, withCredentials: true });
+    const res = await api.post('/showtime/cinema/add', data, { headers: { "Content-Type": 'application/json' }, withCredentials: true });
+    return res;
+}
+
+export const deleteAShowtime = async (id: string) => {
+
+    const res = await api.delete('/showtime/cinema/delete/' + id, { withCredentials: true });
     return res;
 }

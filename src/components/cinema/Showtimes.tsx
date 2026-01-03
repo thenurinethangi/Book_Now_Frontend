@@ -1,10 +1,35 @@
-import { Search, Download } from 'lucide-react';
+import { Search, Download, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getAllShowtimes } from '../../services/cinema/showtimeService';
+import { deleteAShowtime, getAllShowtimes } from '../../services/cinema/showtimeService';
+import { toast } from 'react-toastify';
+
+const ConfirmToast = (props: any) => {
+    const { closeToast, onConfirm } = props;
+
+    return (
+        <div className='font-[Poppins]'>
+            <p className='text-[17px] mb-1.5'>Delete Showtime?</p>
+            <p className='text-[14px] text-gray-500'>Are you certain you want to delete this showtime?</p>
+            <div className="flex gap-3 mt-3">
+                <button onClick={closeToast} className='text-[13px] font-medium px-2 py-2 border border-gray-800 rounded-md'>Cancel</button>
+                <button onClick={() => { onConfirm(); closeToast(); }} className='text-[13px] font-medium px-2 h-[32px] bg-red-700 rounded-md'>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export function askConfirm(onConfirm: () => void) {
+    toast((toastProps: any) => (
+        <ConfirmToast {...toastProps} onConfirm={onConfirm} />
+    ));
+}
 
 function Showtimes(props: any) {
 
     const [showtimes, setShowtimes] = useState([]);
+    const [activeOptions, setActiveOptions] = useState<any | null>(null);
 
     useEffect(() => {
         loadAllShowtimes();
@@ -77,25 +102,45 @@ function Showtimes(props: any) {
         return value >= lowerLimit;
     }
 
+    async function handleDeleteShowtime() {
+
+        if (activeOptions.bookingCount > 0) {
+            toast.warn('The showtime has existing bookings and cannot be deleted!');
+            return;
+        }
+
+        askConfirm(async () => {
+            try {
+                const res = await deleteAShowtime(activeOptions._id);
+                toast.success('Delete Successfully!');
+                loadAllShowtimes();
+            }
+            catch (e) {
+                toast.error('Failed to delete try again later!');
+                console.log(e);
+            }
+        });
+    }
+
 
     return (
         <div className='bg-[#1e1e1e] rounded-lg border border-gray-800 overflow-hidden'>
             {/* Table Header */}
-            <div className='flex justify-between items-center px-5 py-4 border-b border-gray-800'>
+            <div className='flex flex-wrap gap-3 justify-between items-center px-5 py-4 border-b border-gray-800'>
                 <div>
                     <h3 className='text-[18px] font-medium text-white mb-1'>Showtimes</h3>
                     <p className='text-[12px] text-gray-500'>Showtimes for current available movies</p>
                 </div>
-                <div className='flex items-center gap-3'>
+                <div className='flex flex-wrap items-center gap-3'>
                     <div className="relative">
                         <input
                             type="text"
                             placeholder="Search..."
-                            className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900 w-64"
+                            className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
                         />
                         <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
                     </div>
-                    <select className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900">
+                    <select className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700">
                         <option>Last 7 Days</option>
                         <option>Last 30 Days</option>
                         <option>Last 90 Days</option>
@@ -128,7 +173,7 @@ function Showtimes(props: any) {
                     </thead>
                     <tbody>
                         {showtimes.map((showtime: any) => (
-                            <tr key={showtime._id} className='border-b border-gray-800 hover:bg-[#252525] transition-colors'>
+                            <tr key={showtime._id} className='border-b border-gray-800 hover:bg-[#252525] transition-colors relative'>
                                 <td className='p-4'>
                                     <div className='flex items-center gap-3'>
                                         <input
@@ -161,7 +206,7 @@ function Showtimes(props: any) {
                                     </span>
                                 </td>
                                 <td className='p-4'>
-                                    <button className='text-gray-500 hover:text-gray-400'>
+                                    <button onClick={(e) => setActiveOptions(showtime)} className='text-gray-500 hover:text-gray-400'>
                                         <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
                                             <circle cx='12' cy='6' r='1.5' />
                                             <circle cx='12' cy='12' r='1.5' />
@@ -169,6 +214,23 @@ function Showtimes(props: any) {
                                         </svg>
                                     </button>
                                 </td>
+
+                                {/* options */}
+                                <div
+                                    className={`flex flex-col shadow-2xl absolute top-10 right-0 z-[300] bg-[#1e1e1e] border border-gray-700 rounded-md overflow-hidden min-w-[160px] ${activeOptions && activeOptions?._id === showtime._id ? "" : "hidden"
+                                        }`}
+                                >
+                                    {/* Delete Option */}
+                                    <button
+                                        onClick={handleDeleteShowtime}
+                                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
+                                    >
+                                        <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
+                                        <p className="text-[13px] text-gray-300 group-hover:text-red-300">
+                                            Delete
+                                        </p>
+                                    </button>
+                                </div>
                             </tr>
                         ))}
                     </tbody>
