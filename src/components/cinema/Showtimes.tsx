@@ -31,34 +31,32 @@ function Showtimes(props: any) {
     const [showtimes, setShowtimes] = useState([]);
     const [activeOptions, setActiveOptions] = useState<any | null>(null);
 
+    const [searchKey, setSearchKey] = useState<string>('');
+    const [daysRange, setDaysRange] = useState<string>('7');
+    const [no, setNo] = useState<number>(1);
+
+    const [size, setSize] = useState<number>(0);
+
     useEffect(() => {
         loadAllShowtimes();
     }, [props.load]);
 
+    useEffect(() => {
+        handelClickPreviousNext();
+    }, [no,searchKey,daysRange]);
+
     async function loadAllShowtimes() {
         try {
-            const res = await getAllShowtimes();
-            console.log(res.data.data);
-            setShowtimes(res.data.data);
-            props.setShowtimesList(res.data.data);
+            const res = await getAllShowtimes({ searchKey, daysRange, no });
+            console.log(res.data.data.filterAfterTablePageNo);
+            setShowtimes(res.data.data.filterAfterTablePageNo);
+            setSize(res.data.data.size);
+            props.setShowtimesList(res.data.data.filterAfterTablePageNo);
         }
         catch (e) {
             console.log(e);
         }
     }
-
-    const transactions = [
-        { id: 1, orderId: '#323537', customer: 'Abram Schleifer', email: 'abram@example.com', amount: 43999, date: '25 Apr, 2027', status: 'Completed' },
-        { id: 2, orderId: '#323544', customer: 'Ava Smith', email: 'ava.smith@example.com', amount: 1200, date: '01 Dec, 2027', status: 'Pending' },
-        { id: 3, orderId: '#323538', customer: 'Carla George', email: 'carla65@example.com', amount: 919, date: '11 May, 2027', status: 'Completed' },
-        { id: 4, orderId: '#323543', customer: 'Ekstrom Bothman', email: 'ekstrom@example.com', amount: 679, date: '15 Nov, 2027', status: 'Completed' },
-        { id: 5, orderId: '#323552', customer: 'Ella Davis', email: 'ella.davis@example.com', amount: 210, date: '01 Mar, 2028', status: 'Failed' },
-        { id: 6, orderId: '#323539', customer: 'Emery Culhane', email: 'emery09@example.com', amount: 839, date: '29 Jun, 2027', status: 'Completed' },
-        { id: 7, orderId: '#323547', customer: 'Ethan Patel', email: 'ethan.patel@example.com', amount: 2100, date: '05 Jan, 2028', status: 'Pending' },
-        { id: 8, orderId: '#323553', customer: 'James Martinez', email: 'james.martinez@example.com', amount: 3300, date: '15 Mar, 2028', status: 'Completed' },
-        { id: 9, orderId: '#323535', customer: 'Kaiya George', email: 'kaiya@example.com', amount: 1579, date: '13 Mar, 2027', status: 'Failed' },
-        { id: 10, orderId: '#323549', customer: 'Liam Brown', email: 'liam.brown@example.com', amount: 450, date: '28 Jan, 2028', status: 'Failed' },
-    ];
 
     const getStatusBadge = (status: string) => {
         const styles = {
@@ -122,6 +120,30 @@ function Showtimes(props: any) {
         });
     }
 
+    function handleSearchShowtime(e: React.ChangeEvent<HTMLInputElement>) {
+
+        const value = e.target.value.trim();
+        setSearchKey(value);
+    }
+
+    function handleFindByDateRange(e: React.ChangeEvent<HTMLSelectElement>) {
+
+        const value = e.target.value;
+        setDaysRange(value);
+    }
+
+    async function handelClickPreviousNext() {
+
+        try {
+            const res = await getAllShowtimes({ searchKey, daysRange, no });
+            setShowtimes(res.data.data.filterAfterTablePageNo);
+            setSize(res.data.data.size);
+            props.setShowtimesList(res.data.data.filterAfterTablePageNo);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <div className='bg-[#1e1e1e] rounded-lg border border-gray-800 overflow-hidden'>
@@ -134,16 +156,18 @@ function Showtimes(props: any) {
                 <div className='flex flex-wrap items-center gap-3'>
                     <div className="relative">
                         <input
+                            onChange={handleSearchShowtime}
                             type="text"
                             placeholder="Search..."
                             className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
                         />
                         <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
                     </div>
-                    <select className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700">
-                        <option>Last 7 Days</option>
-                        <option>Last 30 Days</option>
-                        <option>Last 90 Days</option>
+                    <select onChange={handleFindByDateRange} value={daysRange} className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700">
+                        <option value={'7'}>Last 7 Days</option>
+                        <option value={'30'}>Last 30 Days</option>
+                        <option value={'90'}>Last 90 Days</option>
+                        <option value={'all'}>All</option>
                     </select>
                     <button className="flex items-center gap-2 px-4 py-2 bg-[#121212] border border-gray-800 rounded-lg hover:border-gray-700 transition-colors text-[12px]">
                         <Download className="w-4 h-4" />
@@ -240,17 +264,19 @@ function Showtimes(props: any) {
             {/* Pagination */}
             <div className='flex items-center justify-between px-5 py-4 border-t border-gray-800'>
                 <span className='text-[12px] text-gray-500'>
-                    Showing <span className='text-white'>1</span> to <span className='text-white'>10</span> of <span className='text-white'>{transactions.length}</span>
+                    Showing <span className='text-white'>1</span> to <span className='text-white'>10</span> of <span className='text-white'>0</span>
                 </span>
                 <div className='flex items-center gap-2'>
-                    <button
+                    <button onClick={(e) => setNo(no - 1)}
                         className='px-2.5 py-1.5 border border-gray-800 rounded-md text-[12px] text-gray-400 hover:bg-[#252525] disabled:opacity-50'
-                    // disabled={currentPage === 1}
+                        disabled={no === 1}
                     >
                         Previous
                     </button>
-                    <button className='px-3 py-2 bg-gray-700 rounded-md text-[12px] text-white'>1</button>
-                    <button className='px-2.5 py-1.5 border border-gray-800 rounded-md text-[12px] text-gray-400 hover:bg-[#252525]'>
+                    <button className='px-3 py-2 bg-gray-700 rounded-md text-[12px] text-white'>{no}</button>
+                    <button onClick={(e) => setNo(no + 1)} className='px-2.5 py-1.5 border border-gray-800 rounded-md text-[12px] text-gray-400 hover:bg-[#252525]'
+                        disabled={size <= no * 10}
+                    >
                         Next
                     </button>
                 </div>

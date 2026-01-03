@@ -1,8 +1,8 @@
 import api from "../api";
 
-export const getAllShowtimes = async () => {
+export const getAllShowtimes = async (rules: any) => {
 
-    const res = await api.get('/showtime/cinema/all', { withCredentials: true });
+    const res = await api.post('/showtime/cinema/all', rules, { headers: { 'Content-Type': 'application/json' }, withCredentials: true });
     return res;
 }
 
