@@ -4,6 +4,7 @@ import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import Showtimes from '../components/cinema/Showtimes';
 import AddShowtime from '../components/cinema/AddShowtime';
 import { getAllTransactions } from '../services/cinema/transactionService';
+import { getScheduledShowtimesCount, getTodayShowtimesCount, getTotalShowtimesCount } from '../services/cinema/showtimeService';
 
 function CinemaShowTime() {
 
@@ -11,19 +12,31 @@ function CinemaShowTime() {
     const [load, setLoad] = useState(0);
     const [showtimesList, setShowtimesList] = useState([]);
 
+    const [totalShowtimes, setTotalShowtimes] = useState(0);
+    const [todayShowtimes, setTodayShowtimes] = useState(0);
+    const [scheduledShowtimes, setScheduledShowtimes] = useState(0);
     const [revenue, setRevenue] = useState(0);
 
     useEffect(() => {
-        calculateRevenue();
+        loadStats();
     }, []);
 
-    async function calculateRevenue() {
+    async function loadStats() {
         try {
-            const res = await getAllTransactions();
+            const res = await getTotalShowtimesCount();
+            setTotalShowtimes(res.data.data);
+
+            const res2 = await getTodayShowtimesCount();
+            setTodayShowtimes(res2.data.data);
+
+            const res3 = await getScheduledShowtimesCount();
+            setScheduledShowtimes(res3.data.data);
+
+            const res4 = await getAllTransactions();
 
             let total = 0;
-            for (let i = 0; i < res.data.data.length; i++) {
-                const e = res.data.data[i];
+            for (let i = 0; i < res4.data.data.length; i++) {
+                const e = res4.data.data[i];
                 total += Number(e.amount);
             }
             setRevenue(total);
@@ -32,6 +45,7 @@ function CinemaShowTime() {
             console.log(e);
         }
     }
+
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -57,7 +71,7 @@ function CinemaShowTime() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Showtimes</p>
-                                <p className='text-[18px] font-medium text-white'>{showtimesList.length}</p>
+                                <p className='text-[18px] font-medium text-white'>{totalShowtimes}</p>
                             </div>
                             <Tag className='w-8 h-8 text-red-700 opacity-20' />
                         </div>
@@ -66,7 +80,7 @@ function CinemaShowTime() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Today</p>
-                                <p className='text-[18px] font-medium text-green-500'>{showtimesList.filter((s: any) => s.status === 'Today').length}</p>
+                                <p className='text-[18px] font-medium text-green-500'>{todayShowtimes}</p>
                             </div>
                             <CheckCircle className='w-8 h-8 text-green-500 opacity-20' />
                         </div>
@@ -75,7 +89,7 @@ function CinemaShowTime() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Scheduled</p>
-                                <p className='text-[18px] font-medium text-orange-500'>{showtimesList.filter((s: any) => s.status === 'Scheduled').length}</p>
+                                <p className='text-[18px] font-medium text-orange-500'>{scheduledShowtimes}</p>
                             </div>
                             <AlertCircle className='w-8 h-8 text-orange-500 opacity-20' />
                         </div>

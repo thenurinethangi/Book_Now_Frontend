@@ -264,7 +264,7 @@ function Showtimes(props: any) {
             {/* Pagination */}
             <div className='flex items-center justify-between px-5 py-4 border-t border-gray-800'>
                 <span className='text-[12px] text-gray-500'>
-                    Showing <span className='text-white'>1</span> to <span className='text-white'>10</span> of <span className='text-white'>0</span>
+                    Showing <span className='text-white'>{no === 1 ? 1 : (no-1)*10}</span> to <span className='text-white'>{(no-1)*10+showtimes.length}</span> of <span className='text-white'>{size}</span>
                 </span>
                 <div className='flex items-center gap-2'>
                     <button onClick={(e) => setNo(no - 1)}

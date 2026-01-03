@@ -35,3 +35,21 @@ export const deleteAShowtime = async (id: string) => {
     const res = await api.delete('/showtime/cinema/delete/' + id, { withCredentials: true });
     return res;
 }
+
+export const getTotalShowtimesCount = async () => {
+
+    const res = await api.get('/showtime/cinema/all/count', { withCredentials: true });
+    return res;
+}
+
+export const getTodayShowtimesCount = async () => {
+
+    const res = await api.get('/showtime/cinema/today/count', { withCredentials: true });
+    return res;
+}
+
+export const getScheduledShowtimesCount = async () => {
+
+    const res = await api.get('/showtime/cinema/scheduled/count', { withCredentials: true });
+    return res;
+}
