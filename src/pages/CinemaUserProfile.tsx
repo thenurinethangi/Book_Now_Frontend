@@ -96,14 +96,14 @@ function CinemaUserProfile() {
             <div className='bg-[#1e1e1e] rounded-lg border border-gray-800 p-6'>
               <div className='flex flex-col items-center'>
                 <div className='relative mb-4'>
-                  <div className='w-32 h-32 rounded-full bg-gradient-to-br from-red-900 to-red-700 flex items-center justify-center overflow-hidden'>
+                  <div className='w-32 h-32 rounded-full bg-gradient-to-br from-black/50 to-black/20 flex items-center justify-center overflow-hidden'>
                     {profileImage ? (
                       <img src={profileImage} alt="Profile" className='w-full h-full object-cover' />
                     ) : (
                       <User className='w-16 h-16 text-white' />
                     )}
                   </div>
-                  <label className='absolute bottom-0 right-0 w-10 h-10 bg-red-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-red-600 transition-colors'>
+                  <label className='absolute bottom-0 right-0 w-10 h-10 bg-black/70 rounded-full flex items-center justify-center cursor-pointer hover:bg-red-600 transition-colors'>
                     <Camera className='w-5 h-5 text-white' />
                     <input
                       type="file"
@@ -126,7 +126,7 @@ function CinemaUserProfile() {
               <div className='mt-6 pt-6 border-t border-gray-800'>
                 <button
                   onClick={handleLogout}
-                  className='w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-700 hover:bg-red-600 rounded-lg transition-colors text-[13px] font-medium'
+                  className='w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-colors text-[13px] font-medium'
                 >
                   <LogOut className='w-4 h-4' />
                   Logout
@@ -162,7 +162,7 @@ function CinemaUserProfile() {
                     </button>
                     <button
                       onClick={handleSaveProfile}
-                      className='px-4 py-2 bg-red-700 hover:bg-red-600 rounded-lg transition-colors text-[12px] flex items-center gap-2'
+                      className='px-4 py-2 bg-red-800 hover:bg-red-700 rounded-lg transition-colors text-[12px] flex items-center gap-2'
                     >
                       <Save className='w-3.5 h-3.5' />
                       Save
@@ -319,7 +319,7 @@ function CinemaUserProfile() {
                       </button>
                       <button
                         onClick={handleChangePassword}
-                        className='flex-1 px-4 py-2.5 bg-red-700 hover:bg-red-600 rounded-lg transition-colors text-[12px] flex items-center justify-center gap-2'
+                        className='flex-1 px-4 py-2.5 bg-red-800 hover:bg-red-700 rounded-lg transition-colors text-[12px] flex items-center justify-center gap-2'
                       >
                         <Lock className='w-3.5 h-3.5' />
                         Update Password
