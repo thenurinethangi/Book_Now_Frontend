@@ -14,18 +14,24 @@ export const getAllAvailableMoviesToAdd = async () => {
 
 export const getSelectedMovieAvailableFormats = async (id: string) => {
 
-    const res = await api.get('/movie/cinema/availableFormats/'+id, { withCredentials: true });
+    const res = await api.get('/movie/cinema/availableFormats/' + id, { withCredentials: true });
     return res;
 }
 
 export const addMovie = async (data: {}) => {
 
-    const res = await api.post('/movie/cinema/add', data, { headers: {'Content-Type': 'application/json'}, withCredentials: true});
+    const res = await api.post('/movie/cinema/add', data, { headers: { 'Content-Type': 'application/json' }, withCredentials: true });
     return res;
 }
 
 export const sendRequest = async (formdata: FormData) => {
 
-    const res = await api.post('/movie/cinema/request', formdata, { withCredentials: true});
+    const res = await api.post('/movie/cinema/request', formdata, { withCredentials: true });
+    return res;
+}
+
+export const removeMovieFromCinemasManageMovieList = async (id: string) => {
+
+    const res = await api.delete('/cinemaMovie/remove/' + id, { withCredentials: true });
     return res;
 }

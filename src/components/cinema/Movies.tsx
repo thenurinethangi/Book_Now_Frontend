@@ -1,6 +1,30 @@
 import { Tv, Trash, Edit, Eye, Clock, Calendar, Star, Tag } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getAllMovies } from "../../services/cinema/movieService";
+import { getAllMovies, removeMovieFromCinemasManageMovieList } from "../../services/cinema/movieService";
+import { toast } from "react-toastify";
+
+const ConfirmToast = (props: any) => {
+    const { closeToast, onConfirm } = props;
+
+    return (
+        <div className='font-[Poppins]'>
+            <p className='text-[17px] mb-1.5'>Remove Movie?</p>
+            <p className='text-[14px] text-gray-500'>Are you certain you want to remove this movie from cinemas' currently managed movie list?</p>
+            <div className="flex gap-3 mt-3">
+                <button onClick={closeToast} className='text-[13px] font-medium px-2 py-2 border border-gray-800 rounded-md'>Cancel</button>
+                <button onClick={() => { onConfirm(); closeToast(); }} className='text-[13px] font-medium px-2 h-[32px] bg-red-700 rounded-md'>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export function askConfirm(onConfirm: () => void) {
+    toast((toastProps: any) => (
+        <ConfirmToast {...toastProps} onConfirm={onConfirm} />
+    ));
+}
 
 function Movies(props: any) {
 
@@ -53,6 +77,26 @@ function Movies(props: any) {
         });
 
         setMovie(filtered);
+    }
+
+    async function handleRemoveMovie(e: React.MouseEvent<HTMLButtonElement>) {
+
+        const id = e.currentTarget.dataset.id;
+        if (!id) {
+            return;
+        }
+
+        askConfirm(async () => {
+            try {
+                const res = await removeMovieFromCinemasManageMovieList(id);
+                toast.success('Successfully removed movie!');
+                loadAllMovies();
+            }
+            catch (e) {
+                toast.error('Failed to remove movie, try again later!');
+                console.log(e);
+            }
+        });
     }
 
 
@@ -114,7 +158,7 @@ function Movies(props: any) {
                             <button className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] transition-colors flex items-center justify-center group/btn'>
                                 <Edit className='text-gray-500 group-hover/btn:text-gray-400 w-[14px] h-[14px]' />
                             </button>
-                            <button className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-red-900/20 transition-colors flex items-center justify-center group/btn'>
+                            <button onClick={handleRemoveMovie} data-id={movie._id} className='w-6.5 h-6.5 rounded-lg bg-[#252525] hover:bg-red-900/20 transition-colors flex items-center justify-center group/btn'>
                                 <Trash className='text-gray-500 group-hover/btn:text-red-500 w-[14px] h-[14px]' />
                             </button>
                         </div>
