@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Search, Tag, Download, CheckCircle, XCircle, AlertCircle, Users, Eye } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
-import { getAllBookings } from '../services/cinema/bookingService';
+import { getAllBookings, getCanceledBookingsCount, getScheduledBookingsCount, getTodayBookingsCount, getTotalBookingsCount } from '../services/cinema/bookingService';
 
 function CinemaBooking() {
 
@@ -13,8 +13,14 @@ function CinemaBooking() {
 
     const [size, setSize] = useState<number>(0);
 
+    const [totalBookings, setTotalBookings] = useState(0);
+    const [todayBookings, setTodayBookings] = useState(0);
+    const [scheduledBookings, setScheduledBookings] = useState(0);
+    const [canceledBookings, setCanceledBookings] = useState(0);
+
     useEffect(() => {
         loadAllBookings();
+        loadStats();
     }, []);
 
     useEffect(() => {
@@ -27,6 +33,26 @@ function CinemaBooking() {
             console.log(res.data.data);
             setBookings(res.data.data.filterAfterTablePageNo);
             setSize(res.data.data.size);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function loadStats() {
+        try {
+            const res = await getTotalBookingsCount();
+            setTotalBookings(res.data.data);
+
+            const res2 = await getTodayBookingsCount();
+            setTodayBookings(res2.data.data);
+
+            const res3 = await getScheduledBookingsCount();
+            setScheduledBookings(res3.data.data);
+
+            const res4 = await getCanceledBookingsCount();
+            setCanceledBookings(res4.data.data);
+
         }
         catch (e) {
             console.log(e);
@@ -115,7 +141,7 @@ function CinemaBooking() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Bookings</p>
-                                <p className='text-[18px] font-medium text-white'>{bookings.length}</p>
+                                <p className='text-[18px] font-medium text-white'>{totalBookings}</p>
                             </div>
                             <Tag className='w-8 h-8 text-red-700 opacity-20' />
                         </div>
@@ -124,7 +150,7 @@ function CinemaBooking() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Today</p>
-                                <p className='text-[18px] font-medium text-green-500'>{bookings.filter((b: any) => b.status === 'Today').length}</p>
+                                <p className='text-[18px] font-medium text-green-500'>{todayBookings}</p>
                             </div>
                             <CheckCircle className='w-8 h-8 text-green-500 opacity-20' />
                         </div>
@@ -133,7 +159,7 @@ function CinemaBooking() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Scheduled</p>
-                                <p className='text-[18px] font-medium text-orange-500'>{bookings.filter((b: any) => b.status === 'Scheduled').length}</p>
+                                <p className='text-[18px] font-medium text-orange-500'>{scheduledBookings}</p>
                             </div>
                             <AlertCircle className='w-8 h-8 text-orange-500 opacity-20' />
                         </div>
@@ -142,7 +168,7 @@ function CinemaBooking() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Canceled</p>
-                                <p className='text-[18px] font-medium text-red-500'>{bookings.filter((b: any) => b.status === 'Canceled').length}</p>
+                                <p className='text-[18px] font-medium text-red-500'>{canceledBookings}</p>
                             </div>
                             <XCircle className='w-8 h-8 text-red-500 opacity-20' />
                         </div>
