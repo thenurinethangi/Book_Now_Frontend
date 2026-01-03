@@ -21,15 +21,15 @@ function CinemaMovie() {
             {/* content right side */}
             <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
                 {/* title */}
-                <div className='flex justify-between items-center mb-[22px]'>
-                    <div>
+                <div className='flex flex-wrap justify-between items-center mb-[22px]'>
+                    <div className='mr-27'>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
                                 <span className='text-[18px] font-medium text-gray-500'>Home {`>`}</span>&nbsp;Movies
                             </span>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="mt-2.5 sm:mt-0 flex items-center gap-3">
                         <div className="relative">
                             <input
                                 type="text"
@@ -42,7 +42,7 @@ function CinemaMovie() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className='grid grid-cols-4 gap-4 mb-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
                     <div className='bg-[#1e1e1e] rounded-lg p-4 border border-gray-800'>
                         <div className='flex items-center justify-between'>
                             <div>

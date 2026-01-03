@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { sendRequest } from "../../services/cinema/movieService";
 
 import { Pencil } from "lucide-react";
+import LoadingSpinner from "../user/LoadingSpinner";
 
 function RequestMovie() {
 
@@ -18,9 +19,13 @@ function RequestMovie() {
 
   const [posterPreview, setPosterPreview] = useState(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleSendMovieRequest(e: React.FormEvent<HTMLFormElement>) {
 
     e.preventDefault();
+
+    setIsLoading(true);
 
     if (!title || !originalLanguage || !duration || !releaseDate || !genres || !directors || !trailerUrl || !poster) {
       toast.warn('Please fill out all fields!');
@@ -57,6 +62,8 @@ function RequestMovie() {
     setPoster(null);
     setStatus('Coming Soon');
     setPosterPreview(null);
+
+    setIsLoading(false);
   }
 
 
@@ -69,7 +76,7 @@ function RequestMovie() {
       </div>
       {/* body */}
       <div className='mt-2'>
-        <div className='grid grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
           <div>
             <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Movie title</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} className='bg-[#121212] border border-gray-700 h-11 w-full rounded-lg appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0' type="text" id="input" placeholder='Zootopia 2' />
@@ -80,7 +87,7 @@ function RequestMovie() {
           </div>
         </div>
 
-        <div className='grid grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
           <div>
             <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Duration</label>
             <input value={duration} onChange={(e) => setDuration(e.target.value)} className='bg-[#121212] border border-gray-700 h-11 w-full rounded-lg appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0' type="text" id="input" placeholder='120min' />
@@ -91,7 +98,7 @@ function RequestMovie() {
           </div>
         </div>
 
-        <div className='grid grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
           <div>
             <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Genre</label>
             <input value={genres} onChange={(e) => setGenres(e.target.value)} className='bg-[#121212] border border-gray-700 h-11 w-full rounded-lg appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0' type="text" id="input" placeholder='Animation,Comedy' />
@@ -102,7 +109,7 @@ function RequestMovie() {
           </div>
         </div>
 
-        <div className='grid grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 pt-4 pb-1.5 px-6'>
           <div>
             <label className='mb-1.5 block text-sm text-gray-500 dark:text-gray-400'>Trailer url</label>
             <input value={trailerUrl} onChange={(e) => setTrailerUrl(e.target.value)} className='bg-[#121212] border border-gray-700 h-11 w-full rounded-lg appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400/50 outline-none focus:border-gray-500 focus:ring-0' type="text" id="input" placeholder='http://localhost:5173/cinema/movie' />
@@ -162,7 +169,9 @@ function RequestMovie() {
         </div>
 
         <div className='flex justify-end py-4 px-6'>
-          <button className='bg-red-800 px-5 py-[8.5px] rounded-md font-medium text-[14px]'>Send Request</button>
+          <button className='flex items-center gap-2.5 px-5 py-[8.5px] rounded-md font-medium text-[14px] bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 transition-all duration-300'>Send Request
+            {isLoading ? <LoadingSpinner /> : ''}
+          </button>
         </div>
       </div>
     </form>
