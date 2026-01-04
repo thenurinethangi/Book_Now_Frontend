@@ -32,7 +32,7 @@ function Showtimes(props: any) {
     const [activeOptions, setActiveOptions] = useState<any | null>(null);
 
     const [searchKey, setSearchKey] = useState<string>('');
-    const [daysRange, setDaysRange] = useState<string>('7');
+    const [daysRange, setDaysRange] = useState<string>('all');
     const [no, setNo] = useState<number>(1);
 
     const [size, setSize] = useState<number>(0);
@@ -43,7 +43,7 @@ function Showtimes(props: any) {
 
     useEffect(() => {
         handelClickPreviousNext();
-    }, [no,searchKey,daysRange]);
+    }, [no, searchKey, daysRange]);
 
     async function loadAllShowtimes() {
         try {
@@ -98,6 +98,22 @@ function Showtimes(props: any) {
     function isClose(value: number, main: number, tolerance: number) {
         const lowerLimit = main - tolerance;
         return value >= lowerLimit;
+    }
+
+    function getOccupancyPercentage(booked: number, total: number): number {
+        console.log(booked);
+        console.log(total)
+        if (!total || total === 0) return 0;
+        return (booked / total) * 100;
+    }
+
+    function getAvailabilityStatus(booked: number, total: number) {
+        const percentage = getOccupancyPercentage(booked, total);
+
+        if (percentage >= 100) return 'UNAVAILABLE';
+        if (percentage >= 85) return 'ALMOST_FULL';
+        if (percentage >= 65) return 'FILLING_FAST';
+        return 'AVAILABLE';
     }
 
     async function handleDeleteShowtime() {
@@ -196,67 +212,119 @@ function Showtimes(props: any) {
                         </tr>
                     </thead>
                     <tbody>
-                        {showtimes.map((showtime: any) => (
-                            <tr key={showtime._id} className='border-b border-gray-800 hover:bg-[#252525] transition-colors relative'>
-                                <td className='p-4'>
-                                    <div className='flex items-center gap-3'>
-                                        <input
-                                            type="checkbox"
-                                            // checked={selectedItems.includes(transaction.id)}
-                                            // onChange={() => toggleSelect(transaction.id)}
-                                            className='w-4 h-4 rounded border-gray-700 bg-transparent'
-                                        />
-                                        <span className='text-[12px] font-medium text-gray-400'>{showtime.date}</span>
-                                    </div>
-                                </td>
-                                <td className='p-4'>
-                                    <span className='text-[12px] text-gray-300'>{showtime.time}</span>
-                                </td>
-                                <td className='p-4'>
-                                    <span className='text-[12px] text-gray-500'>{showtime.screenId.screenName}</span>
-                                </td>
-                                <td className='p-4'>
-                                    <span className='text-[12px] text-gray-300'>{showtime.movieId.title}</span>
-                                </td>
-                                <td className='p-4'>
-                                    <span className='text-[11px] text-gray-500'>{showtime.bookingCount}/{showtime.screenId.numberOfSeats} booked</span>
-                                </td>
-                                <td className='p-4'>
-                                    <span className={`text-[9px] text-gray-500 px-2 py-1 font-semibold rounded-full ${showtime.status === 'Expired' ? '-' : showtime.status === 'Scheduled' && isClose(showtime.bookingCount, showtime.screenId.numberOfSeats, 10) ? 'text-red-400 bg-red-400/20' : showtime.status === 'Scheduled' && isClose(showtime.bookingCount, showtime.screenId.numberOfSeats, 40) ? 'text-blue-400 bg-blue-400/20' : showtime.status === 'Scheduled' && showtime.bookingCount < showtime.screenId.numberOfSeats ? 'text-green-500 bg-green-500/20' : showtime.status === 'Scheduled' && showtime.bookingCount >= showtime.screenId.numberOfSeats ? 'text-red-600 bg-red-600/20' : showtime.status === 'Today' && isPast(showtime.date, showtime.time) ? '-' : showtime.bookingCount < showtime.screenId.numberOfSeats ? 'text-green-500 bg-green-500/20' : 'text-red-600 bg-red-600/20'}`}>{showtime.status === 'Expired' ? '-' : showtime.status === 'Scheduled' && isClose(showtime.bookingCount, showtime.screenId.numberOfSeats, 10) ? 'Almost Full' : showtime.status === 'Scheduled' && isClose(showtime.bookingCount, showtime.screenId.numberOfSeats, 40) ? 'Filling Fast' : showtime.status === 'Scheduled' && showtime.bookingCount < showtime.screenId.numberOfSeats ? 'Available' : showtime.status === 'Scheduled' && showtime.bookingCount >= showtime.screenId.numberOfSeats ? 'Unavailable' : showtime.status === 'Today' && isPast(showtime.date, showtime.time) ? '-' : showtime.bookingCount < showtime.screenId.numberOfSeats ? 'Available' : 'Unavailable'}</span>
-                                </td>
-                                <td className='p-4'>
-                                    <span className={`text-[9px] px-2 py-1 rounded-full font-semibold ${getStatusBadge(showtime.status)}`}>
-                                        {showtime.status}
-                                    </span>
-                                </td>
-                                <td className='p-4'>
-                                    <button onClick={(e) => setActiveOptions(showtime)} className='text-gray-500 hover:text-gray-400'>
-                                        <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
-                                            <circle cx='12' cy='6' r='1.5' />
-                                            <circle cx='12' cy='12' r='1.5' />
-                                            <circle cx='12' cy='18' r='1.5' />
-                                        </svg>
-                                    </button>
-                                </td>
+                        {showtimes.map((showtime: any) => {
+                            const status = getAvailabilityStatus(
+                                showtime.bookingCount,
+                                showtime.screenId.numberOfSeats
+                            );
 
-                                {/* options */}
-                                <div
-                                    className={`flex flex-col shadow-2xl absolute top-10 right-0 z-[300] bg-[#1e1e1e] border border-gray-700 rounded-md overflow-hidden min-w-[160px] ${activeOptions && activeOptions?._id === showtime._id ? "" : "hidden"
-                                        }`}
-                                >
-                                    {/* Delete Option */}
-                                    <button
-                                        onClick={handleDeleteShowtime}
-                                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
+                            return (
+                                <tr key={showtime._id} className='border-b border-gray-800 hover:bg-[#252525] transition-colors relative'>
+                                    <td className='p-4'>
+                                        <div className='flex items-center gap-3'>
+                                            <input
+                                                type="checkbox"
+                                                // checked={selectedItems.includes(transaction.id)}
+                                                // onChange={() => toggleSelect(transaction.id)}
+                                                className='w-4 h-4 rounded border-gray-700 bg-transparent'
+                                            />
+                                            <span className='text-[12px] font-medium text-gray-400'>{showtime.date}</span>
+                                        </div>
+                                    </td>
+                                    <td className='p-4'>
+                                        <span className='text-[12px] text-gray-300'>{showtime.time}</span>
+                                    </td>
+                                    <td className='p-4'>
+                                        <span className='text-[12px] text-gray-500'>{showtime.screenId.screenName}</span>
+                                    </td>
+                                    <td className='p-4'>
+                                        <span className='text-[12px] text-gray-300'>{showtime.movieId.title}</span>
+                                    </td>
+                                    <td className='p-4'>
+                                        <span className='text-[11px] text-gray-500'>{showtime.bookingCount}/{showtime.screenId.numberOfSeats} booked</span>
+                                    </td>
+                                    <td className='p-4'>
+                                        <span
+                                            className={`text-[9px] px-2 py-1 font-semibold rounded-full
+                                                ${showtime.status === 'Expired'
+                                                    ? '-'
+                                                    : showtime.status === 'Scheduled' && status === 'ALMOST_FULL'
+                                                        ? 'text-red-400 bg-red-400/20'
+                                                        : showtime.status === 'Scheduled' && status === 'FILLING_FAST'
+                                                            ? 'text-blue-400 bg-blue-400/20'
+                                                            : showtime.status === 'Scheduled' && status === 'AVAILABLE'
+                                                                ? 'text-green-500 bg-green-500/20'
+                                                                : showtime.status === 'Scheduled' && status === 'UNAVAILABLE'
+                                                                    ? 'text-red-600 bg-red-600/20'
+                                                                    : showtime.status === 'Today' && isPast(showtime.date, showtime.time)
+                                                                        ? ''
+                                                                        : status === 'ALMOST_FULL'
+                                                                            ? 'text-red-400 bg-red-400/20'
+                                                                            : status === 'FILLING_FAST'
+                                                                                ? 'text-blue-400 bg-blue-400/20'
+                                                                                : status === 'AVAILABLE'
+                                                                                    ? 'text-green-500 bg-green-500/20'
+                                                                                    : 'text-red-600 bg-red-600/20'
+                                                }
+  `}
+                                        >
+                                            {
+                                                showtime.status === 'Expired'
+                                                    ? '-'
+                                                    : showtime.status === 'Scheduled' && status === 'ALMOST_FULL'
+                                                        ? 'Almost Full'
+                                                        : showtime.status === 'Scheduled' && status === 'FILLING_FAST'
+                                                            ? 'Filling Fast'
+                                                            : showtime.status === 'Scheduled' && status === 'AVAILABLE'
+                                                                ? 'Available'
+                                                                : showtime.status === 'Scheduled' && status === 'UNAVAILABLE'
+                                                                    ? 'Unavailable'
+                                                                    : showtime.status === 'Today' && isPast(showtime.date, showtime.time)
+                                                                        ? '-'
+                                                                        : status === 'ALMOST_FULL'
+                                                                            ? 'Almost Full'
+                                                                            : status === 'FILLING_FAST'
+                                                                                ? 'Filling Fast'
+                                                                                : status === 'AVAILABLE'
+                                                                                    ? 'Available'
+                                                                                    : 'Unavailable'
+                                            }
+                                        </span>
+                                    </td>
+                                    <td className='p-4'>
+                                        <span className={`text-[9px] px-2 py-1 rounded-full font-semibold ${getStatusBadge(showtime.status)}`}>
+                                            {showtime.status}
+                                        </span>
+                                    </td>
+                                    <td className='p-4'>
+                                        <button onClick={(e) => setActiveOptions(showtime)} className='text-gray-500 hover:text-gray-400'>
+                                            <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
+                                                <circle cx='12' cy='6' r='1.5' />
+                                                <circle cx='12' cy='12' r='1.5' />
+                                                <circle cx='12' cy='18' r='1.5' />
+                                            </svg>
+                                        </button>
+                                    </td>
+
+                                    {/* options */}
+                                    <div
+                                        className={`flex flex-col shadow-2xl absolute top-10 right-0 z-[300] bg-[#1e1e1e] border border-gray-700 rounded-md overflow-hidden min-w-[160px] ${activeOptions && activeOptions?._id === showtime._id ? "" : "hidden"
+                                            }`}
                                     >
-                                        <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
-                                        <p className="text-[13px] text-gray-300 group-hover:text-red-300">
-                                            Delete
-                                        </p>
-                                    </button>
-                                </div>
-                            </tr>
-                        ))}
+                                        {/* Delete Option */}
+                                        <button
+                                            onClick={handleDeleteShowtime}
+                                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
+                                        >
+                                            <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
+                                            <p className="text-[13px] text-gray-300 group-hover:text-red-300">
+                                                Delete
+                                            </p>
+                                        </button>
+                                    </div>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
@@ -264,7 +332,7 @@ function Showtimes(props: any) {
             {/* Pagination */}
             <div className='flex items-center justify-between px-5 py-4 border-t border-gray-800'>
                 <span className='text-[12px] text-gray-500'>
-                    Showing <span className='text-white'>{no === 1 ? 1 : (no-1)*10}</span> to <span className='text-white'>{(no-1)*10+showtimes.length}</span> of <span className='text-white'>{size}</span>
+                    Showing <span className='text-white'>{no === 1 ? 1 : (no - 1) * 10}</span> to <span className='text-white'>{(no - 1) * 10 + showtimes.length}</span> of <span className='text-white'>{size}</span>
                 </span>
                 <div className='flex items-center gap-2'>
                     <button onClick={(e) => setNo(no - 1)}

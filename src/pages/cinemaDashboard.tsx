@@ -118,7 +118,7 @@ const CinemaOwnerDashboard = () => {
         {
             title: 'Active Screens',
             value: `${activeScreens.activeScreens}/${activeScreens.allScreens}`,
-            change: `${activeScreens.change}%`,
+            change: `${Math.round((activeScreens.activeScreens/activeScreens.allScreens) * 100)}%`,
             icon: <Tv className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-red-500'
