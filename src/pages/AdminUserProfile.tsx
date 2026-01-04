@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, Calendar, Camera, Lock, LogOut, Save, X, Building2, FileText, Hash, Globe } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Calendar, Camera, Lock, LogOut, Save, X } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 
 function CinemaUserProfile() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [isEditingCinema, setIsEditingCinema] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
 
@@ -15,19 +14,6 @@ function CinemaUserProfile() {
     phone: '+94 77 123 4567',
     address: 'Negombo, Western Province',
     joinDate: '2024-01-15'
-  });
-
-  const [cinemaDetails, setCinemaDetails] = useState({
-    cinemaName: 'Scope Cinema',
-    cinemaEmail: 'scope@gmail.com',
-    description: 'Scope Cinema description',
-    cinemaPhoneNo: '0714124926',
-    address: '63 Mall, Nupe Matara',
-    city: 'Dewinuwara',
-    distric: 'Colombo',
-    postCode: '81160',
-    googleMapLink: 'http://localhost:5173/cinema/landing?',
-    noOfScreens: '3'
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -54,13 +40,6 @@ function CinemaUserProfile() {
     });
   };
 
-  const handleCinemaInputChange = (e) => {
-    setCinemaDetails({
-      ...cinemaDetails,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handlePasswordChange = (e) => {
     setPasswordData({
       ...passwordData,
@@ -71,11 +50,6 @@ function CinemaUserProfile() {
   const handleSaveProfile = () => {
     console.log('Saving profile:', userDetails);
     setIsEditingProfile(false);
-  };
-
-  const handleSaveCinema = () => {
-    console.log('Saving cinema details:', cinemaDetails);
-    setIsEditingCinema(false);
   };
 
   const handleChangePassword = () => {
@@ -265,186 +239,6 @@ function CinemaUserProfile() {
                         value={userDetails.address}
                         onChange={handleInputChange}
                         disabled={!isEditingProfile}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Cinema Details */}
-            <div className='bg-[#1e1e1e] rounded-lg border border-gray-800'>
-              <div className='flex justify-between items-center px-6 py-4 border-b border-gray-800'>
-                <div>
-                  <h3 className='text-[18px] font-medium text-white mb-1'>Cinema Details</h3>
-                  <p className='text-[12px] text-gray-500'>Update your cinema information</p>
-                </div>
-                {!isEditingCinema ? (
-                  <button
-                    onClick={() => setIsEditingCinema(true)}
-                    className='px-4 py-2 bg-[#121212] border border-gray-800 rounded-lg hover:border-gray-700 transition-colors text-[12px]'
-                  >
-                    Edit Cinema
-                  </button>
-                ) : (
-                  <div className='flex gap-2'>
-                    <button
-                      onClick={() => setIsEditingCinema(false)}
-                      className='px-4 py-2 bg-[#121212] border border-gray-800 rounded-lg hover:border-gray-700 transition-colors text-[12px] flex items-center gap-2'
-                    >
-                      <X className='w-3.5 h-3.5' />
-                      Cancel
-                    </button>
-                    <button
-                      onClick={handleSaveCinema}
-                      className='px-4 py-2 bg-red-700 hover:bg-red-600 rounded-lg transition-colors text-[12px] flex items-center gap-2'
-                    >
-                      <Save className='w-3.5 h-3.5' />
-                      Save
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              <div className='p-6'>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Cinema Name</label>
-                    <div className='relative'>
-                      <Building2 className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="cinemaName"
-                        value={cinemaDetails.cinemaName}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Cinema Email</label>
-                    <div className='relative'>
-                      <Mail className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="email"
-                        name="cinemaEmail"
-                        value={cinemaDetails.cinemaEmail}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div className='md:col-span-2'>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Description</label>
-                    <div className='relative'>
-                      <FileText className='w-4 h-4 text-gray-500 absolute left-3 top-3' />
-                      <textarea
-                        name="description"
-                        value={cinemaDetails.description}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        rows={3}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed resize-none'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Cinema Phone No</label>
-                    <div className='relative'>
-                      <Phone className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="cinemaPhoneNo"
-                        value={cinemaDetails.cinemaPhoneNo}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>No of Screens</label>
-                    <div className='relative'>
-                      <Hash className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="noOfScreens"
-                        value={cinemaDetails.noOfScreens}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div className='md:col-span-2'>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Address</label>
-                    <div className='relative'>
-                      <MapPin className='w-4 h-4 text-gray-500 absolute left-3 top-3' />
-                      <input
-                        type="text"
-                        name="address"
-                        value={cinemaDetails.address}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>City</label>
-                    <div className='relative'>
-                      <MapPin className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="city"
-                        value={cinemaDetails.city}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>District</label>
-                    <div className='relative'>
-                      <MapPin className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="distric"
-                        value={cinemaDetails.distric}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Postal Code</label>
-                    <div className='relative'>
-                      <Hash className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="postCode"
-                        value={cinemaDetails.postCode}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
-                        className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className='block text-[12px] text-gray-500 mb-2'>Google Map Link</label>
-                    <div className='relative'>
-                      <Globe className='w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2' />
-                      <input
-                        type="text"
-                        name="googleMapLink"
-                        value={cinemaDetails.googleMapLink}
-                        onChange={handleCinemaInputChange}
-                        disabled={!isEditingCinema}
                         className='w-full bg-[#121212] border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-[12px] text-gray-300 focus:outline-none focus:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed'
                       />
                     </div>

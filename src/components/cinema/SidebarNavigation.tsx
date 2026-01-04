@@ -19,7 +19,7 @@ function SidebarNavigation(props: any) {
         { icon: <Clock className="w-5.5 h-5.5" />, label: 'Showtimes', id: 'showtimes' },
         { icon: <Tag className="w-5.5 h-5.5" />, label: 'Bookings', id: 'bookings' },
         { icon: <Wallet className="w-5.5 h-5.5" />, label: 'Transactions', id: 'transactions' },
-        { icon: <Search className="w-5.5 h-5.5" />, label: 'Search', id: 'search' }
+        { icon: <Search className="w-5.5 h-5.5" />, label: 'Search', id: '' }
     ];
 
     function handleNavItemClick(e: React.MouseEvent<HTMLButtonElement>){
@@ -48,7 +48,7 @@ function SidebarNavigation(props: any) {
             <div className="flex flex-col justify-start items-center gap-4">
                 <Settings className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
                 <Bell className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
-                <User className="w-5.5 h-5.5 text-red-700 cursor-pointer" />
+                <User onClick={(e) => navigate('/cinema/profile')} className={`w-5.5 h-5.5 cursor-pointer ${props.page === 'profile' ? 'text-red-700' : 'text-gray-500'}`} />
             </div>
         </nav>
     )
