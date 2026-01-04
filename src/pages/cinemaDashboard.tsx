@@ -17,8 +17,6 @@ const CinemaOwnerDashboard = () => {
 
     const navigate = useNavigate();
 
-    const [isShow,setIsShow] = useState<boolean>(false);
-
     const [todayRevenue, setTodayRevenue] = useState<any>({});
     const [todayBookings, setTodayBookings] = useState<any>({});
     const [occupancyRate, setOccupancyRate] = useState('78%');
@@ -28,23 +26,31 @@ const CinemaOwnerDashboard = () => {
     const [screenOccupancy, setScreenOccupancy] = useState<any>([]);
 
     useEffect(() => {
-        setTimeout(() => {
-            if (loading) return null;
-            if (!loading && !user) {
-                navigate('/cinema/landing', { replace: true });
-            }
-            if (!loading && user && !user.roles.includes('CINEMA')) {
-                navigate('/cinema/landing', { replace: true });
-            }
-            else{
-                setIsShow(true);
-            }
-        }, 1500);
-    }, [loading, user, navigate]);
-
-    useEffect(() => {
         init();
     }, []);
+
+    // useEffect(() => {
+    //     if (!loading && !user) {
+    //         navigate('/cinema/landing', { replace: true });
+    //     }
+    //     if (!loading && user && !user.roles.includes('CINEMA')) {
+    //         navigate('/cinema/landing', { replace: true });
+    //     }
+    // }, [loading, user, navigate]);
+
+    // if (loading) {
+    //     return null;
+    // }
+
+    // if (!user) {
+    //     navigate("/cinema/landing", { replace: true });
+    //     return null;
+    // }
+
+    // if (!user.roles?.includes("CINEMA")) {
+    //     navigate("/cinema/landing", { replace: true });
+    //     return null;
+    // }
 
     async function init() {
         try {
