@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Lock, LogOut, Save, X, Building2, FileText, Hash, Globe } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import { toast } from 'react-toastify';
-import { logout } from '../services/cinema/auth';
+import { loadUserAndCinemaDetails, cinemaLogout } from '../services/cinema/auth';
 import { useNavigate } from 'react-router-dom';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/slices/authSlice";
+import type { AppDispatch } from "../store/store";
+
+
 function CinemaUserProfile() {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, loading } = useSelector((state: RootState) => state.auth);
 
   const navigate = useNavigate();
 
@@ -14,27 +24,34 @@ function CinemaUserProfile() {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
 
-  const [userDetails, setUserDetails] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+94 77 123 4567',
-    address: 'Negombo, Western Province',
-    joinDate: '2024-01-15'
-  });
+  const [userDetails, setUserDetails] = useState({});
 
-  const [cinemaDetails, setCinemaDetails] = useState({
-    cinemaName: 'Scope Cinema',
-    cinemaEmail: 'scope@gmail.com',
-    description: 'Scope Cinema description',
-    cinemaPhoneNo: '0714124926',
-    address: '63 Mall, Nupe Matara',
-    city: 'Dewinuwara',
-    distric: 'Colombo',
-    postCode: '81160',
-    googleMapLink: 'http://localhost:5173/cinema/landing?',
-    noOfScreens: '3'
-  });
+  const [cinemaDetails, setCinemaDetails] = useState({});
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/cinema/landing', { replace: true });
+    }
+    if (!loading && user && !user.roles.includes('CINEMA')) {
+      navigate('/cinema/landing', { replace: true });
+    }
+  }, [loading, user, navigate]);
+
+  useEffect(() => {
+    getUserAndCinemaDetails();
+  }, []);
+
+  async function getUserAndCinemaDetails() {
+    try {
+      const res = await loadUserAndCinemaDetails();
+      console.log(res.data.data);
+      setUserDetails(res.data.data.user);
+      setCinemaDetails(res.data.data.cinema);
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
@@ -92,9 +109,12 @@ function CinemaUserProfile() {
 
   async function handleLogout() {
     try {
-      const res = await logout();
+      const res = await cinemaLogout();
       localStorage.removeItem('accessToken');
       navigate('/cinema/landing');
+
+      dispatch(logout());
+      navigate('/cinema/landing', { replace: true });
     }
     catch (e) {
       toast.error('Failed to logout!');
@@ -117,7 +137,7 @@ function CinemaUserProfile() {
       <SidebarNavigation page={'profile'} />
 
       {/* Main Content */}
-      <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
+      <div className='flex-1 text-white px-3 sm:px-7 py-3 pt-7 overflow-auto ml-[25px] sm:ml-[65px]'>
         {/* Header */}
         <div className='flex justify-between items-center mb-[22px]'>
           <div>
@@ -158,7 +178,7 @@ function CinemaUserProfile() {
                 <p className='text-[12px] text-gray-500 mb-4'>{userDetails.email}</p>
                 <div className='flex items-center gap-2 text-[11px] text-gray-500'>
                   <Calendar className='w-3.5 h-3.5' />
-                  <span>Joined {formatDate(userDetails.joinDate)}</span>
+                  <span>Joined {formatDate(userDetails.createdAt)}</span>
                 </div>
               </div>
 

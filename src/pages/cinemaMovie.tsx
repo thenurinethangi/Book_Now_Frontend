@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Home, UserCog, Settings, Disc, Search, Layers, RotateCw, HelpCircle, Bell, MapPin, Tv, Trash, Edit, Eye, Clock, Calendar, Star, Film, Filter, Plus, Video } from "lucide-react";
 import Movies from '../components/cinema/Movies';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
@@ -6,7 +6,15 @@ import AddMovie from '../components/cinema/AddMovie';
 import RequestMovie from '../components/cinema/RequestMovie';
 import ManagedMovies from '../components/admin/ManagedMovies';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from 'react-router-dom';
+
 function CinemaMovie() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState('manage');
     const [loadMovies, setLoadMovie] = useState(0);
@@ -14,6 +22,15 @@ function CinemaMovie() {
     const [manageMovies, setManageMovies] = useState([]);
 
     const [searchKey, setSearchKey] = useState<string>('');
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/cinema/landing', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('CINEMA')) {
+            navigate('/cinema/landing', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     function handleSearchMovies(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value.trim();
@@ -27,7 +44,7 @@ function CinemaMovie() {
             <SidebarNavigation page={'movies'} />
 
             {/* content right side */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
+            <div className='flex-1 text-white px-3 sm:px-7 py-3 pt-7 overflow-auto ml-[25px] sm:ml-[65px]'>
                 {/* title */}
                 <div className='flex flex-wrap justify-between items-center mb-[22px]'>
                     <div className='mr-27'>

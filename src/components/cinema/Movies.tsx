@@ -125,7 +125,7 @@ function Movies(props: any) {
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
             {movies.length > 0 && movies.map((movie: any) => (
-                <div key={movie._id} className='rounded-lg bg-[#1e1e1e] h-[210px] sm:h-[190px] flex items-start pr-2 border border-gray-800 hover:border-gray-700 transition-all duration-300 group'>
+                <div key={movie._id} className='rounded-lg bg-[#1e1e1e] h-[250px] sm:h-[190px] flex items-start pr-2 border border-gray-800 hover:border-gray-700 transition-all duration-300 group'>
                     <div className='h-[100%] w-[22%] rounded-l-sm overflow-hidden relative'>
                         <img
                             src={movie.movieDetails.posterImageUrl}

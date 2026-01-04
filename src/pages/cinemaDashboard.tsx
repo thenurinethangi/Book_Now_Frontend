@@ -7,7 +7,17 @@ import type { ApexOptions } from "apexcharts";
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import { getActiveScreen, getScreenOccupancy, getThisYearEachMonthRevenue, getTodayBooking, getTodayRevenue } from '../services/cinema/dashboardService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from 'react-router-dom';
+
 const CinemaOwnerDashboard = () => {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
+
+    const [isShow,setIsShow] = useState<boolean>(false);
 
     const [todayRevenue, setTodayRevenue] = useState<any>({});
     const [todayBookings, setTodayBookings] = useState<any>({});
@@ -16,6 +26,21 @@ const CinemaOwnerDashboard = () => {
 
     const [weekRevenue, setWeekRevenue] = useState<any>({});
     const [screenOccupancy, setScreenOccupancy] = useState<any>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (loading) return null;
+            if (!loading && !user) {
+                navigate('/cinema/landing', { replace: true });
+            }
+            if (!loading && user && !user.roles.includes('CINEMA')) {
+                navigate('/cinema/landing', { replace: true });
+            }
+            else{
+                setIsShow(true);
+            }
+        }, 1500);
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         init();
@@ -109,8 +134,8 @@ const CinemaOwnerDashboard = () => {
         },
         {
             title: 'Occupancy Rate',
-            value: `${Math.round(totalOccupancy/screenOccupancy.length)}%`,
-            change: `${Math.round(totalOccupancy/screenOccupancy.length)}%`,
+            value: `${Math.round(totalOccupancy / screenOccupancy.length)}%`,
+            change: `${Math.round(totalOccupancy / screenOccupancy.length)}%`,
             icon: <Users className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-purple-500'
@@ -118,7 +143,7 @@ const CinemaOwnerDashboard = () => {
         {
             title: 'Active Screens',
             value: `${activeScreens.activeScreens}/${activeScreens.allScreens}`,
-            change: `${Math.round((activeScreens.activeScreens/activeScreens.allScreens) * 100)}%`,
+            change: `${Math.round((activeScreens.activeScreens / activeScreens.allScreens) * 100)}%`,
             icon: <Tv className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-red-500'
@@ -214,7 +239,7 @@ const CinemaOwnerDashboard = () => {
     ];
 
     return (
-        <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
+        <div className={`bg-[#121212] flex font-[Poppins] min-h-screen`}>
 
             <style>{`
                 .no-scrollbar::-webkit-scrollbar {
@@ -230,7 +255,7 @@ const CinemaOwnerDashboard = () => {
             <SidebarNavigation page={'home'} />
 
             {/* Main Content */}
-            <div className='flex-1 ml-[25px] sm:ml-[65px] text-white px-5 sm:px-7 py-4'>
+            <div className='flex-1 ml-[28px] sm:ml-[65px] text-white px-3 sm:px-7 py-4'>
 
                 {/* Header */}
                 <div className='flex flex-wrap justify-between items-center mb-6'>

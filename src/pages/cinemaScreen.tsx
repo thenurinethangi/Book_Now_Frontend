@@ -5,7 +5,15 @@ import Screens from '../components/cinema/Screens';
 import AddScreen from '../components/cinema/AddScreen';
 import { getScreenOccupancy } from '../services/cinema/dashboardService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from 'react-router-dom';
+
 function CinemaScreen() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [show, setShow] = useState('screens');
     const [loadScreens, setLoadScreens] = useState(false);
@@ -16,6 +24,15 @@ function CinemaScreen() {
     const [totalOccupancy, setTotalOccupancy] = useState<number>(0);
 
     const [searchKey, setSearchKey] = useState<string>('');
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/cinema/landing', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('CINEMA')) {
+            navigate('/cinema/landing', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         let total = 0;
@@ -65,7 +82,7 @@ function CinemaScreen() {
             <SidebarNavigation page={'screens'} />
 
             {/* Main Content */}
-            <div className='flex-1 text-white px-7 py-3 pt-6.5 overflow-auto ml-[20px] sm:ml-[65px]'>
+            <div className='flex-1 text-white px-3 sm:px-7 py-3 pt-6.5 overflow-auto ml-[25px] sm:ml-[65px]'>
                 {/* Header */}
                 <div className='flex flex-wrap justify-between items-center mb-[22px]'>
                     <div className='mr-27'>

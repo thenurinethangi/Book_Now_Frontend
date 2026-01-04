@@ -3,7 +3,15 @@ import { Search, Tag, Download, CheckCircle, XCircle, AlertCircle, Users, Eye } 
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import { getAllBookings, getCanceledBookingsCount, getScheduledBookingsCount, getTodayBookingsCount, getTotalBookingsCount } from '../services/cinema/bookingService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from 'react-router-dom';
+
 function CinemaBooking() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [bookings, setBookings] = useState([]);
 
@@ -17,6 +25,15 @@ function CinemaBooking() {
     const [todayBookings, setTodayBookings] = useState(0);
     const [scheduledBookings, setScheduledBookings] = useState(0);
     const [canceledBookings, setCanceledBookings] = useState(0);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/cinema/landing', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('CINEMA')) {
+            navigate('/cinema/landing', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         loadAllBookings();
@@ -123,7 +140,7 @@ function CinemaBooking() {
             <SidebarNavigation page={'bookings'} />
 
             {/* Main Content */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
+            <div className='flex-1 text-white px-3 sm:px-7 py-3 pt-7 overflow-auto ml-[25px] sm:ml-[65px]'>
                 {/* Header */}
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>

@@ -6,7 +6,15 @@ import AddShowtime from '../components/cinema/AddShowtime';
 import { getAllTransactions, getCinemaRevenue } from '../services/cinema/transactionService';
 import { getScheduledShowtimesCount, getTodayShowtimesCount, getTotalShowtimesCount } from '../services/cinema/showtimeService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from 'react-router-dom';
+
 function CinemaShowTime() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState('showtimes');
     const [load, setLoad] = useState(0);
@@ -16,6 +24,15 @@ function CinemaShowTime() {
     const [todayShowtimes, setTodayShowtimes] = useState(0);
     const [scheduledShowtimes, setScheduledShowtimes] = useState(0);
     const [revenue, setRevenue] = useState(0);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/cinema/landing', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('CINEMA')) {
+            navigate('/cinema/landing', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         loadStats();
@@ -47,7 +64,7 @@ function CinemaShowTime() {
             <SidebarNavigation page={'showtimes'} />
 
             {/* Main Content */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
+            <div className='flex-1 text-white px-3 sm:px-7 py-3 pt-7 overflow-auto ml-[25px] sm:ml-[65px]'>
                 {/* Header */}
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>

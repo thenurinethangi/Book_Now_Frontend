@@ -43,7 +43,7 @@ function SidebarNavigation(props: any) {
             {/* Hamburger Menu Button - Only visible on small screens */}
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="fixed top-5.5 left-2 z-50 p-2 rounded-lg sm:hidden"
+                className="fixed top-5.5 left-0.5 z-50 p-2 rounded-lg sm:hidden"
             >
                 {isMenuOpen ? (
                     ''

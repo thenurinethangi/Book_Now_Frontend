@@ -3,7 +3,15 @@ import { Home, Tv, Clock, Search, Settings, Bell, User, Film, Tag, Wallet, Downl
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import { getAllTransactions, getCinemaRevenue, getCompleteTransactionCount, getFailedTransactionCount, getPendingTransactionCount } from '../services/cinema/transactionService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from 'react-router-dom';
+
 function CinemaTransaction() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -19,6 +27,15 @@ function CinemaTransaction() {
     const [pendingTransactions, setPendingTransactions] = useState(0);
     const [failedTransactions, setFailedTransactions] = useState(0);
     const [revenue, setRevenue] = useState(0);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/cinema/landing', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('CINEMA')) {
+            navigate('/cinema/landing', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         loadAllTransactions();
@@ -140,7 +157,7 @@ function CinemaTransaction() {
             <SidebarNavigation page={'transactions'} />
 
             {/* Main Content */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
+            <div className='flex-1 text-white px-3 sm:px-7 py-3 pt-7 overflow-auto ml-[25px] sm:ml-[65px]'>
                 {/* Header */}
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>
@@ -153,7 +170,7 @@ function CinemaTransaction() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className='grid grid-cols-4 gap-4 mb-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
                     <div className='bg-[#1e1e1e] rounded-lg p-4 border border-gray-800'>
                         <div className='flex items-center justify-between'>
                             <div>
@@ -195,12 +212,12 @@ function CinemaTransaction() {
                 {/* Table Card */}
                 <div className='bg-[#1e1e1e] rounded-lg border border-gray-800 overflow-hidden'>
                     {/* Table Header */}
-                    <div className='flex justify-between items-center px-5 py-4 border-b border-gray-800'>
+                    <div className='flex flex-wrap gap-3 justify-between items-center px-5 py-4 border-b border-gray-800'>
                         <div>
                             <h3 className='text-[18px] font-medium text-white mb-1'>Transactions</h3>
                             <p className='text-[12px] text-gray-500'>Your most recent transactions list</p>
                         </div>
-                        <div className='flex items-center gap-3'>
+                        <div className='flex flex-wrap items-center gap-3'>
                             <div className="relative">
                                 <input
                                     onChange={handleSearchShowtime}
