@@ -3,7 +3,7 @@ import { Home, Tv, Clock, Search, Settings, Bell, User, Film, Tag, Wallet, Filte
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
 import Showtimes from '../components/cinema/Showtimes';
 import AddShowtime from '../components/cinema/AddShowtime';
-import { getAllTransactions } from '../services/cinema/transactionService';
+import { getAllTransactions, getCinemaRevenue } from '../services/cinema/transactionService';
 import { getScheduledShowtimesCount, getTodayShowtimesCount, getTotalShowtimesCount } from '../services/cinema/showtimeService';
 
 function CinemaShowTime() {
@@ -32,14 +32,8 @@ function CinemaShowTime() {
             const res3 = await getScheduledShowtimesCount();
             setScheduledShowtimes(res3.data.data);
 
-            const res4 = await getAllTransactions();
-
-            let total = 0;
-            for (let i = 0; i < res4.data.data.length; i++) {
-                const e = res4.data.data[i];
-                total += Number(e.amount);
-            }
-            setRevenue(total);
+            const res4 = await getCinemaRevenue();
+            setRevenue(res4.data.data);
         }
         catch (e) {
             console.log(e);

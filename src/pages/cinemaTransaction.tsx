@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Home, Tv, Clock, Search, Settings, Bell, User, Film, Tag, Wallet, Download, Filter, Calendar, DollarSign, TrendingUp, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
-import { getAllTransactions } from '../services/cinema/transactionService';
+import { getAllTransactions, getCinemaRevenue, getCompleteTransactionCount, getFailedTransactionCount, getPendingTransactionCount } from '../services/cinema/transactionService';
 
 function CinemaTransaction() {
 
     const [selectedItems, setSelectedItems] = useState([]);
 
     const [transactions, setTransactions] = useState([]);
-    const [revenue, setRevenue] = useState(0);
 
     const [searchKey, setSearchKey] = useState<string>('');
     const [daysRange, setDaysRange] = useState<string>('7');
@@ -16,8 +15,14 @@ function CinemaTransaction() {
 
     const [size, setSize] = useState<number>(0);
 
+    const [completeTransactions, setCompleteTransactions] = useState(0);
+    const [pendingTransactions, setPendingTransactions] = useState(0);
+    const [failedTransactions, setFailedTransactions] = useState(0);
+    const [revenue, setRevenue] = useState(0);
+
     useEffect(() => {
         loadAllTransactions();
+        loadStats();
     }, []);
 
     useEffect(() => {
@@ -30,13 +35,25 @@ function CinemaTransaction() {
             console.log(res.data.data.filterAfterTablePageNo);
             setTransactions(res.data.data.filterAfterTablePageNo);
             setSize(res.data.data.size);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
-            // let total = 0;
-            // for (let i = 0; i < res.data.data.length; i++) {
-            //     const e = res.data.data[i];
-            //     total += Number(e.amount);
-            // }
-            // setRevenue(total);
+    async function loadStats() {
+        try {
+            const res = await getCompleteTransactionCount();
+            setCompleteTransactions(res.data.data);
+
+            const res2 = await getPendingTransactionCount();
+            setPendingTransactions(res2.data.data);
+
+            const res3 = await getFailedTransactionCount();
+            setFailedTransactions(res3.data.data);
+
+            const res4 = await getCinemaRevenue();
+            setRevenue(res4.data.data);
         }
         catch (e) {
             console.log(e);
@@ -150,7 +167,7 @@ function CinemaTransaction() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Completed</p>
-                                <p className='text-[18px] font-medium text-green-500'>{transactions.filter((t: any) => t.status === 'Completed').length}</p>
+                                <p className='text-[18px] font-medium text-green-500'>{completeTransactions}</p>
                             </div>
                             <CheckCircle className='w-8 h-8 text-green-500 opacity-20' />
                         </div>
@@ -159,7 +176,7 @@ function CinemaTransaction() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Pending</p>
-                                <p className='text-[18px] font-medium text-orange-500'>{transactions.filter((t: any) => t.status === 'Pending').length}</p>
+                                <p className='text-[18px] font-medium text-orange-500'>{pendingTransactions}</p>
                             </div>
                             <AlertCircle className='w-8 h-8 text-orange-500 opacity-20' />
                         </div>
@@ -168,7 +185,7 @@ function CinemaTransaction() {
                         <div className='flex items-center justify-between'>
                             <div>
                                 <p className='text-[12px] text-gray-500 mb-1'>Failed</p>
-                                <p className='text-[18px] font-medium text-red-500'>{transactions.filter((t: any) => t.status === 'Failed').length}</p>
+                                <p className='text-[18px] font-medium text-red-500'>{failedTransactions}</p>
                             </div>
                             <XCircle className='w-8 h-8 text-red-500 opacity-20' />
                         </div>

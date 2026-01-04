@@ -101,8 +101,6 @@ function Showtimes(props: any) {
     }
 
     function getOccupancyPercentage(booked: number, total: number): number {
-        console.log(booked);
-        console.log(total)
         if (!total || total === 0) return 0;
         return (booked / total) * 100;
     }
