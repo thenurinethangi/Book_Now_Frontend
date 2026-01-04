@@ -6,28 +6,37 @@ import { getAllTransactions } from '../services/cinema/transactionService';
 function CinemaTransaction() {
 
     const [selectedItems, setSelectedItems] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
 
     const [transactions, setTransactions] = useState([]);
     const [revenue, setRevenue] = useState(0);
+
+    const [searchKey, setSearchKey] = useState<string>('');
+    const [daysRange, setDaysRange] = useState<string>('7');
+    const [no, setNo] = useState<number>(1);
+
+    const [size, setSize] = useState<number>(0);
 
     useEffect(() => {
         loadAllTransactions();
     }, []);
 
+    useEffect(() => {
+        handelClickPreviousNext();
+    }, [no, searchKey, daysRange]);
+
     async function loadAllTransactions() {
         try {
-            const res = await getAllTransactions();
-            console.log(res.data.data);
-            setTransactions(res.data.data);
+            const res = await getAllTransactions({ searchKey, daysRange, no });
+            console.log(res.data.data.filterAfterTablePageNo);
+            setTransactions(res.data.data.filterAfterTablePageNo);
+            setSize(res.data.data.size);
 
-            let total = 0;
-            for (let i = 0; i < res.data.data.length; i++) {
-                const e = res.data.data[i];
-                total+=Number(e.amount);
-            }
-            setRevenue(total);
+            // let total = 0;
+            // for (let i = 0; i < res.data.data.length; i++) {
+            //     const e = res.data.data[i];
+            //     total += Number(e.amount);
+            // }
+            // setRevenue(total);
         }
         catch (e) {
             console.log(e);
@@ -80,6 +89,31 @@ function CinemaTransaction() {
         const formattedTime = new Intl.DateTimeFormat("en-US", optionsTime).format(date);
 
         return `${formattedDate} ${formattedTime}`;
+    }
+
+    function handleSearchShowtime(e: React.ChangeEvent<HTMLInputElement>) {
+
+        const value = e.target.value.trim();
+        setSearchKey(value);
+    }
+
+    function handleFindByDateRange(e: React.ChangeEvent<HTMLSelectElement>) {
+
+        const value = e.target.value;
+        setDaysRange(value);
+    }
+
+    async function handelClickPreviousNext() {
+
+        try {
+            const res = await getAllTransactions({ searchKey, daysRange, no });
+            console.log(res.data.data.filterAfterTablePageNo);
+            setTransactions(res.data.data.filterAfterTablePageNo);
+            setSize(res.data.data.size);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
 
@@ -152,16 +186,18 @@ function CinemaTransaction() {
                         <div className='flex items-center gap-3'>
                             <div className="relative">
                                 <input
+                                    onChange={handleSearchShowtime}
                                     type="text"
                                     placeholder="Search..."
-                                    className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900 w-64"
+                                    className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
                                 />
                                 <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
                             </div>
-                            <select className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900">
-                                <option>Last 7 Days</option>
-                                <option>Last 30 Days</option>
-                                <option>Last 90 Days</option>
+                            <select onChange={handleFindByDateRange} value={daysRange} className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700">
+                                <option value={'7'}>Last 7 Days</option>
+                                <option value={'30'}>Last 30 Days</option>
+                                <option value={'90'}>Last 90 Days</option>
+                                <option value={'all'}>All</option>
                             </select>
                             <button className="flex items-center gap-2 px-4 py-2 bg-[#121212] border border-gray-800 rounded-lg hover:border-gray-700 transition-colors text-[12px]">
                                 <Download className="w-4 h-4" />
@@ -249,17 +285,22 @@ function CinemaTransaction() {
                     {/* Pagination */}
                     <div className='flex items-center justify-between px-5 py-4 border-t border-gray-800'>
                         <span className='text-[12px] text-gray-500'>
-                            Showing <span className='text-white'>1</span> to <span className='text-white'>10</span> of <span className='text-white'>{transactions.length}</span>
+                            Showing <span className='text-white'>{no === 1 ? 1 : (no - 1) * 10}</span> to <span className='text-white'>{(no - 1) * 10 + transactions.length}</span> of <span className='text-white'>{size}</span>
                         </span>
                         <div className='flex items-center gap-2'>
                             <button
+                                onClick={(e) => setNo(no - 1)}
                                 className='px-2.5 py-1.5 text-[12px] text-gray-400 hover:bg-[#252525] disabled:opacity-50'
-                                // disabled={currentPage === 1}
+                                disabled={no === 1}
                             >
                                 Previous
                             </button>
-                            <button className='px-3 py-2 bg-gray-700 rounded-lg text-[12px] text-white'>1</button>
-                            <button className='px-2.5 py-1.5 text-[12px] text-gray-400 hover:bg-[#252525]'>
+                            <button className='px-3 py-2 bg-gray-700 rounded-lg text-[12px] text-white'>{no}</button>
+                            <button
+                                onClick={(e) => setNo(no + 1)}
+                                className='px-2.5 py-1.5 text-[12px] text-gray-400 hover:bg-[#252525]'
+                                disabled={size <= no * 10}
+                            >
                                 Next
                             </button>
                         </div>
