@@ -1,4 +1,4 @@
-import { Home, Tv, Clock, User, Bell, Settings, Search, Users, TvMinimalPlay, Tag, Coins, Wallet } from 'lucide-react';
+import { Home, Tv, Clock, User, Bell, Settings, Search, Users, TvMinimalPlay, Tag, Coins, Wallet, Menu, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ function SidebarNavigation(props: any) {
     const navigate = useNavigate();
 
     const [activeNav, setActiveNav] = useState('home');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useState(() => {
         setActiveNav(props.page);
@@ -29,28 +30,62 @@ function SidebarNavigation(props: any) {
         }
         setActiveNav(item);
         navigate('/cinema/'+item);
+        setIsMenuOpen(false); // Close menu after navigation on mobile
+    }
+
+    function handleProfileClick() {
+        navigate('/cinema/profile');
+        setIsMenuOpen(false);
     }
 
     return (
-        <nav className="w-[65px] h-screen bg-[#121212] border-r border-gray-800 flex flex-col justify-between items-center fixed" style={{ paddingBlock: '17px' }}>
-            <div className="flex flex-col justify-start items-center gap-5">
-                {navItems.map((item) => (
-                    <button
-                        key={item.id}
-                        data-item = {item.id}
-                        onClick={handleNavItemClick}
-                        className={`nav transition-colors cursor-pointer ${activeNav === item.id ? 'text-red-700' : 'text-gray-500'}`}
-                    >
-                        {item.icon}
-                    </button>
-                ))}
-            </div>
-            <div className="flex flex-col justify-start items-center gap-4">
-                <Settings className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
-                <Bell className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
-                <User onClick={(e) => navigate('/cinema/profile')} className={`w-5.5 h-5.5 cursor-pointer ${props.page === 'profile' ? 'text-red-700' : 'text-gray-500'}`} />
-            </div>
-        </nav>
+        <div>
+            {/* Hamburger Menu Button - Only visible on small screens */}
+            <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="fixed top-5.5 left-2 z-50 p-2 rounded-lg sm:hidden"
+            >
+                {isMenuOpen ? (
+                    ''
+                ) : (
+                    <Menu className="w-5 h-5 text-gray-500" />
+                )}
+            </button>
+
+            {/* Overlay for mobile */}
+            {isMenuOpen && (
+                <div
+                    onClick={() => setIsMenuOpen(false)}
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+                />
+            )}
+
+            {/* Sidebar Navigation */}
+            <nav 
+                className={`w-[65px] h-screen bg-[#121212] border-r border-gray-800 flex flex-col justify-between items-center fixed z-40 transition-transform duration-300 ease-in-out
+                    ${isMenuOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'}
+                `}
+                style={{ paddingBlock: '17px' }}
+            >
+                <div className="flex flex-col justify-start items-center gap-5">
+                    {navItems.map((item) => (
+                        <button
+                            key={item.id}
+                            data-item = {item.id}
+                            onClick={handleNavItemClick}
+                            className={`nav transition-colors cursor-pointer ${activeNav === item.id ? 'text-red-700' : 'text-gray-500'}`}
+                        >
+                            {item.icon}
+                        </button>
+                    ))}
+                </div>
+                <div className="flex flex-col justify-start items-center gap-4">
+                    <Settings className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
+                    <Bell className="w-5.5 h-5.5 text-gray-500 cursor-pointer hover:text-red-700 transition-colors" />
+                    <User onClick={handleProfileClick} className={`w-5.5 h-5.5 cursor-pointer ${props.page === 'profile' ? 'text-red-700' : 'text-gray-500'}`} />
+                </div>
+            </nav>
+        </div>
     )
 }
 

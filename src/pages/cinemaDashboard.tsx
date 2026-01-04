@@ -230,7 +230,7 @@ const CinemaOwnerDashboard = () => {
             <SidebarNavigation page={'home'} />
 
             {/* Main Content */}
-            <div className='flex-1 ml-[65px]  text-white px-5 sm:px-7 py-4'>
+            <div className='flex-1 ml-[25px] sm:ml-[65px] text-white px-5 sm:px-7 py-4'>
 
                 {/* Header */}
                 <div className='flex flex-wrap justify-between items-center mb-6'>

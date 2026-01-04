@@ -19,3 +19,8 @@ export async function verifyUser(email: string) {
     const res = await api.put('/auth/user/verify', {email: email}, { headers: { "Content-Type": 'application/json' } });
     return res;
 }
+
+export async function logout() {
+    const res = await api.get('/user/logout', { withCredentials: true });
+    return res;
+}

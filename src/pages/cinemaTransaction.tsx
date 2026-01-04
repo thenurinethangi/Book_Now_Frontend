@@ -140,7 +140,7 @@ function CinemaTransaction() {
             <SidebarNavigation page={'transactions'} />
 
             {/* Main Content */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
+            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
                 {/* Header */}
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>

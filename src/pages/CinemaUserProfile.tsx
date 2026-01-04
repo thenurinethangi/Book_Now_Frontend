@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Lock, LogOut, Save, X, Building2, FileText, Hash, Globe } from 'lucide-react';
 import SidebarNavigation from '../components/cinema/SidebarNavigation';
+import { toast } from 'react-toastify';
+import { logout } from '../services/cinema/auth';
+import { useNavigate } from 'react-router-dom';
 
 function CinemaUserProfile() {
+
+  const navigate = useNavigate();
+
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingCinema, setIsEditingCinema] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -84,9 +90,16 @@ function CinemaUserProfile() {
     setIsChangingPassword(false);
   };
 
-  const handleLogout = () => {
-    console.log('Logging out...');
-  };
+  async function handleLogout() {
+    try {
+      const res = await logout();
+      localStorage.removeItem('accessToken');
+      navigate('/cinema/landing');
+    }
+    catch (e) {
+      toast.error('Failed to logout!');
+    }
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -104,7 +117,7 @@ function CinemaUserProfile() {
       <SidebarNavigation page={'profile'} />
 
       {/* Main Content */}
-      <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
+      <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[20px] sm:ml-[65px]'>
         {/* Header */}
         <div className='flex justify-between items-center mb-[22px]'>
           <div>
@@ -149,10 +162,10 @@ function CinemaUserProfile() {
                 </div>
               </div>
 
-              <div className='mt-6 pt-6 border-t border-gray-800'>
+              <div className='mt-6 pt-6 border-t border-gray-800 flex justify-center'>
                 <button
                   onClick={handleLogout}
-                  className='w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-colors text-[13px] font-medium'
+                  className='flex items-center justify-center gap-2 rounded-lg transition-colors text-[13px] font-medium cursor-pointer'
                 >
                   <LogOut className='w-4 h-4' />
                   Logout
