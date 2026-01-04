@@ -9,11 +9,14 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+
 function MyBookings() {
 
     const navigate = useNavigate();
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
@@ -30,7 +33,10 @@ function MyBookings() {
 
     useEffect(() => {
         if (!loading && !user) {
-            navigate('/');
+            navigate('/', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('USER')) {
+            navigate('/', { replace: true });
         }
     }, [loading, user, navigate]);
 
@@ -123,7 +129,7 @@ function MyBookings() {
                                     <div className='flex-1 flex flex-col justify-center items-center md:items-start h-[120px]'>
                                         <div>
                                             <h2 className='text-[15px] font-medium mb-1 text-center md:text-start'>{booking?.movie.title}</h2>
-                                            <p className='text-[13px] text-white/75 mb-4 text-center md:text-start'>{booking?.cinema.cinemaName}-{booking?.screen.screenName}</p>
+                                            <p className='text-[13px] text-white/75 mb-4 text-center md:text-start'>{booking?.cinema?.cinemaName}-{booking?.screen?.screenName}</p>
 
                                             <div className='space-y-0.5'>
                                                 <p className='text-[12px] text-white/50 text-center md:text-start'>

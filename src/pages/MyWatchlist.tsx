@@ -10,11 +10,14 @@ import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { getAllWatchlistMovies, removeMovieFromWatchlist } from '../services/user/watchlistService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+
 function MyWatchlist() {
 
     const navigate = useNavigate();
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const [signInVisible, setSignInVisible] = useState(false);
     const [signUpVisible, setSignUpVisible] = useState(false);
@@ -31,7 +34,10 @@ function MyWatchlist() {
 
     useEffect(() => {
         if (!loading && !user) {
-            navigate('/');
+            navigate('/', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('USER')) {
+            navigate('/', { replace: true });
         }
     }, [loading, user, navigate]);
 

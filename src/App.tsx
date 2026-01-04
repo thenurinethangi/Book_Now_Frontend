@@ -64,6 +64,7 @@ import { useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/slices/authSlice";
 import type { AppDispatch } from "./store/store";
 import { useEffect } from 'react';
+import CinemaProtectedRoute from './components/cinema/CinemaProtectedRoute';
 
 function App() {
 
@@ -71,7 +72,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -126,7 +127,7 @@ function App() {
           <Route path='/cinema/:id' element={<SingleCinemaPage />}></Route>
           <Route path='/mybookings' element={<MyBookings />}></Route>
           <Route path='/mywatchlist' element={<MyWatchlist />}></Route>
-          <Route path='/cinema/profile' element={<CinemaUserProfile />}></Route>
+          <Route path='/cinema/profile' element={<CinemaProtectedRoute><CinemaUserProfile /></CinemaProtectedRoute>}></Route>
         </Routes>
       </BrowserRouter>
     </>

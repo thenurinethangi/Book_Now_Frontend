@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import logo2 from '../../assets/images/attachment_69652587-removebg-preview.png'
 import { useEffect, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
-import { useAuth } from "../../context/authContext";
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 function Navigation(props: any) {
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const navigate = useNavigate();
 
@@ -25,7 +27,12 @@ function Navigation(props: any) {
             props.setSignInVisible(true);
         }
         else {
-            setShowProfileMenu(true);
+            if (!user.roles.includes('USER')) {
+                props.setSignInVisible(true);
+            }
+            else {
+                setShowProfileMenu(true);
+            }
         }
     }
 

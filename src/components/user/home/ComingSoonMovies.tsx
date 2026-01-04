@@ -7,11 +7,14 @@ import ComingSoonMovieFilterModel from '../movie/ComingSoonMovieFilterModel';
 import { useAuth } from '../../../context/authContext';
 import { addMovieToWatchlist, getAllWatchlistMovies, removeMovieFromWatchlist } from '../../../services/user/watchlistService';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
+
 function ComingSoonMovies(props: any) {
 
     const navigate = useNavigate();
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const [comingSoonMovies, setComingSoonMovies] = useState<any>([]);
     const [immutableComingSoonMovies, setImmutableComingSoonMovies] = useState([]);

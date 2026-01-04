@@ -5,16 +5,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getCurrentUserData, signIn } from '../../services/user/authService';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../context/authContext';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../store/slices/authSlice';
+import type { RootState, AppDispatch } from '../../store/store';
 
 const SignIn: React.FC = (props: any) => {
 
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const { setUser } = useAuth()
+    const auth = useSelector((state: RootState) => state.auth);
 
     const [isVisible, setIsVisible] = useState(false);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -49,7 +51,8 @@ const SignIn: React.FC = (props: any) => {
 
             const res2 = await getCurrentUserData();
             console.log(res2.data.data);
-            setUser(res2.data.data);
+
+            dispatch(setUser(res2.data.data));
 
             setIsVisible(false);
             setTimeout(() => {
@@ -88,7 +91,7 @@ const SignIn: React.FC = (props: any) => {
 
                 <div className="flex justify-center items-center space-x-3">
                     <div className="flex items-center justify-center z-10">
-                        <img src={logo2} width={'120px'}></img>
+                        <img src={logo2} width={'120px'} />
                     </div>
                 </div>
 
@@ -97,8 +100,8 @@ const SignIn: React.FC = (props: any) => {
                 </div>
 
                 <form onSubmit={handleSignIn} className='flex flex-col gap-4 font-[Poppins]'>
-                    <input onChange={(e) => setEmail(e.target.value)} value={email} type='email' placeholder='Email' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
-                    <input onChange={(e) => setPassword(e.target.value)} value={password} type='password' placeholder='Password' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0'></input>
+                    <input onChange={(e) => setEmail(e.target.value)} value={email} type='email' placeholder='Email' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0' />
+                    <input onChange={(e) => setPassword(e.target.value)} value={password} type='password' placeholder='Password' className='w-[440px]  h-12 px-3 py-[15px] border border-[#616161] text-[14.5px] bg-[#353535] rounded-sm text-white focus:outline-none focus:ring-0' />
                     <button className='w-[440px] bg-red-900 border border-red-800 rounded-sm font-semibold text-[15px] px-6 py-3 cursor-pointer'>Sign in</button>
                 </form>
 

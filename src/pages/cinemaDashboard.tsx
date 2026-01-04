@@ -29,28 +29,14 @@ const CinemaOwnerDashboard = () => {
         init();
     }, []);
 
-    // useEffect(() => {
-    //     if (!loading && !user) {
-    //         navigate('/cinema/landing', { replace: true });
-    //     }
-    //     if (!loading && user && !user.roles.includes('CINEMA')) {
-    //         navigate('/cinema/landing', { replace: true });
-    //     }
-    // }, [loading, user, navigate]);
-
-    // if (loading) {
-    //     return null;
-    // }
-
-    // if (!user) {
-    //     navigate("/cinema/landing", { replace: true });
-    //     return null;
-    // }
-
-    // if (!user.roles?.includes("CINEMA")) {
-    //     navigate("/cinema/landing", { replace: true });
-    //     return null;
-    // }
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/cinema/landing', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('CINEMA')) {
+            navigate('/cinema/landing', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     async function init() {
         try {

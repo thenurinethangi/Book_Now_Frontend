@@ -30,7 +30,9 @@ function SidebarNavigation(props: any) {
         }
         setActiveNav(item);
         navigate('/cinema/'+item);
-        setIsMenuOpen(false); // Close menu after navigation on mobile
+        setIsMenuOpen(false); 
+
+        // window.location.reload();
     }
 
     function handleProfileClick() {

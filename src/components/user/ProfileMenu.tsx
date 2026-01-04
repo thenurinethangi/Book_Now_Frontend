@@ -1,9 +1,15 @@
 import { useEffect, useRef } from "react";
-import { logout } from "../../services/user/authService";
+import { userLogout } from "../../services/user/authService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/slices/authSlice";
+import type { AppDispatch } from "../../store/store";
+
 function ProfileMenu({ closeMenu }: { closeMenu: () => void }) {
+
+    const dispatch = useDispatch<AppDispatch>();
 
     const navigate = useNavigate();
 
@@ -20,13 +26,16 @@ function ProfileMenu({ closeMenu }: { closeMenu: () => void }) {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [closeMenu]);
 
-    async function handleLogout(){
-        try{
-            const res = await logout();
+    async function handleLogout() {
+        try {
+            const res = await userLogout();
             localStorage.removeItem('accessToken');
             window.location.reload();
+
+            dispatch(logout());
+            navigate('/cinema/landing', { replace: true });
         }
-        catch(e){
+        catch (e) {
             toast.error('Failed to logout!');
         }
     }
@@ -40,10 +49,10 @@ function ProfileMenu({ closeMenu }: { closeMenu: () => void }) {
                 <li className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Profile
                 </li>
-                <li onClick={(e) => navigate('/mywatchlist') } className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
+                <li onClick={(e) => navigate('/mywatchlist')} className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Watchlist
                 </li>
-                <li onClick={(e) => navigate('/mybookings') } className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
+                <li onClick={(e) => navigate('/mybookings')} className="px-5 py-3 text-[14.5px] text-[#e0e0e0] hover:bg-[#1c2128] cursor-pointer transition-colors">
                     Bookings
                 </li>
 

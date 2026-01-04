@@ -29,11 +29,10 @@ function CinemaUserProfile() {
   const [cinemaDetails, setCinemaDetails] = useState({});
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate('/cinema/landing', { replace: true });
-    }
-    if (!loading && user && !user.roles.includes('CINEMA')) {
-      navigate('/cinema/landing', { replace: true });
+    if (!loading) { 
+      if (!user || !user.roles?.includes('CINEMA')) {
+        navigate('/cinema/landing', { replace: true });
+      }
     }
   }, [loading, user, navigate]);
 

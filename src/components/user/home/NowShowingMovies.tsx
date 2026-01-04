@@ -5,13 +5,15 @@ import { Search, User, Tags, Bookmark } from "lucide-react";
 import { getAllNowShowingMovies, getMoviesBookingsCount } from '../../../services/user/movieService';
 import ShowingMovieFilterModel from '../movie/ShowingMovieFilterModel';
 import { addMovieToWatchlist, getAllWatchlistMovies, removeMovieFromWatchlist } from '../../../services/user/watchlistService';
-import { useAuth } from '../../../context/authContext';
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
 
 function NowShowingMovies(props: any) {
 
     const navigate = useNavigate();
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const [nowShowingMovies, setNowShowingMovies] = useState<any>([]);
     const [immutableNowShowingMovies, setImmutableNowShowingMovies] = useState([]);

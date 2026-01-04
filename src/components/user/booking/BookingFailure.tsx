@@ -8,7 +8,9 @@ import SignUp from "../../../components/user/SignUp";
 import OTPModel from "../../../components/user/OTPModel";
 import { getShowtimeDetailsById } from "../../../services/user/showtimeService";
 import { deleteTransactionAndBookingIfErrorInBooking, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
-import { useAuth } from "../../../context/authContext";
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
 
 function BookingFailure() {
 
@@ -16,7 +18,7 @@ function BookingFailure() {
 
     const { id } = useParams();
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const tabsRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,7 +47,10 @@ function BookingFailure() {
 
     useEffect(() => {
         if (!loading && !user) {
-            navigate('/');
+            navigate('/', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('USER')) {
+            navigate('/', { replace: true });
         }
     }, [loading, user, navigate]);
 

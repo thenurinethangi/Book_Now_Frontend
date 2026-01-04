@@ -4,13 +4,15 @@ import tk from "../../../assets/images/blank-golden-coupon-or-ticket-golden-stic
 import { useNavigate, useParams } from "react-router-dom";
 import Navigation from "../Navigation";
 import { confirmTransactionAndBookingIfBookingComplete, getShowtimeDetailsByPaymentId } from "../../../services/user/paymentService";
-import { useAuth } from "../../../context/authContext";
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
 
 function BookingSuccess() {
 
     const { id } = useParams();
 
-    const { user, loading } = useAuth();
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
     const navigate = useNavigate();
 
@@ -43,10 +45,12 @@ function BookingSuccess() {
 
     useEffect(() => {
         if (!loading && !user) {
-            navigate('/');
+            navigate('/', { replace: true });
+        }
+        if (!loading && user && !user.roles.includes('USER')) {
+            navigate('/', { replace: true });
         }
     }, [loading, user, navigate]);
-
 
     async function loadShowtimeDetails() {
         if (!id) {
