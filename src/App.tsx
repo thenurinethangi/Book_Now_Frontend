@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
@@ -39,10 +39,7 @@ import CinemaMovie from './pages/cinemaMovie'
 import CinemaAddMovie from './pages/cinemaAddMovie'
 import CinemaRequestMovie from './pages/cinemaMovieRequest'
 import OTPModel from './components/cinema/OTPModel';
-import RowColQsModel from './components/cinema/RowColQsMpdel';
-import Temp from './pages/temp';
 import AdminHeroPosters from './pages/adminHero';
-import Payment from './components/user/booking/Payment';
 import PaymentTwo from './components/user/booking/py';
 import BookingFailure from './components/user/booking/BookingFailure';
 import BookingSuccess from './components/user/booking/BookingSuccess';
@@ -53,12 +50,9 @@ import MoviePage from './pages/MoviePage';
 import CinemaPage from './pages/CinemaPage';
 import SingleCinemaPage from './pages/SingleCinemaPage';
 import ScrollToTop from './components/user/ScrollToTop';
-import { AuthProvider } from './context/authContext';
 import MyBookings from './pages/MyBookings';
 import MyWatchlist from './pages/MyWatchlist';
 import CinemaUserProfile from './pages/CinemaUserProfile';
-import { Provider } from "react-redux";
-import { store } from "./store/store";
 
 import { useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/slices/authSlice";
