@@ -19,7 +19,7 @@ function AdminUser() {
             <SidebarNavigation page={'user'} />
 
             {/* content right side */}
-            <div className='w-full min-h-screen text-white px-7 py-3 pt-7 ml-[65px]'>
+            <div className='w-full min-h-screen text-white py-3 pt-7 px-3 sm:px-7 ml-[27px] sm:ml-[65px]'>
 
                 {/* title */}
                 <div className='flex justify-between items-center mb-[17px]'>

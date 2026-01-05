@@ -35,7 +35,7 @@ function AdminScreen() {
             <SidebarNavigation page={"screen"} />
 
             {/* content right side */}
-            <div className="w-full h-min-screen text-white px-7 py-3 pt-7 ml-[65px]">
+            <div className="w-full h-min-screen text-white py-3 pt-7 px-3 sm:px-7 ml-[28px] sm:ml-[65px]">
                 {/* title */}
                 <div className="flex flex-wrap gap-2.5 justify-between items-center mb-[17px]">
                     <div className='mr-27'>

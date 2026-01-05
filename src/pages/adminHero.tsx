@@ -201,7 +201,7 @@ function AdminHeroPosters() {
             <SidebarNavigation page={"hero"} />
 
             {/* Main Content */}
-            <div className="w-full min-h-screen text-white px-7 py-3 pt-7 ml-[65px]">
+            <div className="w-full min-h-screen text-white py-3 pt-7 px-3 sm:px-7 ml-[28px] sm:ml-[65px]">
                 {/* Header */}
                 <div className="flex flex-wrap gap-2.5 justify-between items-center mb-[17px]">
                     <div className='mr-27'>

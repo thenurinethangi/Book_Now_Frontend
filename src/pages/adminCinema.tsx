@@ -42,7 +42,7 @@ function AdminCinema() {
             <SidebarNavigation page={'cinema'} />
 
             {/* content right side */}
-            <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
+            <div className='flex-1 text-white px-3 sm:px-7 ml-[28px] sm:ml-[65px] py-3 pt-7 overflow-auto'>
                 {/* title */}
                 <div className='flex flex-wrap gap-2.5 justify-between items-center mb-[17px]'>
                     <div className='mr-27'>

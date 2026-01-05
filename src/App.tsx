@@ -59,6 +59,7 @@ import { fetchCurrentUser } from "./store/slices/authSlice";
 import type { AppDispatch } from "./store/store";
 import { useEffect } from 'react';
 import CinemaProtectedRoute from './components/cinema/CinemaProtectedRoute';
+import AdminUserProfile from './pages/AdminUserProfile';
 
 function App() {
 
@@ -122,6 +123,7 @@ function App() {
           <Route path='/mybookings' element={<MyBookings />}></Route>
           <Route path='/mywatchlist' element={<MyWatchlist />}></Route>
           <Route path='/cinema/profile' element={<CinemaProtectedRoute><CinemaUserProfile /></CinemaProtectedRoute>}></Route>
+          <Route path='/admin/profile' element={<AdminUserProfile />}></Route>
         </Routes>
       </BrowserRouter>
     </>

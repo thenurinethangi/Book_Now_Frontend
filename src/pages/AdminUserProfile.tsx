@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Lock, LogOut, Save, X } from 'lucide-react';
-import SidebarNavigation from '../components/cinema/SidebarNavigation';
+import SidebarNavigation from '../components/admin/SidebarNavigation';
 
-function CinemaUserProfile() {
+function AdminUserProfile() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
@@ -78,7 +78,7 @@ function CinemaUserProfile() {
       <SidebarNavigation page={'profile'} />
 
       {/* Main Content */}
-      <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
+      <div className='flex-1 text-white px-3 sm:px-7 ml-[27px] sm:ml-[65px] py-3 pt-7 overflow-auto'>
         {/* Header */}
         <div className='flex justify-between items-center mb-[22px]'>
           <div>
@@ -336,4 +336,4 @@ function CinemaUserProfile() {
   );
 }
 
-export default CinemaUserProfile;
+export default AdminUserProfile;
