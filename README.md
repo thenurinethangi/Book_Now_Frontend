@@ -20,7 +20,7 @@ Overall, Synema delivers a modern, scalable, and real-world movie booking experi
 
 ## Technologies and tools used
 
-### Frontend
+#### Frontend
 
 - React.js (with TypeScript) -
 Used to build a component-based, scalable, and type-safe user interface for the application.
@@ -37,7 +37,7 @@ Manages client-side routing and role-based navigation within the application.
 - Axios -
 Used for handling HTTP requests and communication with the backend API.
 
-### Backend
+#### Backend
 
 - Node.js -
 Provides the runtime environment for executing server-side JavaScript.
@@ -60,7 +60,7 @@ Used for secure authentication and role-based authorization.
 - Nodemailer -
 Sends email ex: booking confirmation containing ticket details, email verify otp
 
-### AI & Advanced Features
+#### AI & Advanced Features
 
 - Grok AI Model -
 Generates AI-powered movie summaries to enhance the movie discovery experience.
@@ -68,7 +68,7 @@ Generates AI-powered movie summaries to enhance the movie discovery experience.
 - Redis-based Concurrency Control -
 Ensures consistent seat availability when multiple users attempt bookings simultaneously.
 
-### Development & Deployment
+#### Development & Deployment
 
 - Git & GitHub -
 Used for version control and project collaboration.
@@ -88,3 +88,18 @@ This project consists of two separate applications:
 - Backend – Node.js & Express REST API
 
 Both applications must be set up and run separately.
+
+#### Prerequisites
+
+Ensure the following are installed on your system:
+
+- Node.js (v18 or later)
+- npm or yarn
+- MongoDB (local or cloud instance)
+- Redis Server (for seat locking functionality)
+
+#### Frontend Setup
+
+1. Clone the Frontend Repository
+git clone https://github.com/your-username/synema-frontend.git
+cd synema-frontend
