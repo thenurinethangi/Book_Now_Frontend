@@ -33,7 +33,7 @@ function AdminUser() {
                 </div>
 
                 {/* tabs */}
-                <div className="flex items-center gap-6 border-b border-gray-800 mb-6 mt-7">
+                <div className="flex flex-wrap items-center gap-6 border-b border-gray-800 mb-6 mt-7">
                     <button
                         onClick={() => setActiveTab("users")}
                         className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${activeTab === "users"

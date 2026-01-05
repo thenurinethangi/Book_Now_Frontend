@@ -34,21 +34,21 @@ function Users(props: any) {
     return (
         <div className='bg-[#1e1e1e] rounded-lg border border-gray-800 overflow-hidden'>
             {/* Table Header */}
-            <div className='flex justify-between items-center px-5 py-4 border-b border-gray-800'>
+            <div className='flex flex-wrap gap-3 justify-between items-center px-5 py-4 border-b border-gray-800'>
                 <div>
                     <h3 className='text-[18px] font-medium text-white mb-1'>Users</h3>
                     <p className='text-[12px] text-gray-500'>All registered users in synema</p>
                 </div>
-                <div className='flex items-center gap-3'>
+                <div className='flex flex-wrap items-center gap-3'>
                     <div className="relative">
                         <input
                             type="text"
                             placeholder="Search..."
-                            className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900 w-64"
+                            className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700 w-64"
                         />
                         <Search className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 -translate-y-1/2" />
                     </div>
-                    <select className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-red-900">
+                    <select className="bg-[#121212] border border-gray-800 rounded-lg px-4 py-2 text-[12px] text-gray-400 focus:outline-none focus:border-gray-700">
                         <option>Last 7 Days</option>
                         <option>Last 30 Days</option>
                         <option>Last 90 Days</option>
