@@ -13,6 +13,7 @@ import {
 import SidebarNavigation from "../components/admin/SidebarNavigation";
 import { addNewHeroPoster, deleteAHeroPoster, getAllHeros, getAllMovies } from "../services/admin/heroService";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/user/LoadingSpinner";
 
 
 const ConfirmToast = (props: any) => {
@@ -55,6 +56,8 @@ function AdminHeroPosters() {
         video: "",
     });
     const [allMovies, setAllMovies] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         init();
@@ -115,6 +118,7 @@ function AdminHeroPosters() {
     };
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         console.log("Submitting hero poster:", formData);
 
         const data = new FormData();
@@ -132,6 +136,8 @@ function AdminHeroPosters() {
             console.log(e);
             toast.error('Failed to add new hero poster, please try again later!');
         }
+
+        setIsLoading(false);
 
         setShowAddModal(false);
         resetForm();
@@ -197,8 +203,8 @@ function AdminHeroPosters() {
             {/* Main Content */}
             <div className="w-full min-h-screen text-white px-7 py-3 pt-7 ml-[65px]">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-[17px]">
-                    <div>
+                <div className="flex flex-wrap gap-2.5 justify-between items-center mb-[17px]">
+                    <div className='mr-27'>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
                                 <span className="text-[18px] font-medium text-gray-500">
@@ -508,9 +514,10 @@ function AdminHeroPosters() {
                             <div className="flex gap-3 mt-6 pt-5 border-t border-[#2a2a2a]">
                                 <button
                                     onClick={handleSubmit}
-                                    className="flex-1 px-4 py-2.5 bg-[#f5cc50] text-black text-[13px] font-medium rounded hover:bg-[#f5d670] transition-colors"
+                                    className="flex-1 flex justify-center items-center gap-2.5 px-4 py-2.5 bg-[#f5cc50] text-black text-[13px] font-medium rounded hover:bg-[#f5d670] transition-colors"
                                 >
                                     {editingPoster ? "Update Hero Poster" : "Add Hero Poster"}
+                                    {isLoading ? <LoadingSpinner /> : ''}
                                 </button>
                                 <button
                                     onClick={() => {
