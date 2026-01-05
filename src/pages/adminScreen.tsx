@@ -37,8 +37,8 @@ function AdminScreen() {
             {/* content right side */}
             <div className="w-full h-min-screen text-white px-7 py-3 pt-7 ml-[65px]">
                 {/* title */}
-                <div className="flex justify-between items-center mb-[17px]">
-                    <div>
+                <div className="flex flex-wrap gap-2.5 justify-between items-center mb-[17px]">
+                    <div className='mr-27'>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
                                 <span className="text-[18px] font-medium text-gray-500">
@@ -61,7 +61,7 @@ function AdminScreen() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-4 gap-4 mb-6 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 mt-8">
                     <div className="bg-[#1e1e1e] rounded-lg p-4 border border-gray-800">
                         <div className="flex items-center justify-between">
                             <div>
@@ -103,7 +103,7 @@ function AdminScreen() {
                 </div>
 
                 {/* tabs */}
-                <div className="flex items-center gap-6 border-b border-gray-800 mb-6">
+                <div className="flex flex-wrap items-center gap-6 border-b border-gray-800 mb-6">
                     <button
                         onClick={() => setActiveTab("manage")}
                         className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${activeTab === "manage"

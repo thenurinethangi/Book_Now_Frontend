@@ -75,9 +75,9 @@ function ActiveScreens(props: any) {
 
 
     return (
-        <div className='grid grid-cols-5 gap-[12px] mt-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:gap-7 md:gap-7 lg:gap-3 justify-items-center mt-6'>
             {activeScreens.map((screen: any) => (
-                <div key={screen._id} className='rounded-md bg-[#1e1e1e] h-[360px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
+                <div key={screen._id} className='rounded-md bg-[#1e1e1e] w-[217.85px] h-[360px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
                     <div className='h-[45%] relative overflow-hidden'>
                         <button onClick={(e) => { setActiveOptionsId(screen._id); e.stopPropagation(); }} className='absolute right-1 top-1 z-[50] w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
                             <svg className='w-4 h-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
