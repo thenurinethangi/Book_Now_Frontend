@@ -24,6 +24,12 @@ export const deactivateACinema = async (id: string) => {
     return res;
 }
 
+export const getAllDeactivatedCinemas = async () => {
+
+    const res = await api.get('/cinema/deactive', { withCredentials: true });
+    return res;
+}
+
 export const makeCinemaApprove = async (id: string) => {
 
     const res = await api.put('/cinema/activate/'+id, { withCredentials: true });

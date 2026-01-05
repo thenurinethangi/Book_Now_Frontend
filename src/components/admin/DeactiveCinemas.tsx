@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { MapPin, Tv, Star, Trash2, X } from "lucide-react";
-import { deactivateACinema, getAllActiveCinemas } from '../../services/admin/cinemaService';
-import { toast } from "react-toastify";
+import { useEffect, useState } from 'react'
+import { MapPin, Tv, Star, CircleFadingArrowUp, CircleX, BrushCleaning, Trash, Trash2, Minus, X, Check } from "lucide-react";
+import { deleteRejectedCinema, getAllActiveCinemas, getAllDeactivatedCinemas, getAllRejectedCinemas, makeCinemaApprove } from '../../services/admin/cinemaService';
+import { toast } from 'react-toastify';
 
 const ConfirmToast = (props: any) => {
-    const { closeToast, onConfirm } = props;
+    const { closeToast, onConfirm, title, desc } = props;
 
     return (
         <div className='font-[Poppins]'>
-            <p className='text-[17px] mb-1.5'>Deactivate cinema?</p>
-            <p className='text-[14px] text-gray-500'>Does this cinema violate the rules? If so, you can proceed with deactivation; otherwise, you cannot.</p>
+            <p className='text-[16.5px] mb-1.5'>{title}</p>
+            <p className='text-[14px] text-gray-500'>{desc}</p>
             <div className="flex gap-3 mt-3">
                 <button onClick={closeToast} className='text-[13px] font-medium px-2 py-2 border border-gray-800 rounded-md'>Cancel</button>
                 <button onClick={() => { onConfirm(); closeToast(); }} className='text-[13px] font-medium px-2 h-[32px] bg-red-700 rounded-md'>
@@ -20,20 +20,20 @@ const ConfirmToast = (props: any) => {
     );
 };
 
-export function askConfirm(onConfirm: () => void) {
+export function askConfirm(onConfirm: () => void, title: string, desc: string) {
     toast((toastProps: any) => (
-        <ConfirmToast {...toastProps} onConfirm={onConfirm} />
+        <ConfirmToast {...toastProps} onConfirm={onConfirm} title={title} desc={desc} />
     ));
 }
 
 
-function ApprovedCinemas(props: any) {
+function DeactiveCinemas(props: any) {
 
-    const [approvedCinemas, setApprovedCinemas] = useState([]);
+    const [deactiveCinemas, setDeactiveCinemas] = useState([]);
     const [activeOptionsId, setActiveOptionsId] = useState('');
 
     useEffect(() => {
-        loadAllApprovedCinemas();
+        loadAllDeactiveCinemas();
     }, []);
 
     useEffect(() => {
@@ -42,38 +42,37 @@ function ApprovedCinemas(props: any) {
         return () => window.removeEventListener("click", close);
     }, []);
 
-    async function loadAllApprovedCinemas() {
+    async function loadAllDeactiveCinemas() {
         try {
-            const res = await getAllActiveCinemas();
+            const res = await getAllDeactivatedCinemas();
             console.log(res.data.data);
-            setApprovedCinemas(res.data.data);
-            props.setStatsUpdate(props.statsUpdate+1);
+            setDeactiveCinemas(res.data.data);
+            props.setStatsUpdate(props.statsUpdate + 1);
         }
         catch (e) {
             console.log(e);
         }
     }
 
-    function handleDeactivateCinema(e: React.MouseEvent<HTMLButtonElement>) {
-        // e.stopPropagation();
+    function handleActivateCinema(e: React.MouseEvent<HTMLButtonElement>) {
 
         askConfirm(async () => {
             try {
-                const res = await deactivateACinema(activeOptionsId);
-                toast.success(`Successfully Deactivated Cinema ID ${activeOptionsId}`);
+                const res = await makeCinemaApprove(activeOptionsId);
+                toast.success(`Successfully Activated Cinema ID ${activeOptionsId}`);
                 setActiveOptionsId('');
-                loadAllApprovedCinemas();
+                loadAllDeactiveCinemas();
             }
             catch (e) {
                 toast.error(`Failed to Deactivated Cinema ID ${activeOptionsId}`);
             }
-        });
+        }, 'Activete This Cinema?', 'Are you sure you want to activate this cinema, granting them permission to login, schedule showtimes, manage movies, and receive bookings within the system?');
     }
 
 
     return (
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-items-center'>
-            {approvedCinemas.map((cinema: any) => (
+            {deactiveCinemas.length > 0 && deactiveCinemas.map((cinema: any) => (
                 <div key={cinema._id} className='rounded-lg bg-[#1e1e1e] w-[217.85px] h-[350px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden relative'>
                     <div className='h-[45%] relative overflow-hidden'>
                         <div className='absolute top-0 left-0 right-0 p-2.5 flex justify-end items-start z-10'>
@@ -111,13 +110,6 @@ function ApprovedCinemas(props: any) {
                                     <span className='text-[9px] text-[#999] font-bold'>{cinema.noOfScreens} SCREENS</span>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-2 flex-wrap'>
-                                {cinema.formats.map((tag: string, index: number) => (
-                                    <p key={index} className='px-1 py-0.5 bg-[#353535] text-[9px] rounded-xs text-[#999] font-bold'>
-                                        {tag}
-                                    </p>
-                                ))}
-                            </div>
                         </div>
                         <button className='text-red-700 text-[12px] font-medium hover:text-red-600 transition-colors flex items-center gap-1 mt-2'>
                             More details
@@ -132,19 +124,21 @@ function ApprovedCinemas(props: any) {
 
                         {/* Delete Option */}
                         <button
-                            onClick={handleDeactivateCinema}
+                            onClick={handleActivateCinema}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-900/20 transition-colors group"
                         >
-                            <X className="w-4 h-4 text-red-400 group-hover:text-red-300" />
-                            <p className="text-[13px] text-gray-300 group-hover:text-red-300">
-                                Deactivate
+                            <Check className="w-4 h-4 text-green-400 group-hover:text-green-300" />
+                            <p className="text-[13px] text-gray-300 group-hover:text-green-300">
+                                Activate
                             </p>
                         </button>
                     </div>
                 </div>
             ))}
+            {/* {rejectedCinemas.length <= 0 &&
+            <p className="text-[14px] text-white/70 font-light mt-2">No Rejected Cinemas</p> } */}
         </div>
     )
 }
 
-export default ApprovedCinemas
+export default DeactiveCinemas

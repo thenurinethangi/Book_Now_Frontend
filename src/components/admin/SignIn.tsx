@@ -34,7 +34,7 @@ const Signin = (props: any) => {
         const formdata = new FormData();
         formdata.append('email', email);
         formdata.append('password', password);
-        formdata.append('role','ADMIN');
+        formdata.append('role', 'ADMIN');
 
         try {
             const res = await signIn(formdata);

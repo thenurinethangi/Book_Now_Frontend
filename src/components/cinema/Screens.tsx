@@ -298,32 +298,37 @@ function Screens(props: any) {
                         <div className="h-[1px] bg-gray-700/50"></div>
 
                         {/* Toggle Status Option */}
-                        <button
-                            onClick={switchStatus}
-                            data-status={screen.status}
-                            data-bookings={screensBookings[index]?.bookings}
-                            data-showtimes={screensShowtimes[index]?.showtimes}
-                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#252525] transition-colors group"
-                        >
-                            {screen.status === "ACTIVE" ? (
-                                <>
-                                    <XCircle className="w-4 h-4 text-orange-400 group-hover:text-orange-300" />
-                                    <p className="text-[13px] text-gray-300 group-hover:text-white">
-                                        Mark Unavailable
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <CheckCircle className="w-4 h-4 text-green-400 group-hover:text-green-300" />
-                                    <p className="text-[13px] text-gray-300 group-hover:text-white">
-                                        Mark Available
-                                    </p>
-                                </>
-                            )}
-                        </button>
+                        {screen.status !== 'DEACTIVE' &&
+                            <button
+                                onClick={switchStatus}
+                                data-status={screen.status}
+                                data-bookings={screensBookings[index]?.bookings}
+                                data-showtimes={screensShowtimes[index]?.showtimes}
+                                className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#252525] transition-colors group"
+                            >
+                                {screen.status === "ACTIVE" && (
+                                    <>
+                                        <XCircle className="w-4 h-4 text-orange-400 group-hover:text-orange-300" />
+                                        <p className="text-[13px] text-gray-300 group-hover:text-white">
+                                            Mark Unavailable
+                                        </p>
+                                    </>
+                                )}
+                                {(screen.status === "UNAVAILABLE" || screen.status === "MAINTENANCE" || screen.status === "CLOSED") && (
+                                    <>
+                                        <CheckCircle className="w-4 h-4 text-green-400 group-hover:text-green-300" />
+                                        <p className="text-[13px] text-gray-300 group-hover:text-white">
+                                            Mark Available
+                                        </p>
+                                    </>
+                                )}
+                            </button>
+                        }
 
                         {/* Divider */}
-                        <div className="h-[1px] bg-gray-700/50"></div>
+                        {screen.status !== 'DEACTIVE' &&
+                            <div className="h-[1px] bg-gray-700/50"></div>
+                        }
 
                         {/* Delete Option */}
                         <button

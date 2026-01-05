@@ -5,6 +5,7 @@ import ApprovedCinemas from '../components/admin/ApprovedCinemas';
 import PendingCinemas from '../components/admin/PendingCinemas';
 import RejectedCinemas from '../components/admin/RejectedCinemas';
 import { getAllActiveCinemas, getAllPendingCinemas, getAllRejectedCinemas } from '../services/admin/cinemaService';
+import DeactiveCinemas from '../components/admin/DeactiveCinemas';
 
 function AdminCinema() {
 
@@ -43,8 +44,8 @@ function AdminCinema() {
             {/* content right side */}
             <div className='flex-1 text-white px-7 py-3 pt-7 overflow-auto ml-[65px]'>
                 {/* title */}
-                <div className='flex justify-between items-center mb-[17px]'>
-                    <div>
+                <div className='flex flex-wrap gap-2.5 justify-between items-center mb-[17px]'>
+                    <div className='mr-27'>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
                                 <span className='text-[18px] font-medium text-gray-500'>Home {`>`}</span>&nbsp;Cinema
@@ -64,7 +65,7 @@ function AdminCinema() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className='grid grid-cols-4 mb-6 bg-[#1e1e1e]/0 rounded-md p-4'>
+                <div className='grid grid-cols-2 gap-3 sm:gap-0 sm:grid-cols-4 mb-6 bg-[#1e1e1e]/0 rounded-md p-4'>
                     <div className=''>
                         <div className='flex flex-col items-center gap-3'>
                             <MapPin className='w-8 h-8 text-red-700 opacity-20' />
@@ -109,7 +110,7 @@ function AdminCinema() {
                 </div>
 
                 {/* tabs */}
-                <div className='flex items-center gap-6 border-b border-gray-800 mb-6'>
+                <div className='flex flex-wrap items-center gap-6 border-b border-gray-800 mb-6'>
                     <button
                         onClick={() => setActiveTab('approved')}
                         className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${activeTab === 'approved' ? 'border-b-2 border-red-900 text-white' : 'text-gray-500 hover:text-gray-300'}`}
@@ -128,6 +129,12 @@ function AdminCinema() {
                     >
                         Rejected
                     </button>
+                    <button
+                        onClick={() => setActiveTab('deactive')}
+                        className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${activeTab === 'deactive' ? 'border-b-2 border-red-900 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                    >
+                        Deactive
+                    </button>
                 </div>
 
                 {/* cinema container */}
@@ -138,6 +145,9 @@ function AdminCinema() {
 
                 {/* cinema container */}
                 {activeTab === 'rejected' ? <RejectedCinemas statsUpdate={statsUpdate} setStatsUpdate={setStatsUpdate} /> : ''}
+
+                {/* cinema container */}
+                {activeTab === 'deactive' ? <DeactiveCinemas statsUpdate={statsUpdate} setStatsUpdate={setStatsUpdate} /> : ''}
 
             </div>
         </div>

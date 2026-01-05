@@ -79,9 +79,9 @@ function RejectedCinemas(props: any) {
 
 
     return (
-        <div className='grid grid-cols-5 gap-[12px]'>
-            {rejectedCinemas.map((cinema: any) => (
-                <div key={cinema._id} className='rounded-lg bg-[#1e1e1e] h-[350px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-items-center'>
+            {rejectedCinemas.length > 0 && rejectedCinemas.map((cinema: any) => (
+                <div key={cinema._id} className='rounded-lg bg-[#1e1e1e] w-[217.85px] h-[350px] border border-gray-800 hover:border-gray-700 transition-all duration-300 group overflow-hidden'>
                     <div className='h-[45%] relative overflow-hidden'>
                         <div className='absolute top-0 left-0 right-0 p-2.5 flex justify-end items-start z-10'>
                             {/* <div className='flex items-center gap-1 px-2 py-1 bg-black/50 backdrop-blur-sm rounded text-[9px] font-bold text-white/88'>
@@ -129,6 +129,8 @@ function RejectedCinemas(props: any) {
                     </div>
                 </div>
             ))}
+            {/* {rejectedCinemas.length <= 0 &&
+            <p className="text-[14px] text-white/70 font-light mt-2">No Rejected Cinemas</p> } */}
         </div>
     )
 }
