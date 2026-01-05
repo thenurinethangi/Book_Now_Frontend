@@ -253,10 +253,10 @@ The administration module provides full control over the Synema platform. Admini
 This centralized administration ensures platform security, content moderation, and consistent system operation, supporting scalability and long-term maintenance of the application.
 
 #### Key Admin Features
-1. Cinema Approval & Management
+1. Cinema Approval & Management  
 Approve or reject cinema registrations and update cinema information as needed.
 
-2. Screen & Movie Management
+2. Screen & Movie Management  
 Add, edit, or remove screens and movies across all cinemas to maintain content consistency.
 
 3. Showtime Oversight
