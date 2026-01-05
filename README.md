@@ -17,7 +17,7 @@ Synema provides a dedicated interface for **cinema owners**, allowing cinemas to
 
 Overall, Synema delivers a modern, scalable, and real-world movie booking experience that reflects **industry-level application design and development practices**.
 
----
+
 ## Technologies and tools used
 
 #### Frontend
@@ -79,7 +79,7 @@ Used for testing and validating API endpoints during development.
 - Render / Railway -
 Used for deploying and hosting the frontend and backend services.
 
----
+
 ## Setup and Run Instructions
 
 This project consists of two separate applications:
@@ -166,3 +166,6 @@ npm run dev
 ```
 
 The backtend will be available at: [http://localhost:5000](http://localhost:5000)
+
+
+## Deployed URLs (frontend & backend)
