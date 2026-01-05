@@ -1,17 +1,9 @@
 import React from 'react'
 import { House, UserCog, SquareCheck, Disc, Search, Layers2, RotateCw, CircleQuestionMark, Bell, Clapperboard, Tv, Video, MapPinHouse, User, DollarSign, Ticket, Users, Film } from "lucide-react";
-import { MdAlarm, MdSlideshow } from "react-icons/md";
-import { BeakerIcon } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
-import ticket from '../assets/images/ticket-4-removebg-preview.png'
 import circle from '../assets/images/new-moon.png'
-import logo from '../assets/images/camera-roll-removebg-preview.png'
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
 import { GiMoneyStack } from "react-icons/gi";
 import { FaTicketAlt } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa";
-import { FaUserCog } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { MdMovie } from "react-icons/md";
 import { HiUser } from "react-icons/hi2";
 import {
