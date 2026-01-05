@@ -16,3 +16,45 @@ Synema provides a dedicated interface for **cinema owners**, allowing cinemas to
 **The Synema administration panel** provides system-level control for managing the entire platform. Administrators can approve or reject cinema registrations, manage cinemas, screens, and movies, and oversee user, cinema, and admin accounts. In addition, administrators are responsible for controlling primary system features such as promotional banners and featured content, ensuring data consistency, platform security, and smooth overall operation. This centralized administration layer enables effective monitoring, moderation, and scalability of the Synema platform.
 
 Overall, Synema delivers a modern, scalable, and real-world movie booking experience that reflects **industry-level application design and development practices**.
+
+## Technologies and tools used
+
+### Frontend
+
+- React.js (with TypeScript)
+Used to build a component-based, scalable, and type-safe user interface for the application.
+
+- Redux Toolkit
+Handles global state management, including user authentication, booking flow, and seat selection state.
+
+- Tailwind CSS
+Provides a modern, responsive, and consistent UI design with utility-first styling.
+
+- React Router
+Manages client-side routing and role-based navigation within the application.
+
+- Axios
+Used for handling HTTP requests and communication with the backend API.
+
+### Backend
+
+- Node.js
+Provides the runtime environment for executing server-side JavaScript.
+
+- Express.js
+Used to build a RESTful API and handle routing, middleware, and request processing.
+
+- MongoDB
+Serves as the primary database for storing users, cinemas, movies, screens, showtimes, and bookings.
+
+- Mongoose
+Acts as an ODM to model application data and enforce schema validation.
+
+- Redis
+Implements real-time seat locking with automatic timeout handling to prevent double bookings.
+
+- JWT (JSON Web Tokens)
+Used for secure authentication and role-based authorization.
+
+- Nodemailer
+Sends booking confirmation emails containing ticket details to users.
