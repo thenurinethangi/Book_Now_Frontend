@@ -98,7 +98,7 @@ Ensure the following are installed on your system:
 - MongoDB (local or cloud instance)
 - Redis Server (for seat locking functionality)
 
-#### Frontend Setup
+### Frontend Setup
 
 1. Clone the Frontend Repository
 ```bash
@@ -117,3 +117,52 @@ npm run dev
 ```
 
 The frontend will be available at: [http://localhost:5173](http://localhost:5173)
+
+### Backend Setup
+
+1. Clone the Backend Repository
+```bash
+git clone https://github.com/thenurinethangi/Book_Now_Backend.git
+cd synema-backend
+```
+
+2. Install Dependencies
+```bash
+npm install
+```
+
+3. Environment Configuration
+Create a .env file in the root directory and configure the following:
+```bash
+# Database Configuration
+DATABASE_URL=your_mongodb_connection_string
+
+# Authentication Secrets
+JWT_ACCESS_TOKEN_SECRET=your_jwt_access_token_secret
+JWT_REFRESH_TOKEN_SECRET=your_jwt_refresh_token_secret
+
+# Email Service (SMTP)
+EMAIL_USER=your_email_address
+EMAIL_PASS=your_app_specific_password
+
+# Payment Gateway
+STRIPE_SECRET_KEY=your_stripe_secret_key
+
+# Redis Configuration (Upstash)
+UPSTASH_REDIS_REST_URL=your_upstash_redis_rest_url
+UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_rest_token
+
+# AI Model API Keys
+GEMINI_API_KEY=your_google_gemini_api_key
+HF_API_KEY=your_huggingface_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
+OPENAI_API_KEY=your_openai_api_key
+GROQ_API_KEY=your_groq_api_key
+```
+
+4. Run the Server
+```bash
+npm run dev
+```
+
+The backtend will be available at: [http://localhost:5000](http://localhost:5000)
