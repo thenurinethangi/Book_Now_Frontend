@@ -101,5 +101,6 @@ Ensure the following are installed on your system:
 #### Frontend Setup
 
 1. Clone the Frontend Repository
+```bash
 git clone https://github.com/your-username/synema-frontend.git
 cd synema-frontend
