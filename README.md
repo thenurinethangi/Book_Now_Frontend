@@ -216,3 +216,63 @@ Save movies to a personal watchlist for future reference or planning.
 
 10. Cancel Booking
 Cancel existing bookings if plans change, with automatic release of locked seats.
+
+### Cinema Features
+Synema includes a dedicated portal for cinema owners to manage their operations. Cinemas can register on the platform, with access granted only after approval by the system administrator. Once approved, cinema users can log in to manage cinema profile details, add and configure screens, select movies to be shown, and create showtimes for each screen.
+
+Cinema users can monitor bookings made by customers for their cinema, allowing them to track seat occupancy and showtime performance. This role-based functionality enables cinemas to operate independently while remaining integrated within the Synema ecosystem.
+
+#### Key Cinema Features
+1. Cinema Registration & Approval
+Cinemas can register on the Synema platform; login access is only granted after admin approval.
+
+2. Manage Cinema Profile
+Update cinema information including name, location, contact details, and branding.
+
+3. Screen Management
+Add, edit, or remove screens within the cinema to organize movie showings.
+
+4. Movie Management
+Select movies to be shown in each screen and update movie details as required.
+
+5. Showtime Management
+Create, edit, and delete showtimes for each screen, ensuring accurate scheduling.
+
+6. View Bookings
+Monitor user bookings for their cinema, track seat occupancy, and manage seat availability.
+
+7. Seat Availability Management
+See real-time booked and available seats for each showtime.
+
+8. Integration with Platform Features
+Work seamlessly with user booking flow, email confirmations, and seat locking handled by Redis.
+
+### Admin Features
+The administration module provides full control over the Synema platform. Administrators can approve or reject cinema registrations, manage cinemas, screens, and movies, and oversee user, cinema, and admin accounts. The admin panel also allows control over core system features such as promotional banners and featured content.
+
+This centralized administration ensures platform security, content moderation, and consistent system operation, supporting scalability and long-term maintenance of the application.
+
+#### Key Admin Features
+1. Cinema Approval & Management
+Approve or reject cinema registrations and update cinema information as needed.
+
+2. Screen & Movie Management
+Add, edit, or remove screens and movies across all cinemas to maintain content consistency.
+
+3. Showtime Oversight
+Monitor and manage showtimes for all cinemas to ensure accurate scheduling.
+
+4. User & Admin Management
+Manage user accounts, cinema accounts, and other admin accounts, including access control.
+
+5. Booking Oversight
+Monitor bookings across all cinemas for operational tracking and reporting.
+
+6. Promotional Banners & Featured Content
+Add and manage banners, featured movies, and other platform-wide promotional content.
+
+7. System Security & Monitoring
+Oversee platform activity, enforce rules, and ensure secure operation of all functionalities.
+
+8. Integration with Platform Features
+Maintain seamless interaction with user booking flow, seat locking, and AI-powered movie summaries.
