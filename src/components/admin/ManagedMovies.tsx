@@ -120,7 +120,7 @@ function ManagedMovies() {
                                 <img
                                     src={movie.movie.posterImageUrl}
                                     alt={movie.movie.title}
-                                    className='w-[170px] h-full object-cover rounded-sm'
+                                    className='w-[170px] h-[252.02px] object-cover object-center rounded-sm'
                                 />
                             </div>
 

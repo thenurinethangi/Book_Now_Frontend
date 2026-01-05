@@ -4,6 +4,7 @@ import { X, Calendar, Clock, Globe, User, Paintbrush, TriangleAlert, Loader, Ima
 import { toast } from 'react-toastify';
 import { addNewMovie, deleteMovieRequest, getAllRequestMovie, rejectMovieRequest } from '../../services/admin/movieService';
 import blackBg from '../../assets/images/black-bg.jpg'
+import LoadingSpinner from '../user/LoadingSpinner';
 
 const ConfirmToast = (props: any) => {
     const { closeToast, onConfirm, title, description } = props;
@@ -53,8 +54,10 @@ function RequestedMovies() {
         rtRating: '',
         status: 'Coming Soon'
     });
-    const [posterImage,setPosterImage] = useState(null);
-    const [bannerImage,setBannerImage] = useState(null);
+    const [posterImage, setPosterImage] = useState(null);
+    const [bannerImage, setBannerImage] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         loadAllRequestMovies();
@@ -120,10 +123,11 @@ function RequestedMovies() {
     };
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         console.log('Movie added:', formData);
 
         const data = new FormData();
-        data.append('id',selectedRequest._id);
+        data.append('id', selectedRequest._id);
         data.append('title', formData.title);
         data.append('description', formData.description);
         data.append('releaseDate', formData.releaseDate);
@@ -156,6 +160,7 @@ function RequestedMovies() {
             console.log(e);
             toast.error('Failed add Movie, please try again later!');
         }
+        setIsLoading(false);
     };
 
     function handleDelete(request: any) {
@@ -649,9 +654,10 @@ function RequestedMovies() {
                             <div className="flex gap-3 mt-6 pt-5 border-t border-[#2a2a2a]">
                                 <button
                                     onClick={handleSubmit}
-                                    className="flex-1 px-4 py-2.5 bg-[#f5cc50] text-black text-[13px] font-medium rounded hover:bg-[#f5d670] transition-colors"
+                                    className="flex-1 flex justify-center items-center gap-2.5 px-4 py-2.5 bg-[#f5cc50] text-black text-[13px] font-medium rounded hover:bg-[#f5d670] transition-colors"
                                 >
                                     Add Movie to Platform
+                                    {isLoading ? <LoadingSpinner /> : ''}
                                 </button>
                                 <button
                                     onClick={() => setShowAddModal(false)}
