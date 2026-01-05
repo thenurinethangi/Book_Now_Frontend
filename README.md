@@ -177,3 +177,42 @@ The Synema application is deployed and accessible through the following live env
 
 - Backend API:
 <https://synema-backend-url.com>
+
+
+## Main Features and Relevant Screenshots
+
+### User Features
+Synema provides a comprehensive and user-friendly booking experience for moviegoers. Users can browse and search movies by title, genre, or cinema, allowing them to easily discover movies currently playing across multiple locations. Each movie includes detailed information such as trailers, cast details, ticket pricing, and AI-generated summaries powered by the Grok AI model.
+
+Users can view showtimes for a selected movie across different cinemas and screens, or alternatively search by cinema to find nearby cinemas and check the movies currently playing at that location. During the booking process, users select seats from an interactive seating layout. Selected seats are temporarily locked for 5 minutes to allow booking completion; if the session expires, the seats are released automatically and become available to other users. Upon successful booking, users receive a confirmation email containing their ticket, which can be presented at the cinema as proof of purchase. Additionally, users can save movies to a personal watchlist for future reference and cancel bookings if needed.
+
+#### Key User Features
+1. Browse Movies
+Users can explore all movies available on the platform, filtering by title, genre, or cinema.
+
+2. Movie Details & Trailer
+Each movie provides full details, including cast, synopsis, ticket price, and trailer playback.
+
+3. AI-Generated Summaries
+Synema generates concise movie summaries using the Grok AI model, helping users quickly understand the movie.
+
+4. Search by Cinema
+Users can find nearby cinemas and check which movies are currently playing, along with showtimes.
+
+5. Showtime Selection Across Cinemas
+View the available showtimes for a specific movie in different cinemas and screens.
+
+6. Seat Selection with Locking
+Interactive seat selection locks chosen seats for 5 minutes to prevent double booking.
+
+7. Booking & Payment
+Complete the booking process and pay securely through the platform.
+
+8. Booking Confirmation & Email Ticket
+Receive a ticket via email that can be used as proof at the cinema.
+
+9. Watchlist
+Save movies to a personal watchlist for future reference or planning.
+
+10. Cancel Booking
+Cancel existing bookings if plans change, with automatic release of locked seats.
