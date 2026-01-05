@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from "react-router-dom";
 import { MdAlarm, MdSlideshow } from "react-icons/md";
 import { House, UserCog, SquareCheck, Disc, Search, Layers2, RotateCw, CircleQuestionMark, Bell, Clapperboard, Tv, Video, MapPinHouse, User, DollarSign, Ticket, Film, CircleX, SquarePen, Eye, Trash, ChevronLeft, ChevronRight } from "lucide-react";
@@ -7,10 +7,25 @@ import SidebarNavigation from '../components/admin/SidebarNavigation';
 import Users from '../components/admin/Users';
 import Admins from '../components/admin/Admins';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 function AdminUser() {
 
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
+
     const [activeTab, setActiveTab] = useState('users');
+
+    useEffect(() => {
+        if (!loading) {
+            if (!user || !user.roles?.includes('ADMIN')) {
+                navigate('/admin/landing', { replace: true });
+            }
+        }
+    }, [loading, user, navigate]);
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] overflow-hidden'>

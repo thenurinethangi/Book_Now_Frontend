@@ -5,8 +5,17 @@ import { signIn } from '../../services/admin/auth';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { getCurrentUserData } from '../../services/user/authService';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../store/slices/authSlice';
+import type { RootState, AppDispatch } from '../../store/store';
 
 const Signin = (props: any) => {
+
+    const dispatch = useDispatch<AppDispatch>();
+
+    const auth = useSelector((state: RootState) => state.auth);
 
     const navigate = useNavigate();
 
@@ -39,6 +48,11 @@ const Signin = (props: any) => {
         try {
             const res = await signIn(formdata);
             localStorage.setItem('accessToken', res.data.data);
+
+            const res2 = await getCurrentUserData();
+            console.log(res2.data.data);
+
+            dispatch(setUser(res2.data.data));
 
             navigate('/admin/home');
         }

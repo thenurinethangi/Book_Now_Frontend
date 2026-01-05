@@ -7,13 +7,29 @@ import RejectedCinemas from '../components/admin/RejectedCinemas';
 import { getAllActiveCinemas, getAllPendingCinemas, getAllRejectedCinemas } from '../services/admin/cinemaService';
 import DeactiveCinemas from '../components/admin/DeactiveCinemas';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
+
 function AdminCinema() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState('approved');
     const [statsUpdate, setStatsUpdate] = useState(0);
     const [actCinema, setActCinema] = useState([]);
     const [pendCinema, setPendCinema] = useState([]);
     const [rejCinema, setRejCinema] = useState([]);
+
+    useEffect(() => {
+        if (!loading) {
+            if (!user || !user.roles?.includes('ADMIN')) {
+                navigate('/admin/landing', { replace: true });
+            }
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         initStats();
@@ -71,7 +87,7 @@ function AdminCinema() {
                             <MapPin className='w-8 h-8 text-red-700 opacity-20' />
                             <div className='flex flex-col items-center justify-center'>
                                 <p className='text-[12px] text-gray-500 mb-1'>Total Cinemas</p>
-                                <p className='text-[18px] font-medium text-white'>{actCinema.length+pendCinema.length+rejCinema.length}</p>
+                                <p className='text-[18px] font-medium text-white'>{actCinema.length + pendCinema.length + rejCinema.length}</p>
                             </div>
                         </div>
                     </div>

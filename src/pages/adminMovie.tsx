@@ -4,11 +4,25 @@ import SidebarNavigation from '../components/admin/SidebarNavigation';
 import ManagedMovies from '../components/admin/ManagedMovies';
 import RequestedMovies from '../components/admin/RequestedMovies';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 function AdminMovie() {
 
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
+
     const [activeTab, setActiveTab] = useState('manage');
 
+    useEffect(() => {
+        if (!loading) {
+            if (!user || !user.roles?.includes('ADMIN')) {
+                navigate('/admin/landing', { replace: true });
+            }
+        }
+    }, [loading, user, navigate]);
 
     return (
         <div className='bg-[#121212] flex font-[Poppins] overflow-hidden min-h-screen'>

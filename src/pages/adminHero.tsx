@@ -15,6 +15,10 @@ import { addNewHeroPoster, deleteAHeroPoster, getAllHeros, getAllMovies } from "
 import { toast } from "react-toastify";
 import LoadingSpinner from "../components/user/LoadingSpinner";
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
+
 
 const ConfirmToast = (props: any) => {
     const { closeToast, onConfirm } = props;
@@ -41,6 +45,11 @@ export function askConfirm(onConfirm: () => void) {
 
 
 function AdminHeroPosters() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
+
     const [heroPosters, setHeroPosters] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [editingPoster, setEditingPoster] = useState(null);
@@ -58,6 +67,14 @@ function AdminHeroPosters() {
     const [allMovies, setAllMovies] = useState([]);
 
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!loading) {
+            if (!user || !user.roles?.includes('ADMIN')) {
+                navigate('/admin/landing', { replace: true });
+            }
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         init();

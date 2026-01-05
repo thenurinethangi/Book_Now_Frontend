@@ -1,26 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Lock, LogOut, Save, X } from 'lucide-react';
 import SidebarNavigation from '../components/admin/SidebarNavigation';
+import { getCurrentUserData } from '../services/user/authService';
+import { toast } from 'react-toastify';
+import { adminLogout } from '../services/admin/auth';
+import { useNavigate } from 'react-router-dom';
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/slices/authSlice";
+import type { AppDispatch } from "../store/store";
 
 function AdminUserProfile() {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, loading } = useSelector((state: RootState) => state.auth);
+
+  const navigate = useNavigate();
+
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
 
-  const [userDetails, setUserDetails] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+94 77 123 4567',
-    address: 'Negombo, Western Province',
-    joinDate: '2024-01-15'
-  });
+  const [userDetails, setUserDetails] = useState<any>({});
 
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user || !user.roles?.includes('ADMIN')) {
+        navigate('/admin/landing', { replace: true });
+      }
+    }
+  }, [loading, user, navigate]);
+
+  useEffect(() => {
+    getUserAndDetails();
+  }, []);
+
+  async function getUserAndDetails() {
+    try {
+      const res = await getCurrentUserData();
+      console.log(res.data.data);
+      setUserDetails(res.data.data);
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
@@ -58,10 +90,6 @@ function AdminUserProfile() {
     setIsChangingPassword(false);
   };
 
-  const handleLogout = () => {
-    console.log('Logging out...');
-  };
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -70,6 +98,20 @@ function AdminUserProfile() {
       year: "numeric",
     });
   };
+
+  async function handleLogout() {
+    try {
+      const res = await adminLogout();
+      localStorage.removeItem('accessToken');
+      navigate('/admin/landing');
+
+      dispatch(logout());
+      navigate('/admin/landing', { replace: true });
+    }
+    catch (e) {
+      toast.error('Failed to logout!');
+    }
+  }
 
   return (
     <div className='bg-[#121212] flex font-[Poppins] min-h-screen'>
@@ -119,14 +161,14 @@ function AdminUserProfile() {
                 <p className='text-[12px] text-gray-500 mb-4'>{userDetails.email}</p>
                 <div className='flex items-center gap-2 text-[11px] text-gray-500'>
                   <Calendar className='w-3.5 h-3.5' />
-                  <span>Joined {formatDate(userDetails.joinDate)}</span>
+                  <span>Joined {formatDate(userDetails.createdAt)}</span>
                 </div>
               </div>
 
-              <div className='mt-6 pt-6 border-t border-gray-800'>
+              <div className='mt-6 pt-6 border-t border-gray-800 flex justify-center items-center'>
                 <button
                   onClick={handleLogout}
-                  className='w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-colors text-[13px] font-medium'
+                  className='flex items-center justify-center gap-2 rounded-lg transition-colors text-[13px] font-medium cursor-pointer'
                 >
                   <LogOut className='w-4 h-4' />
                   Logout

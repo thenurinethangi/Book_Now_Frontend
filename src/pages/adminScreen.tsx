@@ -5,12 +5,28 @@ import ActiveScreens from "../components/admin/ActiveScreens";
 import DeactiveScreens from "../components/admin/DeactiveScreens";
 import { getAllActiveScreens, getAllDeactiveScreens } from "../services/admin/screenService";
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
+
 function AdminScreen() {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState("manage");
     const [statsUpdate, setStatsUpdate] = useState(0);
     const [mngScreens, setMngScreens] = useState([]);
     const [deactScreens, setDeactScreens] = useState([]);
+
+    useEffect(() => {
+        if (!loading) {
+            if (!user || !user.roles?.includes('ADMIN')) {
+                navigate('/admin/landing', { replace: true });
+            }
+        }
+    }, [loading, user, navigate]);
 
     useEffect(() => {
         initStats();
@@ -66,7 +82,7 @@ function AdminScreen() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-[12px] text-gray-500 mb-1">Total Screens</p>
-                                <p className="text-[18px] font-medium text-white">{mngScreens.length+deactScreens.length}</p>
+                                <p className="text-[18px] font-medium text-white">{mngScreens.length + deactScreens.length}</p>
                             </div>
                             <Tv className="w-8 h-8 text-red-700 opacity-20" />
                         </div>
@@ -86,7 +102,7 @@ function AdminScreen() {
                                 <p className="text-[12px] text-gray-500 mb-1">
                                     Currently Active
                                 </p>
-                                <p className="text-[18px] font-medium text-orange-500">{mngScreens.filter((screen: any) => screen.status === 'ACTIVE' ).length}</p>
+                                <p className="text-[18px] font-medium text-orange-500">{mngScreens.filter((screen: any) => screen.status === 'ACTIVE').length}</p>
                             </div>
                             <AlertCircle className="w-8 h-8 text-orange-500 opacity-20" />
                         </div>

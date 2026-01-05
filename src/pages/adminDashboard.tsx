@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { House, UserCog, SquareCheck, Disc, Search, Layers2, RotateCw, CircleQuestionMark, Bell, Clapperboard, Tv, Video, MapPinHouse, User, DollarSign, Ticket, Users, Film } from "lucide-react";
 import circle from '../assets/images/new-moon.png'
 import logo2 from '../assets/images/attachment_69652587-removebg-preview.png'
@@ -12,10 +12,26 @@ import {
     ChevronDown, BarChart3, Clock, Star, Eye, ChevronRight
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import {Ellipsis, Bomb, Circle} from "lucide-react";
+import { Ellipsis, Bomb, Circle } from "lucide-react";
 import SidebarNavigation from '../components/admin/SidebarNavigation';
 
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
+
 const AdminDashboard = () => {
+
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading) {
+            if (!user || !user.roles?.includes('ADMIN')) {
+                navigate('/admin/landing', { replace: true });
+            }
+        }
+    }, [loading, user, navigate]);
 
     interface StatCard {
         title: string;
@@ -72,7 +88,7 @@ const AdminDashboard = () => {
             <SidebarNavigation page={'home'} />
 
             {/* content right side */}
-            <div className='w-full h-min-screen text-white px-7 py-3 pt-4 ml-[65px]'>
+            <div className='w-full h-min-screen text-white py-3 pt-4 px-3 sm:px-7 ml-[28px] sm:ml-[65px]'>
 
                 <div className='flex justify-between items-center mb-[22px]'>
                     <div>
@@ -88,11 +104,11 @@ const AdminDashboard = () => {
                     </div>
                     <div>
                         <User className="w-5 h-5 text-red-900" />
-                    </div> 
+                    </div>
                 </div>
 
                 {/* Stats Grid */}
-                <div className="flex justify-center items-center gap-20 mb-5 bg-[#1e1e1e] rounded-sm py-[23px]">
+                <div className="flex flex-wrap justify-center items-center gap-20 mb-5 bg-[#1e1e1e] rounded-sm py-[23px]">
                     {stats.map((stat, index) => (
                         <div
                             key={index}
@@ -109,8 +125,8 @@ const AdminDashboard = () => {
                                 <div>
                                     <div className="text-[17px] font-normal mb-1">{stat.value}
                                         <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-green-500' : 'text-red-500'} ml-5`}>
-                                        {stat.change}
-                                </span>
+                                            {stat.change}
+                                        </span>
                                     </div>
                                     <div className="text-[12.8px] text-gray-400">{stat.title}</div>
                                 </div>
@@ -119,10 +135,10 @@ const AdminDashboard = () => {
                     ))}
                 </div>
 
-                <div className='flex gap-4'>
+                <div className='flex flex-wrap lg:flex-nowrap gap-4'>
 
                     {/* Revenue Chart */}
-                    <div className="lg:col-span-2 bg-[#1e1e1e] backdrop-blur-sm rounded-sm px-5 py-3 w-[70%]">
+                    <div className="lg:col-span-2 bg-[#1e1e1e] backdrop-blur-sm rounded-sm px-5 py-3 w-[100%] lg:w-[70%]">
                         <div className="flex items-center justify-between mb-6">
                             <div>
                                 <h3 className="text-[14px] font-medium">Revenue Overview</h3>
@@ -150,7 +166,7 @@ const AdminDashboard = () => {
                         </ResponsiveContainer>
                     </div>
 
-                    <div className="bg-[#1e1e1e] rounded-b-sm w-[30%] px-5 py-3 text-white">
+                    <div className="bg-[#1e1e1e] rounded-b-sm w-[100%] lg:w-[30%] px-5 py-3 text-white">
 
                         <div className='flex justify-between items-center' style={{ marginBottom: '16px' }}>
                             <h1 className='text-[13.5px] font-medium tracking-[0.01em]'>Pending Cinema Request</h1>
@@ -215,7 +231,7 @@ const AdminDashboard = () => {
                                     <p className='text-[13.5px] text-white font-normal'>Develop Tick Tick frontend</p>
                                 </div>
                             </div>
-         
+
                         </div>
 
                     </div>
