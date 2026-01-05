@@ -55,7 +55,7 @@ function ManagedMovies() {
             const res = await checkMovieInCinemasManageMovieList(id);
             console.log(res.data.data);
             if (res.data.data > 0) {
-                toast.warning(`Cannot delete selected movie; it is still playing in 3 cinemas.`);
+                toast.warning(`Cannot delete selected movie; it is still playing in ${res.data.data} cinemas.`);
                 return;
             }
 
@@ -114,7 +114,7 @@ function ManagedMovies() {
             <div className='space-y-4 mt-6'>
                 {movies.map((movie: any) => (
                     <div key={movie.movie._id} className='rounded-lg bg-[#1a1a1a] border border-[#2a2a2a] overflow-hidden hover:border-[#3a3a3a] transition-all'>
-                        <div className='flex gap-4 p-4'>
+                        <div className='flex flex-wrap gap-4 p-4'>
                             {/* Left: Poster */}
                             <div className='flex-shrink-0'>
                                 <img
@@ -127,8 +127,8 @@ function ManagedMovies() {
                             {/* Middle: Movie Details */}
                             <div className='flex-1 flex flex-col justify-between'>
                                 <div>
-                                    <div className='flex items-start justify-between mb-2'>
-                                        <div>
+                                    <div className='flex flex-wrap gap-2 items-start justify-between mb-2'>
+                                        <div className='mr-8'>
                                             <h3 className='text-[16px] text-white font-medium mb-1'>{movie.movie.title}</h3>
                                             <div className='flex items-center gap-2 mb-3'>
                                                 {movie.movie.genres.map((g: string, i: number) => (

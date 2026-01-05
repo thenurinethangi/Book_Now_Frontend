@@ -18,8 +18,8 @@ function AdminMovie() {
             {/* content right side */}
             <div className='w-full min-h-screen text-white px-7 py-3 pt-7 ml-[65px]'>
                 {/* title */}
-                <div className='flex justify-between items-center mb-[17px]'>
-                    <div>
+                <div className='flex flex-wrap gap-2.5 justify-between items-center mb-[17px]'>
+                    <div className='mr-27'>
                         <div className="flex items-center space-x-3">
                             <span className="bg-gradient-to-r from-red-900 to-red-700 bg-clip-text text-transparent text-[16.5px] font-semibold z-0">
                                 <span className='text-[18px] font-medium text-gray-500'>Home {`>`}</span>&nbsp;Movie
@@ -39,7 +39,7 @@ function AdminMovie() {
                 </div>
 
                 {/* tabs */}
-                <div className='flex items-center gap-6 border-b border-gray-800 mb-6 mt-5'>
+                <div className='flex flex-wrap items-center gap-6 border-b border-gray-800 mb-6 mt-5'>
                     <button
                         onClick={() => setActiveTab('manage')}
                         className={`px-2.5 pb-2 text-[18px] -mb-[1px] transition-colors ${activeTab === 'manage' ? 'border-b-2 border-red-900 text-white' : 'text-gray-500 hover:text-gray-300'}`}
