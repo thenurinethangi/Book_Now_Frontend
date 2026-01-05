@@ -22,59 +22,69 @@ Overall, Synema delivers a modern, scalable, and real-world movie booking experi
 
 ### Frontend
 
-- React.js (with TypeScript)
+- React.js (with TypeScript) -
 Used to build a component-based, scalable, and type-safe user interface for the application.
 
-- Redux Toolkit
+- Redux Toolkit -
 Handles global state management, including user authentication, booking flow, and seat selection state.
 
-- Tailwind CSS
+- Tailwind CSS -
 Provides a modern, responsive, and consistent UI design with utility-first styling.
 
-- React Router
+- React Router -
 Manages client-side routing and role-based navigation within the application.
 
-- Axios
+- Axios -
 Used for handling HTTP requests and communication with the backend API.
 
 ### Backend
 
-- Node.js
+- Node.js -
 Provides the runtime environment for executing server-side JavaScript.
 
-- Express.js
+- Express.js -
 Used to build a RESTful API and handle routing, middleware, and request processing.
 
-- MongoDB
+- MongoDB -
 Serves as the primary database for storing users, cinemas, movies, screens, showtimes, and bookings.
 
-- Mongoose
+- Mongoose -
 Acts as an ODM to model application data and enforce schema validation.
 
-- Redis
+- Redis -
 Implements real-time seat locking with automatic timeout handling to prevent double bookings.
 
-- JWT (JSON Web Tokens)
+- JWT (JSON Web Tokens) -
 Used for secure authentication and role-based authorization.
 
-- Nodemailer
+- Nodemailer -
 Sends email ex: booking confirmation containing ticket details, email verify otp
 
 ### AI & Advanced Features
 
-- Grok AI Model
+- Grok AI Model -
 Generates AI-powered movie summaries to enhance the movie discovery experience.
 
-- Redis-based Concurrency Control
+- Redis-based Concurrency Control -
 Ensures consistent seat availability when multiple users attempt bookings simultaneously.
 
 ### Development & Deployment
 
-- Git & GitHub
+- Git & GitHub -
 Used for version control and project collaboration.
 
-- Postman
+- Postman -
 Used for testing and validating API endpoints during development.
 
-- Render / Railway
+- Render / Railway -
 Used for deploying and hosting the frontend and backend services.
+
+
+## Setup and Run Instructions
+
+This project consists of two separate applications:
+
+- Frontend – React-based client application
+- Backend – Node.js & Express REST API
+
+Both applications must be set up and run separately.
