@@ -168,4 +168,12 @@ npm run dev
 The backtend will be available at: [http://localhost:5000](http://localhost:5000)
 
 
-## Deployed URLs (frontend & backend)
+## Deployed URLs
+
+The Synema application is deployed and accessible through the following live environments:
+
+- Frontend Application:
+<https://synema-frontend-url.com>
+
+- Backend API:
+<https://synema-backend-url.com>
