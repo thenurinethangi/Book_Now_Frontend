@@ -102,5 +102,18 @@ Ensure the following are installed on your system:
 
 1. Clone the Frontend Repository
 ```bash
-git clone https://github.com/your-username/synema-frontend.git
+git clone https://github.com/thenurinethangi/Book_Now_Frontend.git
 cd synema-frontend
+```
+
+2. Install Dependencies
+```bash
+npm install
+```
+
+3. Run the Application
+```bash
+npm run dev
+```
+
+The frontend will be available at: <http://localhost:5173>
