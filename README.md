@@ -58,4 +58,23 @@ Implements real-time seat locking with automatic timeout handling to prevent dou
 Used for secure authentication and role-based authorization.
 
 - Nodemailer
-Sends booking confirmation emails containing ticket details to users.
+Sends email ex: booking confirmation containing ticket details, email verify otp
+
+### AI & Advanced Features
+
+- Grok AI Model
+Generates AI-powered movie summaries to enhance the movie discovery experience.
+
+- Redis-based Concurrency Control
+Ensures consistent seat availability when multiple users attempt bookings simultaneously.
+
+### Development & Deployment
+
+- Git & GitHub
+Used for version control and project collaboration.
+
+- Postman
+Used for testing and validating API endpoints during development.
+
+- Render / Railway
+Used for deploying and hosting the frontend and backend services.
