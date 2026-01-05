@@ -17,6 +17,7 @@ Synema provides a dedicated interface for **cinema owners**, allowing cinemas to
 
 Overall, Synema delivers a modern, scalable, and real-world movie booking experience that reflects **industry-level application design and development practices**.
 
+
 ## Technologies and tools used
 
 ### Frontend
