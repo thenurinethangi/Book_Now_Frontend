@@ -217,7 +217,7 @@ Save movies to a personal watchlist for future reference or planning.
 10. Cancel Booking  
 Cancel existing bookings if plans change, with automatic release of locked seats.
 
-![User part](src/assets/readme_assets/screenshot_1092.png)
+![User part](./src/assets/readme_assets/screenshot_1092.png)
 ![User part](./src/assets/readme_assets/screenshot_1093.png)
 ![User part](./src/assets/readme_assets/screenshot_1094.png)
 ![User part](./src/assets/readme_assets/screenshot_1095.png)
