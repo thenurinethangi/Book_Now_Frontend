@@ -217,6 +217,8 @@ Save movies to a personal watchlist for future reference or planning.
 10. Cancel Booking  
 Cancel existing bookings if plans change, with automatic release of locked seats.
 
+![User part](./src/assets/readme_assets/Screenshot%20(1092).png)
+
 ### Cinema Features
 Synema includes a dedicated portal for cinema owners to manage their operations. Cinemas can register on the platform, with access granted only after approval by the system administrator. Once approved, cinema users can log in to manage cinema profile details, add and configure screens, select movies to be shown, and create showtimes for each screen.
 

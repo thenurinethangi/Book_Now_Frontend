@@ -192,7 +192,7 @@ function CinemaContent() {
                             <div className='flex flex-col items-start mt-3.5 -translate-x-2'>
                                 <p className='text-[20.5px] text-white/90 tracking-[0.5px] font-normal font-[Nunito_Sans] leading-relaxed line-clamp-2 w-[70%] sm:w-[100%]'>{cinema.address}</p>
 
-                                <div className='flex items-center gap-1.5 mt-2.5'>
+                                <div className='flex flex-wrap items-center gap-1.5 mt-2.5'>
                                     {cinema.formats.map((f: string, index: number) => (
                                         <p key={index} className='text-[13px] bg-[#353535] text-[#999] font-semibold rounded-xs py-1 px-2'>{f}</p>
                                     ))}

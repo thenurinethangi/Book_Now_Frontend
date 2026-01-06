@@ -48,8 +48,14 @@ function CinemaBooking() {
         try {
             const res = await getAllBookings({ searchKey, daysRange, no });
             console.log(res.data.data);
-            setBookings(res.data.data.filterAfterTablePageNo);
-            setSize(res.data.data.size);
+            if (res.data.message === 'No bookings found') {
+                setBookings([]);
+                setSize(0);
+            }
+            else {
+                setBookings(res.data.data.filterAfterTablePageNo);
+                setSize(res.data.data.size);
+            }
         }
         catch (e) {
             console.log(e);
@@ -258,7 +264,7 @@ function CinemaBooking() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {bookings.map((booking: any) => (
+                                {bookings?.map((booking: any) => (
                                     <tr key={booking._id} className='border-b border-gray-800 hover:bg-[#252525] transition-colors'>
                                         <td className='px-6 py-3.5'>
                                             <p className='text-[12px] text-gray-300'>{formatSLDate(booking.date)}</p>
@@ -308,7 +314,7 @@ function CinemaBooking() {
                         {/* Pagination */}
                         <div className='flex items-center justify-between px-5 py-4 border-t border-gray-800'>
                             <span className='text-[12px] text-gray-500'>
-                                Showing <span className='text-white'>{no === 1 ? 1 : (no - 1) * 10}</span> to <span className='text-white'>{(no - 1) * 10 + bookings.length}</span> of <span className='text-white'>{size}</span>
+                                Showing <span className='text-white'>{no === 1 ? 1 : (no - 1) * 10}</span> to <span className='text-white'>{(no - 1) * 10 + bookings?.length}</span> of <span className='text-white'>{size}</span>
                             </span>
                             <div className='flex items-center gap-2'>
                                 <button onClick={(e) => setNo(no - 1)}

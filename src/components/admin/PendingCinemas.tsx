@@ -89,10 +89,10 @@ function PendingCinemas(props: any) {
                                 {4.5}
                             </div> */}
                             <div className='flex items-center gap-1'>
-                                <button onClick={approveACinema} data-cinema={cinema._id} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
+                                <button onClick={approveACinema} data-cinema={cinema._id} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors cursor-pointer'>
                                     <CircleFadingArrowUp className='absolute text-white/90 w-[19px] h-[19px]' />
                                 </button>
-                                <button onClick={rejectACinema} data-cinema={cinema._id} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
+                                <button onClick={rejectACinema} data-cinema={cinema._id} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors cursor-pointer'>
                                     <CircleX className='absolute text-red-600/90 w-[19px] h-[19px]' />
                                 </button>
                             </div>

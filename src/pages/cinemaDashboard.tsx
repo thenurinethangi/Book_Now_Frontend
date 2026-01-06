@@ -126,8 +126,8 @@ const CinemaOwnerDashboard = () => {
         },
         {
             title: 'Occupancy Rate',
-            value: `${Math.round(totalOccupancy / screenOccupancy.length)}%`,
-            change: `${Math.round(totalOccupancy / screenOccupancy.length)}%`,
+            value: `${totalOccupancy === 0 ? 0 : Math.round(totalOccupancy / screenOccupancy.length)}%`,
+            change: `${totalOccupancy === 0 ? 0 : Math.round(totalOccupancy / screenOccupancy.length)}%`,
             icon: <Users className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-purple-500'
@@ -135,7 +135,7 @@ const CinemaOwnerDashboard = () => {
         {
             title: 'Active Screens',
             value: `${activeScreens.activeScreens}/${activeScreens.allScreens}`,
-            change: `${Math.round((activeScreens.activeScreens / activeScreens.allScreens) * 100)}%`,
+            change: `${activeScreens.allScreens ===0 ? 0 : Math.round((activeScreens.activeScreens / activeScreens.allScreens) * 100)}%`,
             icon: <Tv className="w-5.5 h-5.5" />,
             trend: 'up',
             color: 'text-red-500'

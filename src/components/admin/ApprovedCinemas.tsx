@@ -81,7 +81,7 @@ function ApprovedCinemas(props: any) {
                                 <Star className='w-3 h-3 fill-white/88' />
                                 {4.5}
                             </div> */}
-                            <button onClick={(e) => { setActiveOptionsId(cinema._id); e.stopPropagation(); }} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors'>
+                            <button onClick={(e) => { setActiveOptionsId(cinema._id); e.stopPropagation(); }} className='w-7 h-7 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors cursor-pointer'>
                                 <svg className='w-4 h-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                     <circle cx='12' cy='6' r='1.5' />
                                     <circle cx='12' cy='12' r='1.5' />

@@ -85,8 +85,8 @@ function AdminHeroPosters() {
             const res = await getAllMovies();
             console.log(res.data.data);
             setAllMovies(res.data.data);
-            setFormData((prev) => ({ ...prev, ['movieId']: res.data.data[0].movie._id }));
-            setFormData((prev) => ({ ...prev, ['status']: res.data.data[0].movie.status }));
+            setFormData((prev) => ({ ...prev, ['movieId']: res.data.data[0]?.movie._id }));
+            setFormData((prev) => ({ ...prev, ['status']: res.data.data[0]?.movie.status }));
 
             const res2 = await getAllHeros();
             console.log(res2.data.data);
