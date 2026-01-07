@@ -271,16 +271,16 @@ See real-time booked and available seats for each showtime.
 8. Integration with Platform Features  
 Work seamlessly with user booking flow, email confirmations, and seat locking handled by Redis.
 
-![User part](https://github.com/user-attachments/assets/dcef4a85-fab3-41f5-8a2d-dcbb25032061)
-![User part](https://github.com/user-attachments/assets/a93be891-171b-419b-8833-60648873bb57)
-![User part](https://github.com/user-attachments/assets/3224b86a-e1a1-4141-b1c6-76812265d861)
-![User part](https://github.com/user-attachments/assets/8157545b-ce02-4f43-b6fb-b05914bb8cde)
-![User part](https://github.com/user-attachments/assets/df00e063-fbc9-475f-8799-baee99f09903)
-![User part](https://github.com/user-attachments/assets/ca1bf851-b503-4e8e-bd7a-a1e9a5945687)
-![User part](https://github.com/user-attachments/assets/a52b972d-bc98-47d2-ab2e-34fff740790b)
-![User part](https://github.com/user-attachments/assets/fcfa5b3c-715d-482b-8df2-a2985d187cd5)
-![User part](https://github.com/user-attachments/assets/a234954e-3b5a-4081-9129-441b1c5adf78)
-![User part](https://github.com/user-attachments/assets/ce838565-8e24-4ae4-9291-dcf4d5d261bc)
+![Cinema part](https://github.com/user-attachments/assets/dcef4a85-fab3-41f5-8a2d-dcbb25032061)
+![Cinema part](https://github.com/user-attachments/assets/a93be891-171b-419b-8833-60648873bb57)
+![Cinema part](https://github.com/user-attachments/assets/3224b86a-e1a1-4141-b1c6-76812265d861)
+![Cinema part](https://github.com/user-attachments/assets/8157545b-ce02-4f43-b6fb-b05914bb8cde)
+![Cinema part](https://github.com/user-attachments/assets/df00e063-fbc9-475f-8799-baee99f09903)
+![Cinema part](https://github.com/user-attachments/assets/ca1bf851-b503-4e8e-bd7a-a1e9a5945687)
+![Cinema part](https://github.com/user-attachments/assets/a52b972d-bc98-47d2-ab2e-34fff740790b)
+![Cinema part](https://github.com/user-attachments/assets/fcfa5b3c-715d-482b-8df2-a2985d187cd5)
+![Cinema part](https://github.com/user-attachments/assets/a234954e-3b5a-4081-9129-441b1c5adf78)
+![Cinema part](https://github.com/user-attachments/assets/ce838565-8e24-4ae4-9291-dcf4d5d261bc)
 
 ### Admin Features
 The administration module provides full control over the Synema platform. Administrators can approve or reject cinema registrations, manage cinemas, screens, and movies, and oversee user, cinema, and admin accounts. The admin panel also allows control over core system features such as promotional banners and featured content.
@@ -311,3 +311,12 @@ Oversee platform activity, enforce rules, and ensure secure operation of all fun
 
 8. Integration with Platform Features  
 Maintain seamless interaction with user booking flow, seat locking, and AI-powered movie summaries.
+
+![Admin part](https://github.com/user-attachments/assets/a23a97af-63cb-456f-af83-8469df2323e6)
+![Admin part](https://github.com/user-attachments/assets/316ace67-e7ce-45c9-b76f-8a741b0a5866)
+![Admin part](https://github.com/user-attachments/assets/090be319-8633-4ed0-9551-c7ed87bee27f)
+![Admin part](https://github.com/user-attachments/assets/ce8e2c29-b9e3-402f-afb7-e9e65b14f6c1)
+![Admin part](https://github.com/user-attachments/assets/cade2c92-0d51-4aba-8fe1-8dfa7032ef4c)
+![Admin part](https://github.com/user-attachments/assets/2c970ad1-ea54-4093-b677-a845389b2a31)
+![Admin part](https://github.com/user-attachments/assets/c5afc949-7b4a-49b4-b864-e9ca73790378)
+![Admin part](https://github.com/user-attachments/assets/356fcc7d-9471-4e35-a2e5-b5023f84a64f)
