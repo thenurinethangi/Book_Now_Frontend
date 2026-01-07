@@ -239,7 +239,7 @@ Cancel existing bookings if plans change, with automatic release of locked seats
 ![User part](./src/assets/readme_assets/screenshot_1111.png)
 ![User part](./src/assets/readme_assets/screenshot_1112.png)
 ![User part](./src/assets/readme_assets/screenshot_1113.png)
-![User part](./src/assets/readme_assets/screenshot_1114.png)
+![User part](https://github.com/user-attachments/assets/74534cfa-0d33-48ff-879c-96e4029073cf)
 
 ### Cinema Features
 Synema includes a dedicated portal for cinema owners to manage their operations. Cinemas can register on the platform, with access granted only after approval by the system administrator. Once approved, cinema users can log in to manage cinema profile details, add and configure screens, select movies to be shown, and create showtimes for each screen.
