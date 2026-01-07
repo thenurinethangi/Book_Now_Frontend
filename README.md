@@ -271,6 +271,17 @@ See real-time booked and available seats for each showtime.
 8. Integration with Platform Features  
 Work seamlessly with user booking flow, email confirmations, and seat locking handled by Redis.
 
+![User part](https://github.com/user-attachments/assets/dcef4a85-fab3-41f5-8a2d-dcbb25032061)
+![User part](https://github.com/user-attachments/assets/a93be891-171b-419b-8833-60648873bb57)
+![User part](https://github.com/user-attachments/assets/3224b86a-e1a1-4141-b1c6-76812265d861)
+![User part](https://github.com/user-attachments/assets/8157545b-ce02-4f43-b6fb-b05914bb8cde)
+![User part](https://github.com/user-attachments/assets/df00e063-fbc9-475f-8799-baee99f09903)
+![User part](https://github.com/user-attachments/assets/ca1bf851-b503-4e8e-bd7a-a1e9a5945687)
+![User part](https://github.com/user-attachments/assets/a52b972d-bc98-47d2-ab2e-34fff740790b)
+![User part](https://github.com/user-attachments/assets/fcfa5b3c-715d-482b-8df2-a2985d187cd5)
+![User part](https://github.com/user-attachments/assets/a234954e-3b5a-4081-9129-441b1c5adf78)
+![User part](https://github.com/user-attachments/assets/ce838565-8e24-4ae4-9291-dcf4d5d261bc)
+
 ### Admin Features
 The administration module provides full control over the Synema platform. Administrators can approve or reject cinema registrations, manage cinemas, screens, and movies, and oversee user, cinema, and admin accounts. The admin panel also allows control over core system features such as promotional banners and featured content.
 
